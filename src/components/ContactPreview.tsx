@@ -33,7 +33,7 @@ const ContactPreview: React.FC = () => {
             <h3 className="font-display text-xl font-medium mb-2">Contact Us</h3>
             <p className="text-vivenza-black/80 mb-2">
               <a href="tel:+919876543210" className="hover:text-vivenza-gold transition-colors">
-                +91 9876543210
+                +91 9697798888
               </a>
             </p>
             <p className="text-vivenza-black/80">
