@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
               <p className="mb-4">Telangana – 501504</p>
               <p className="mb-2">
                 <a href="tel:+919876543210" className="hover:text-vivenza-gold transition-colors">
-                  +91 9876543210
+                  +91 9697798888
                 </a>
               </p>
               <p>
