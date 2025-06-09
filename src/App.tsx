@@ -29,11 +29,11 @@ const App = () => (
       <Sonner />
 
       {/* Marquee Banner */}
-     <div className="w-full bg-amber-100 py-2 shadow-sm overflow-hidden">
+{/*      <div className="w-full bg-amber-100 py-2 shadow-sm overflow-hidden">
   <div className="whitespace-nowrap animate-marquee font-medium text-vivenza-black inline-block">
     🚧 WEBSITE UNDER CONSTRUCTION - COMING SOON! 🚧 Contact us: 040-2222 8888 / +91 969779 8888
   </div>
-</div>
+</div> */}
       {/* Main Routing */}
       <BrowserRouter>
         <Routes>
