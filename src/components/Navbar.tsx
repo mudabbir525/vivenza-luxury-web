@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center space-x-6 text-white text-sm">
               <div className="flex items-center space-x-2 text-xs">
                 <MapPin className="h-4 w-4" />
-                <span>108, Murthuzaguda ,Moinabad</span>
+                <span>108, Murthuzaguda,Moinabad</span>
               </div>
               <div className="flex items-center space-x-2 text-xs">
                 <Phone className="h-4 w-4" />

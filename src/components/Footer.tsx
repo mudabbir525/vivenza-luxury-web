@@ -5,6 +5,20 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
+    <>
+     <div className="w-full h-[300px] overflow-hidden">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.560849572976!2d78.2893251!3d17.3172401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbc1b4d898a27f%3A0xd1be5c6813a879ce!2sVivenza%20farm-Best%20farmhouse%20in%20Hyderabad!5e1!3m2!1sen!2sin!4v1750970748661!5m2!1sen!2sin" 
+          width="100%" 
+          height="300" 
+          style={{ border: 0 }} 
+          allowFullScreen={true} 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Vivenza Farm Location"
+        />
+      </div>
+
     <footer className="bg-vivenza-black text-white">
       <div className="luxury-container py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -152,6 +166,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

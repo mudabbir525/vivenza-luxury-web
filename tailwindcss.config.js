@@ -1,6 +1,7 @@
 export default {
   theme: {
     extend: {
+      
       animation: {
         marquee: 'marquee 25s linear infinite',
       },

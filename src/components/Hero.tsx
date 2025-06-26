@@ -204,7 +204,7 @@ const Hero: React.FC = () => {
   const currentContent = heroContent[currentImageIndex];
 
   return (
-    <div className="relative h-[80vh]"> {/* Reduced height from h-screen to h-[80vh] */}
+    <div className="relative h-[93vh]"> {/* Reduced height from h-screen to h-[80vh] */}
       <div className="absolute mt-10 inset-0 overflow-hidden">
         {/* Hero background image carousel */}
         {heroContent.map((content, index) => (

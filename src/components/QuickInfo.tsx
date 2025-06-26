@@ -79,7 +79,7 @@ const EventsSection = () => {
     <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">
       <div className="luxury-container">
         <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-medium">Host Your Perfect Event</h2>
+          <h2 className="font-display text-3xl md:text-4xl   font-medium">Host Your Perfect Event</h2>
           <div className="gold-divider mx-auto"></div>
           <p className="max-w-3xl mx-auto text-vivenza-black/80">
             Our luxury farmhouse provides the ideal setting for all types of gatherings and celebrations
