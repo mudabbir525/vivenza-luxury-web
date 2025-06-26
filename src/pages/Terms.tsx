@@ -9,7 +9,7 @@ const TermsAndConditions = () => {
       <Navbar />
       <div className="flex-grow bg-vivenza-offWhite py-20">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h1 className="font-display text-4xl md:text-5xl mt-16 font-medium mb-4 text-center">Terms & Conditions</h1>
+          <h1 className="font-display text-4xl md:text-5xl mt-24 font-medium mb-4 text-center">Terms & Conditions</h1>
           <div className="gold-divider mb-8"></div>
           
           <div className="prose prose-lg mx-auto">

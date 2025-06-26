@@ -126,7 +126,7 @@ const EventsSection = () => {
                   </ul>
                   
                   <button className="mt-4 px-4 py-2 bg-vivenza-gold text-white rounded-md hover:bg-opacity-90 transition-colors font-medium shadow-md">
-                    Enquire Now
+                    Book Now
                   </button>
                 </div>
               </div>
