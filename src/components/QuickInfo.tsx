@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import house from '/public/12.jpeg';
 const EventsSection = () => {
   const eventCategories = [
     {
@@ -76,65 +76,153 @@ const EventsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">
-      <div className="luxury-container">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl   font-medium">Host Your Perfect Event</h2>
-          <div className="gold-divider mx-auto"></div>
-          <p className="max-w-3xl mx-auto text-vivenza-black/80">
-            Our luxury farmhouse provides the ideal setting for all types of gatherings and celebrations
-          </p>
-        </div>
+    <>
+      {/* Pricing Section */}
+      <section className="py-16 bg-white">
+        <div className="luxury-container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
+              Booking & Pricing
+            </h2>
+            <div className="gold-divider mx-auto"></div>
+            <p className="max-w-3xl mx-auto text-vivenza-black/80">
+              Transparent pricing for your perfect farmhouse experience
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {eventCategories.map((category, index) => (
-            <Link 
-              key={index}
-              to="/booking"
-              className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 h-96 block cursor-pointer"
-            >
-              {/* Image that's always visible */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Image */}
+            <div className="relative overflow-hidden rounded-xl shadow-lg">
               <img
-                src={category.image}
-                alt={category.title}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-75"
+                src={house}
+                alt="Luxury Farmhouse"
+                className="w-auto h-[600px] object-cover"
               />
-              
-              {/* Dark overlay to make text more readable - always present but stronger on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/70">
-              </div>
-              
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
-                  <h3 className="font-display text-2xl font-semibold text-white mb-2 drop-shadow-lg">
-                    {category.title}
-                  </h3>
-                  <p className="text-vivenza-gold mb-3 drop-shadow-md font-medium">
-                    {category.description}
-                  </p>
+            </div>
+
+            {/* Right side - Pricing Information */}
+            <div className="space-y-2">
+              {/* Weekdays Section */}
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white">
+                <h3 className="font-display text-2xl font-semibold mb-6">
+                  Weekdays (Mon-Fri)
+                </h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg">12 Hrs:</span>
+                    <span className="text-2xl font-bold text-yellow-300">₹20,000</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg">24 Hrs:</span>
+                    <span className="text-2xl font-bold text-yellow-300">₹25,000</span>
+                  </div>
                 </div>
                 
-                <div className="max-h-0 overflow-hidden group-hover:max-h-64 transition-all duration-700 ease-in-out">
-                  <ul className="text-white text-sm space-y-1.5 bg-black/30 p-3 rounded-lg">
-                    {category.items.map((item, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="text-vivenza-gold mr-2 font-bold">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <button className="mt-4 px-4 py-2 bg-vivenza-gold text-white rounded-md hover:bg-opacity-90 transition-colors font-medium shadow-md">
-                    Book Now
-                  </button>
+                <div className="text-sm space-y-1 opacity-90">
+                  <p>Minimum - 10 members and Maximum - 25 members</p>
+                  <p>Extra per guest - ₹1000</p>
                 </div>
               </div>
-            </Link>
-          ))}
+
+              {/* Weekends Section */}
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white">
+                <h3 className="font-display text-2xl font-semibold mb-6">
+                  Weekends (Sat-Sun)
+                </h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg">12 Hrs:</span>
+                    <span className="text-2xl font-bold text-yellow-300">₹30,000</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg">24 Hrs:</span>
+                    <span className="text-2xl font-bold text-yellow-300">₹35,000</span>
+                  </div>
+                </div>
+                
+                <div className="text-sm space-y-1 opacity-90">
+                  <p>Minimum - 10 members and Maximum - 25 members</p>
+                  <p>Extra per guest - ₹1000</p>
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              {/* <div className="text-center pt-4">
+                <Link 
+                  to="/booking"
+                  className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
+                >
+                  Book Your Stay
+                </Link>
+              </div> */}
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Events Section */}
+      <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">
+        <div className="luxury-container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl   font-medium">Host Your Perfect Event</h2>
+            <div className="gold-divider mx-auto"></div>
+            <p className="max-w-3xl mx-auto text-vivenza-black/80">
+              Our luxury farmhouse provides the ideal setting for all types of gatherings and celebrations
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {eventCategories.map((category, index) => (
+              <Link 
+                key={index}
+                to="/booking"
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 h-96 block cursor-pointer"
+              >
+                {/* Image that's always visible */}
+                <img
+                  src={category.image}
+                  alt={category.title}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-75"
+                />
+                
+                {/* Dark overlay to make text more readable - always present but stronger on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/70">
+                </div>
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <h3 className="font-display text-2xl font-semibold text-white mb-2 drop-shadow-lg">
+                      {category.title}
+                    </h3>
+                    <p className="text-vivenza-gold mb-3 drop-shadow-md font-medium">
+                      {category.description}
+                    </p>
+                  </div>
+                  
+                  <div className="max-h-0 overflow-hidden group-hover:max-h-64 transition-all duration-700 ease-in-out">
+                    <ul className="text-white text-sm space-y-1.5 bg-black/30 p-3 rounded-lg">
+                      {category.items.map((item, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="text-vivenza-gold mr-2 font-bold">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <button className="mt-4 px-4 py-2 bg-vivenza-gold text-white rounded-md hover:bg-opacity-90 transition-colors font-medium shadow-md">
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

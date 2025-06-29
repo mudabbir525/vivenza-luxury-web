@@ -1,7 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import darkhouse from '/public/5.jpeg';
+import { 
+  Wifi, 
+  Snowflake, 
+  Zap, 
+  ShowerHead, 
+  Refrigerator, 
+  Thermometer,
+  Waves,
+  Music,
+  Users,
+  Gamepad2,
+  Flame,
+  ChefHat,
+  Baby,
+  Crown,
+  Bed,
+  Heart,
+  TreePine,
+  Trees,
+  UtensilsCrossed,
+  Volume2,
+  CookingPot,
+  Shield,
+  ShieldCheck,
+  Shirt,
+  Bath,
+  Droplets,
+  Tv,
+  MapPin,
+  Gift,
+  WashingMachine
+} from 'lucide-react';
 
 const Packages = () => {
   const packages = [
@@ -11,7 +44,7 @@ const Packages = () => {
       description: "Access to all 8 bedrooms, halls, and amenities",
       features: [
         "All 4 AC bedrooms",
-        "4 spacious halls",
+        "4 spacious halls", 
         "Swimming pool access",
         "Garden area access",
         "24/7 security"
@@ -35,17 +68,91 @@ const Packages = () => {
     { name: "DJ Services", price: "₹10,000" },
     { name: "Drinking Permission", price: "₹15,000" },
     { name: "Bonfire", price: "₹2,500" },
-    { 
-      name: "Food Services (Vegetarian)", 
-      price: "₹800", 
+    {
+      name: "Food Services (Vegetarian)",
+      price: "₹800",
       note: "Per person"
     },
-    { 
-      name: "Food Services (Non-Vegetarian)", 
-      price: "₹1,200", 
+    {
+      name: "Food Services (Non-Vegetarian)",
+      price: "₹1,200",
       note: "Per person"
     }
   ];
+
+  const amenitiesCategories = [
+    {
+      title: "Essentials",
+      items: [
+        { name: "Free WiFi", icon: Wifi },
+        { name: "Air Conditioning", icon: Snowflake },
+        { name: "Power Backup", icon: Zap },
+        { name: "Geyser", icon: ShowerHead },
+        { name: "Refrigerator", icon: Refrigerator },
+        { name: "Heating/Cooling", icon: Thermometer }
+      ]
+    },
+    {
+      title: "Entertainment & Leisure",
+      items: [
+        { name: "Swimming Pool", icon: Waves },
+        { name: "Music System", icon: Music },
+        { name: "Carrom", icon: Users },
+        { name: "Board Games", icon: Gamepad2 },
+        { name: "Bonfire", icon: Flame },
+        { name: "Barbeque", icon: ChefHat }
+      ]
+    },
+    {
+      title: "Kids & Family Friendly",
+      items: [
+        { name: "Kids Play Area", icon: Baby },
+        { name: "Highchair", icon: Crown },
+        { name: "Pack-n-Play", icon: Bed },
+        { name: "Pet Friendly", icon: Heart },
+        { name: "Outdoor Games", icon: TreePine }
+      ]
+    },
+    {
+      title: "Event-Ready",
+      items: [
+        { name: "Garden Lawn", icon: Trees },
+        { name: "Dining Area", icon: UtensilsCrossed },
+        { name: "Sound System", icon: Volume2 },
+        { name: "Fully-stocked Kitchen", icon: CookingPot }
+      ]
+    },
+    {
+      title: "Safety & Comfort",
+      items: [
+        { name: "CCTV", icon: Shield },
+        { name: "Security Guard", icon: ShieldCheck },
+        { name: "Wardrobe", icon: Shirt },
+        { name: "Towels", icon: Bath },
+        { name: "Soap", icon: Droplets },
+        { name: "Gas Stove", icon: Flame },
+        { name: "Television", icon: Tv },
+        { name: "Bathtub", icon: Bath },
+        { name: "Walking Trails", icon: MapPin },
+        { name: "Welcome Basket", icon: Gift },
+        { name: "Washer/Dryer", icon: WashingMachine }
+      ]
+    }
+  ];
+
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCategoryIndex((prevIndex) => 
+        (prevIndex + 1) % amenitiesCategories.length
+      );
+    }, 4000); // Change every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [amenitiesCategories.length]);
+
+  const currentCategory = amenitiesCategories[currentCategoryIndex];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -56,7 +163,7 @@ const Packages = () => {
             Our Packages
           </h1>
           <div className="gold-divider mx-auto mb-12"></div>
-
+          
           {/* Package information */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {packages.map((pkg) => (
@@ -83,7 +190,7 @@ const Packages = () => {
               </div>
             ))}
           </div>
-
+          
           {/* Timing information */}
           <div className="bg-amber-50 p-6 rounded-lg shadow-lg mb-16">
             <h3 className="font-display text-xl mb-4 text-center">Check-in & Check-out Times</h3>
@@ -99,6 +206,88 @@ const Packages = () => {
             </div>
           </div>
 
+          {/* Amenities Section */}
+          <div className="bg-white rounded-lg shadow-lg mb-16 overflow-hidden">
+            <div className="p-8">
+              <h3 className="font-display text-2xl mb-6 text-center">Our Amenities</h3>
+              <div className="grid md:grid-cols-2 gap-8 items-start">
+                {/* Left side - Scrolling Amenities */}
+                <div className="space-y-6">
+                  <div className="transition-all duration-1000 ease-in-out transform">
+                    <h4 className="font-display text-xl mb-4 text-vivenza-gold">
+                      {currentCategory.title}
+                    </h4>
+                    <div className="grid grid-cols-1 gap-3">
+                      {currentCategory.items.map((amenity, index) => {
+                        const IconComponent = amenity.icon;
+                        return (
+                          <div 
+                            key={`${amenity.name}-${currentCategoryIndex}`}
+                            className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-300"
+                            style={{
+                              animation: `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`,
+                              opacity: 0
+                            }}
+                          >
+                            <IconComponent className="w-5 h-5 text-vivenza-gold flex-shrink-0" />
+                            <span className="text-vivenza-black/80">{amenity.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  {/* Category indicator dots */}
+                  <div className="flex justify-center space-x-2 mt-6">
+                    {amenitiesCategories.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                          index === currentCategoryIndex 
+                            ? 'bg-vivenza-gold w-6' 
+                            : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        onClick={() => setCurrentCategoryIndex(index)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right side - Image */}
+                <div className="relative">
+                  <div className="rounded-lg overflow-hidden">
+                    <img
+                      src={darkhouse}
+                      alt="Luxury Farmhouse Amenities"
+                      className="w-full h-96 object-cover rounded-lg shadow-md"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <p className="text-sm font-medium">Experience Luxury</p>
+                    <p className="text-xs opacity-90">Premium amenities for your comfort</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes fadeInUp {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            .animate-fadeInUp {
+              animation: fadeInUp 0.6s ease-out;
+            }
+          `}</style>
+          
           {/* Additional services */}
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h3 className="font-display text-2xl mb-6">Additional Services</h3>
