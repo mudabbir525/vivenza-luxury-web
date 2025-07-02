@@ -95,8 +95,24 @@ const Booking = () => {
 
   // Handle package selection
   const handlePackageChange = (value: string) => {
-    setBasePrice(value === "farmhouse" ? 3 : 2);
-  };
+  switch (value) {
+    case "weekdays":
+      setBasePrice(3);
+      break;
+    case "weekends":
+      setBasePrice(4);
+      break;
+    case "garden":
+      setBasePrice(5);
+      break;
+    case "farmhouse":
+      setBasePrice(6);
+      break;
+    default:
+      setBasePrice(0); // fallback in case of invalid input
+  }
+};
+
 
   // Handle additional services changes
   const handleAdditionalServiceChange = (service: string, checked: boolean) => {
