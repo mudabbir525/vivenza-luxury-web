@@ -437,13 +437,40 @@ const Booking = () => {
                       <SelectValue placeholder="Select a package" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="farmhouse">Full Farmhouse Stay (₹50,000)</SelectItem>
-                      <SelectItem value="garden">Garden Area (₹40,000)</SelectItem>
-                      <SelectItem value="garden">Weekdays(ONLY FarmHouse) (₹26,000)</SelectItem>
-                      <SelectItem value="garden">Weekends(ONLY FarmHouse) (₹36,000)</SelectItem>
+                      <SelectItem value="farmhouse">Full Farmhouse Stay </SelectItem>
+                      <SelectItem value="garden">Garden Area </SelectItem>
+                      <SelectItem value="garden">Weekdays(ONLY FarmHouse)</SelectItem>
+                      <SelectItem value="garden">Weekends(ONLY FarmHouse)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+
+               <div className="space-y-6">
+  <div className="flex items-center space-x-4">
+    <label className="flex items-center space-x-2">
+      <input
+        type="radio"
+        name="timeFormat"
+        value="12hr"
+        className="form-radio text-blue-600"
+      />
+      <span>12 Hours</span>
+    </label>
+    
+    <label className="flex items-center space-x-2">
+      <input
+        type="radio"
+        name="timeFormat"
+        value="24hr"
+        className="form-radio text-blue-600"
+      />
+      <span>24 Hours</span>
+    </label>
+  </div>
+</div>
+
+
+
 
                 <div className="space-y-4">
                   <div>
