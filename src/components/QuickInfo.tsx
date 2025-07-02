@@ -1,196 +1,268 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import house from '/public/12.jpeg';
+import React from "react";
+import { Link } from "react-router-dom";
+import house from "/public/12.jpeg";
 const EventsSection = () => {
   const eventCategories = [
     {
       title: "Celebrations & Social Gatherings",
       description: "Birthday parties, anniversaries, reunions and more",
-      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
       items: [
         "Birthday Parties (Kids, Teens, Adults)",
         "Anniversary Celebrations",
         "Retirement Parties",
         "Kitty Parties",
         "Baby Showers",
-        "Bridal Showers"
-      ]
+        "Bridal Showers",
+      ],
     },
     {
       title: "Corporate & Formal Events",
       description: "Professional gatherings with premium amenities",
-      image: "https://ohmyfacts.com/wp-content/uploads/2024/10/30-facts-about-social-gatherings-1730181720.jpg",
+      image:
+        "https://ohmyfacts.com/wp-content/uploads/2024/10/30-facts-about-social-gatherings-1730181720.jpg",
       items: [
         "Corporate Offsites",
         "Team-Building Retreats",
         "Product Launches",
         "Networking Mixers",
-        "Board Meetings with a View"
-      ]
+        "Board Meetings with a View",
+      ],
     },
     {
       title: "Weddings & Related Events",
       description: "Make your special day unforgettable",
-      image: "https://www.wedamor.com/wp-content/uploads/2024/06/indian-wedding-traditions-2.jpeg",
+      image:
+        "https://www.wedamor.com/wp-content/uploads/2024/06/indian-wedding-traditions-2.jpeg",
       items: [
         "Weddings",
         "Engagement Ceremonies",
         "Haldi, Mehndi & Sangeet",
         "Pre-Wedding Photoshoots",
-        "Reception Parties"
-      ]
+        "Reception Parties",
+      ],
     },
     {
       title: "Wellness & Retreats",
       description: "Rejuvenate in our peaceful environment",
-      image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
       items: [
         "Yoga Retreats",
         "Meditation Camps",
         "Detox & Wellness Retreats",
-        "Spiritual Gatherings"
-      ]
+        "Spiritual Gatherings",
+      ],
     },
     {
       title: "Cultural & Community Events",
       description: "Celebrate diversity and traditions",
-      image: "https://thumbs.dreamstime.com/b/house-lightning-eve-diwali-india-193913179.jpg",
+      image:
+        "https://thumbs.dreamstime.com/b/house-lightning-eve-diwali-india-193913179.jpg",
       items: [
         "Festivals (Holi, Diwali, Christmas)",
         "Theme Nights",
         "Community Picnics",
-        "Seasonal Markets or Fairs"
-      ]
+        "Seasonal Markets or Fairs",
+      ],
     },
     {
       title: "Workshops & Learning",
       description: "Creative and educational experiences",
-      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
       items: [
         "Art & Craft Workshops",
         "Cooking/Baking Classes",
         "Gardening Demos",
-        "Photography Workshops"
-      ]
-    }
+        "Photography Workshops",
+      ],
+    },
   ];
 
   return (
     <>
       {/* Pricing Section */}
       <section className="py-16 bg-white">
-  <div className="luxury-container">
-    <div className="text-center mb-12">
-      <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
-        Booking & Pricing
-      </h2>
-      <div className="gold-divider mx-auto"></div>
-      <p className="max-w-3xl mx-auto text-vivenza-black/80">
-        Transparent pricing for your perfect farmhouse experience
-      </p>
-    </div>
+        <div className="luxury-container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
+              Booking & Pricing
+            </h2>
+            <div className="gold-divider mx-auto"></div>
+            <p className="max-w-3xl mx-auto text-vivenza-black/80">
+              Transparent pricing for your perfect farmhouse experience
+            </p>
+          </div>
 
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
-      {/* Left side - Image */}
-      <div className="flex flex-col gap-6">
-        {[ // two left boxes
-          {
-            title: "Full FarmHouse Stay (Including Garden Area)",
-            rates: [["12 Hrs:", "₹50,000"], ["24 Hrs:", "₹75,000"]],
-            note: "Minimum - 10 members and Maximum - 500 members"
-          },
-          {
-            title: "Open Garden Area",
-            rates: [["12 Hrs:", "₹40,000"], ["24 Hrs:", "₹55,000"]],
-            note: "Minimum - 50 members and Maximum - 500 members"
-          }
-        ].map((item, index) => (
-          <div key={index} className="flex h-full">
-            <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-2xl font-semibold mb-6">{item.title}</h3>
-                <div className="space-y-4 mb-6">
-                  {item.rates.map(([label, price], i) => (
-                    <div key={i} className="flex justify-between items-center">
-                      <span className="text-lg">{label}</span>
-                      <span className="text-2xl font-bold text-yellow-300">{price}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Weekdays */}
+            <div className="flex h-full">
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+                <div>
+                  <h3 className="font-display text-2xl font-semibold mb-6">
+                    Weekdays (Mon-Fri)
+                  </h3>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">12 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹20,000
+                      </span>
                     </div>
-                  ))}
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">24 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹25,000
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-sm space-y-1 opacity-90">
+                    <p>Minimum - 10 members and Maximum - 25 members</p>
+                    <p>Extra per guest - ₹1000</p>
+                  </div>
                 </div>
-                <div className="text-sm space-y-1 opacity-90">
-                  <p>{item.note}</p>
+                <div className="text-center pt-4">
+                  <Link
+                    to="/booking"
+                    className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
+                  >
+                    Book Your Stay
+                  </Link>
                 </div>
               </div>
-              <div className="text-center pt-4">
-                <Link to="/booking" className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg">
-                  Book Your Stay
-                </Link>
+            </div>
+
+            {/* Weekends */}
+            <div className="flex h-full">
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+                <div>
+                  <h3 className="font-display text-2xl font-semibold mb-6">
+                    Weekends (Sat-Sun)
+                  </h3>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">12 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹30,000
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">24 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹35,000
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-sm space-y-1 opacity-90">
+                    <p>Minimum - 10 members and Maximum - 25 members</p>
+                    <p>Extra per guest - ₹1000</p>
+                  </div>
+                </div>
+                <div className="text-center pt-4">
+                  <Link
+                    to="/booking"
+                    className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
+                  >
+                    Book Your Stay
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Full FarmHouse Stay */}
+            <div className="flex h-full">
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+                <div>
+                  <h3 className="font-display text-2xl font-semibold mb-6">
+                    Full FarmHouse Stay (Including Garden Area)
+                  </h3>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">12 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹50,000
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">24 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹75,000
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-sm space-y-1 opacity-90">
+                    <p>Minimum - 50 members and Maximum - 500 members</p>
+                  </div>
+                </div>
+                <div className="text-center pt-4">
+                  <Link
+                    to="/booking"
+                    className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
+                  >
+                    Book Your Stay
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Open Garden Area */}
+            <div className="flex h-full">
+              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+                <div>
+                  <h3 className="font-display text-2xl font-semibold mb-6">
+                    Open Garden Area
+                  </h3>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">12 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹40,000
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">24 Hrs:</span>
+                      <span className="text-2xl font-bold text-yellow-300">
+                        ₹55,000
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-sm space-y-1 opacity-90">
+                    <p>Minimum - 50 members and Maximum - 500 members</p>
+                  </div>
+                </div>
+                <div className="text-center pt-4">
+                  <Link
+                    to="/booking"
+                    className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
+                  >
+                    Book Your Stay
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Right side - Pricing Information */}
-      <div className="flex flex-col gap-6">
-        {[ // two right boxes
-          {
-            title: "Weekdays (Mon-Fri)",
-            rates: [["12 Hrs:", "₹20,000"], ["24 Hrs:", "₹25,000"]],
-            notes: ["Minimum - 10 members and Maximum - 25 members", "Extra per guest - ₹1000"]
-          },
-          {
-            title: "Weekends (Sat-Sun)",
-            rates: [["12 Hrs:", "₹30,000"], ["24 Hrs:", "₹35,000"]],
-            notes: ["Minimum - 10 members and Maximum - 25 members", "Extra per guest - ₹1000"]
-          }
-        ].map((item, index) => (
-          <div key={index} className="flex h-full">
-            <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-2xl font-semibold mb-6">{item.title}</h3>
-                <div className="space-y-4 mb-6">
-                  {item.rates.map(([label, price], i) => (
-                    <div key={i} className="flex justify-between items-center">
-                      <span className="text-lg">{label}</span>
-                      <span className="text-2xl font-bold text-yellow-300">{price}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="text-sm space-y-1 opacity-90">
-                  {item.notes.map((note, i) => (
-                    <p key={i}>{note}</p>
-                  ))}
-                </div>
-              </div>
-              <div className="text-center pt-4">
-                <Link to="/booking" className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg">
-                  Book Your Stay
-                </Link>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
+        </div>
+      </section>
 
       {/* Events Section */}
       <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">
         <div className="luxury-container">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl   font-medium">Host Your Perfect Event</h2>
+            <h2 className="font-display text-3xl md:text-4xl   font-medium">
+              Host Your Perfect Event
+            </h2>
             <div className="gold-divider mx-auto"></div>
             <p className="max-w-3xl mx-auto text-vivenza-black/80">
-              Our luxury farmhouse provides the ideal setting for all types of gatherings and celebrations
+              Our luxury farmhouse provides the ideal setting for all types of
+              gatherings and celebrations
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {eventCategories.map((category, index) => (
-              <Link 
+              <Link
                 key={index}
                 to="/booking"
                 className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 h-96 block cursor-pointer"
@@ -201,11 +273,10 @@ const EventsSection = () => {
                   alt={category.title}
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-75"
                 />
-                
+
                 {/* Dark overlay to make text more readable - always present but stronger on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/70">
-                </div>
-                
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/70"></div>
+
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
                   <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
@@ -216,17 +287,19 @@ const EventsSection = () => {
                       {category.description}
                     </p>
                   </div>
-                  
+
                   <div className="max-h-0 overflow-hidden group-hover:max-h-64 transition-all duration-700 ease-in-out">
                     <ul className="text-white text-sm space-y-1.5 bg-black/30 p-3 rounded-lg">
                       {category.items.map((item, i) => (
                         <li key={i} className="flex items-start">
-                          <span className="text-vivenza-gold mr-2 font-bold">•</span>
+                          <span className="text-vivenza-gold mr-2 font-bold">
+                            •
+                          </span>
                           {item}
                         </li>
                       ))}
                     </ul>
-                    
+
                     <button className="mt-4 px-4 py-2 bg-vivenza-gold text-white rounded-md hover:bg-opacity-90 transition-colors font-medium shadow-md">
                       Book Now
                     </button>

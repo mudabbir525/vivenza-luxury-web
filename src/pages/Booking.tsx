@@ -440,7 +440,7 @@ const Booking = () => {
                       <SelectItem value="farmhouse">Full Farmhouse Stay (₹50,000)</SelectItem>
                       <SelectItem value="garden">Garden Area (₹40,000)</SelectItem>
                       <SelectItem value="garden">Weekdays(ONLY FarmHouse) (₹26,000)</SelectItem>
-                      <SelectItem value="garden">Weekends(ONLY FarmHouse) (₹26,000)</SelectItem>
+                      <SelectItem value="garden">Weekends(ONLY FarmHouse) (₹36,000)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
