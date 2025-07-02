@@ -439,8 +439,8 @@ const Booking = () => {
                     <SelectContent>
                       <SelectItem value="farmhouse">Full Farmhouse Stay </SelectItem>
                       <SelectItem value="garden">Garden Area </SelectItem>
-                      <SelectItem value="garden">Weekdays(ONLY FarmHouse)</SelectItem>
-                      <SelectItem value="garden">Weekends(ONLY FarmHouse)</SelectItem>
+                      <SelectItem value="weekdays">Weekdays(ONLY FarmHouse)</SelectItem>
+                      <SelectItem value="weekends">Weekends(ONLY FarmHouse)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
