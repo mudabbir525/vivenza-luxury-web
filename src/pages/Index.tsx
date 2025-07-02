@@ -17,7 +17,7 @@ const Index: React.FC = () => {
       <Hero />
       <QuickInfo />
       <Accommodations />
-      <PricingPreview />
+      {/* <PricingPreview /> */}
       <GalleryPreview />
       <Testimonials />
       <ContactPreview />

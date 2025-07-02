@@ -79,88 +79,103 @@ const EventsSection = () => {
     <>
       {/* Pricing Section */}
       <section className="py-16 bg-white">
-        <div className="luxury-container">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
-              Booking & Pricing
-            </h2>
-            <div className="gold-divider mx-auto"></div>
-            <p className="max-w-3xl mx-auto text-vivenza-black/80">
-              Transparent pricing for your perfect farmhouse experience
-            </p>
-          </div>
+  <div className="luxury-container">
+    <div className="text-center mb-12">
+      <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
+        Booking & Pricing
+      </h2>
+      <div className="gold-divider mx-auto"></div>
+      <p className="max-w-3xl mx-auto text-vivenza-black/80">
+        Transparent pricing for your perfect farmhouse experience
+      </p>
+    </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Image */}
-            <div className="relative overflow-hidden rounded-xl shadow-lg">
-              <img
-                src={house}
-                alt="Luxury Farmhouse"
-                className="w-auto h-[600px] object-cover"
-              />
-            </div>
-
-            {/* Right side - Pricing Information */}
-            <div className="space-y-2">
-              {/* Weekdays Section */}
-              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white">
-                <h3 className="font-display text-2xl font-semibold mb-6">
-                  Weekdays (Mon-Fri)
-                </h3>
-                
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+      {/* Left side - Image */}
+      <div className="flex flex-col gap-6">
+        {[ // two left boxes
+          {
+            title: "Full FarmHouse Stay (Including Garden Area)",
+            rates: [["12 Hrs:", "₹50,000"], ["24 Hrs:", "₹75,000"]],
+            note: "Minimum - 10 members and Maximum - 500 members"
+          },
+          {
+            title: "Open Garden Area",
+            rates: [["12 Hrs:", "₹40,000"], ["24 Hrs:", "₹55,000"]],
+            note: "Minimum - 50 members and Maximum - 500 members"
+          }
+        ].map((item, index) => (
+          <div key={index} className="flex h-full">
+            <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+              <div>
+                <h3 className="font-display text-2xl font-semibold mb-6">{item.title}</h3>
                 <div className="space-y-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg">12 Hrs:</span>
-                    <span className="text-2xl font-bold text-yellow-300">₹20,000</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg">24 Hrs:</span>
-                    <span className="text-2xl font-bold text-yellow-300">₹25,000</span>
-                  </div>
+                  {item.rates.map(([label, price], i) => (
+                    <div key={i} className="flex justify-between items-center">
+                      <span className="text-lg">{label}</span>
+                      <span className="text-2xl font-bold text-yellow-300">{price}</span>
+                    </div>
+                  ))}
                 </div>
-                
                 <div className="text-sm space-y-1 opacity-90">
-                  <p>Minimum - 10 members and Maximum - 25 members</p>
-                  <p>Extra per guest - ₹1000</p>
+                  <p>{item.note}</p>
                 </div>
               </div>
-
-              {/* Weekends Section */}
-              <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white">
-                <h3 className="font-display text-2xl font-semibold mb-6">
-                  Weekends (Sat-Sun)
-                </h3>
-                
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg">12 Hrs:</span>
-                    <span className="text-2xl font-bold text-yellow-300">₹30,000</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg">24 Hrs:</span>
-                    <span className="text-2xl font-bold text-yellow-300">₹35,000</span>
-                  </div>
-                </div>
-                
-                <div className="text-sm space-y-1 opacity-90">
-                  <p>Minimum - 10 members and Maximum - 25 members</p>
-                  <p>Extra per guest - ₹1000</p>
-                </div>
-              </div>
-
-              {/* Call to Action */}
-              {/* <div className="text-center pt-4">
-                <Link 
-                  to="/booking"
-                  className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg"
-                >
+              <div className="text-center pt-4">
+                <Link to="/booking" className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg">
                   Book Your Stay
                 </Link>
-              </div> */}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      {/* Right side - Pricing Information */}
+      <div className="flex flex-col gap-6">
+        {[ // two right boxes
+          {
+            title: "Weekdays (Mon-Fri)",
+            rates: [["12 Hrs:", "₹20,000"], ["24 Hrs:", "₹25,000"]],
+            notes: ["Minimum - 10 members and Maximum - 25 members", "Extra per guest - ₹1000"]
+          },
+          {
+            title: "Weekends (Sat-Sun)",
+            rates: [["12 Hrs:", "₹30,000"], ["24 Hrs:", "₹35,000"]],
+            notes: ["Minimum - 10 members and Maximum - 25 members", "Extra per guest - ₹1000"]
+          }
+        ].map((item, index) => (
+          <div key={index} className="flex h-full">
+            <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+              <div>
+                <h3 className="font-display text-2xl font-semibold mb-6">{item.title}</h3>
+                <div className="space-y-4 mb-6">
+                  {item.rates.map(([label, price], i) => (
+                    <div key={i} className="flex justify-between items-center">
+                      <span className="text-lg">{label}</span>
+                      <span className="text-2xl font-bold text-yellow-300">{price}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-sm space-y-1 opacity-90">
+                  {item.notes.map((note, i) => (
+                    <p key={i}>{note}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="text-center pt-4">
+                <Link to="/booking" className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg">
+                  Book Your Stay
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Events Section */}
       <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">

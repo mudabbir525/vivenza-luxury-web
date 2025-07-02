@@ -7,7 +7,7 @@ const Accommodations: React.FC = () => {
       image: " /5.jpeg",
       title: "Farmhouse Stay",
       description: "Private, luxurious villa-style accommodation with 8 air-conditioned bedrooms and 4 spacious halls.",
-      features: ["8 AC Bedrooms", "4 Bathrooms", "4 Spacious Halls", "Multiple Lounges"]
+      features: ["4 AC Bedrooms", "4 Bathrooms", "4 Spacious Halls", "Multiple Lounges"]
     },
     {
       image:  "/3.jpeg",
