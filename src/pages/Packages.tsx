@@ -66,7 +66,7 @@ const Packages = () => {
 
   const addOns = [
     { name: "DJ Services", price: "₹10,000" },
-    { name: "Drinking Permission", price: "₹15,000" },
+   
     { name: "Bonfire", price: "₹2,500" },
     {
       name: "Food Services (Vegetarian)",
