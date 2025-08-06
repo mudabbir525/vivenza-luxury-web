@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, MapPin, Phone, Facebook, Twitter, Instagram, User, UserPlus } from 'lucide-react';
-
+import { Menu, X, MapPin, Phone, Facebook, Twitter, Instagram, User, UserPlus, LogOut } from 'lucide-react';
+// import { useAuth } from '@/pages/Authsystem';
+import { useAuth } from '@/pages/auth-context';
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,17 +14,11 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
@@ -42,6 +38,11 @@ const Navbar: React.FC = () => {
     { icon: Instagram, href: '#', label: 'Instagram' },
   ];
 
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
         ? 'shadow-lg'
@@ -51,9 +52,8 @@ const Navbar: React.FC = () => {
           ? 'linear-gradient(to right, rgb(118, 37, 79), rgb(118, 37, 79))'
           : 'linear-gradient(to right, rgba(118, 37, 79), rgba(118, 37, 79))'
       }}>
-
       {/* Top Bar */}
-      <div className="border-b  border-white/10">
+      <div className="border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3">
             {/* Left Side - Location & Phone */}
@@ -96,23 +96,42 @@ const Navbar: React.FC = () => {
               {/* Divider */}
               <div className="h-4 w-px bg-white/30"></div>
 
-              {/* Auth Links */}
-              <div className="flex items-center space-x-4 text-white text-sm">
-                <Link
-                  to="/login"
-                  className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
-                >
-                  <User className="h-4 w-4" />
-                  <span>LOGIN</span>
-                </Link>
-                <Link
-                  to="/register"
-                  className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
-                >
-                  <UserPlus className="h-4 w-4" />
-                  <span>REGISTER</span>
-                </Link>
-              </div>
+              {/* Auth Links - Conditional rendering */}
+              {user ? (
+                <div className="flex items-center space-x-4 text-white text-sm">
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>PROFILE</span>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>LOGOUT</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-4 text-white text-sm">
+                  <Link
+                    to="/login"
+                    className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>LOGIN</span>
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="flex items-center space-x-1 hover:text-yellow-400 transition-colors duration-300"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    <span>REGISTER</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -197,24 +216,44 @@ const Navbar: React.FC = () => {
 
             {/* Mobile Auth Links */}
             <div className="border-t border-white/10 pt-4 mt-4">
-              <div className="flex space-x-4 mb-4">
-                <Link
-                  to="/login"
-                  className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <User className="h-4 w-4" />
-                  <span>LOGIN</span>
-                </Link>
-                <Link
-                  to="/register"
-                  className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <UserPlus className="h-4 w-4" />
-                  <span>REGISTER</span>
-                </Link>
-              </div>
+              {user ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300 mb-4"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4" />
+                    <span>PROFILE</span>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300 mb-4"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>LOGOUT</span>
+                  </button>
+                </>
+              ) : (
+                <div className="flex space-x-4 mb-4">
+                  <Link
+                    to="/login"
+                    className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4" />
+                    <span>LOGIN</span>
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    <span>REGISTER</span>
+                  </Link>
+                </div>
+              )}
 
               {/* Mobile Social Icons */}
               <div className="flex items-center space-x-4 mb-4">
