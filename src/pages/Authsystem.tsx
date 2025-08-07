@@ -599,13 +599,3 @@ const handleOTPSubmit = async (e: React.MouseEvent<HTMLButtonElement>): Promise<
   );
 };
 
-// Wrapper component with AuthProvider
-const App: React.FC = () => {
-  return (
-    <AuthProvider>
-      <ModernAuthSystem />
-    </AuthProvider>
-  );
-};
-
-export default App;
