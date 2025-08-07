@@ -599,3 +599,12 @@ const handleOTPSubmit = async (e: React.MouseEvent<HTMLButtonElement>): Promise<
   );
 };
 
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <ModernAuthSystem />
+    </AuthProvider>
+  );
+};
+
+export default App;
