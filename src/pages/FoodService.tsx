@@ -527,7 +527,8 @@ const FoodService: React.FC<FoodServiceProps> = ({
         const data = await response.json();
         
         if (data.status === 'success') {
-          setFoodCategories(data.data);
+          const activeCategories = data.data.filter((cat: any) => cat.is_active === 1);
+          setFoodCategories(activeCategories);
         }
       } catch (error) {
         console.error('Error fetching food categories:', error);
@@ -547,7 +548,8 @@ const FoodService: React.FC<FoodServiceProps> = ({
         const data = await response.json();
         
         if (data.status === 'success') {
-          setCuisineTypes(data.data);
+          const activeCuisines = data.data.filter((cuisine: any) => cuisine.is_active === 1);
+          setCuisineTypes(activeCuisines);
         }
       } catch (error) {
         console.error('Error fetching cuisine types:', error);

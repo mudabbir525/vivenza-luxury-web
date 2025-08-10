@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, MapPin, Phone, Facebook, Twitter, Instagram, User, UserPlus, LogOut } from 'lucide-react';
 // import { useAuth } from '@/pages/Authsystem';
 import { useAuth } from '@/pages/auth-context';
+import UserDropdown from '../components/UserDropdown';
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,7 +98,7 @@ const Navbar: React.FC = () => {
               <div className="h-4 w-px bg-white/30"></div>
 
               {/* Auth Links - Conditional rendering */}
-              {user ? (
+              {/* {user ? (
                 <div className="flex items-center space-x-4 text-white text-sm">
                   <Link
                     to="/profile"
@@ -131,7 +132,8 @@ const Navbar: React.FC = () => {
                     <span>REGISTER</span>
                   </Link>
                 </div>
-              )}
+              )} */}
+              <UserDropdown />
             </div>
 
             {/* Mobile menu button */}

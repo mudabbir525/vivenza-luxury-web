@@ -1145,7 +1145,9 @@ const [checkOutPopoverOpen, setCheckOutPopoverOpen] = useState(false);
           </div>
         )}
 
-        {additionalServicesData.map(service => 
+        {additionalServicesData
+        .filter(service => service.is_active === 1 && additionalServices[service.id])
+        .map(service => 
           additionalServices[service.id] && (
             <div key={service.id} className="flex justify-between">
               <span>{service.name}:</span>
@@ -1359,7 +1361,9 @@ const [checkOutPopoverOpen, setCheckOutPopoverOpen] = useState(false);
               <div className="bg-white p-8 rounded-lg shadow-lg">
                 <h3 className="font-serif text-2xl mb-6">Additional Services</h3>
                 <div className="space-y-4">
-                  {additionalServicesData.map(service => (
+                  {additionalServicesData
+                  .filter(service => service.is_active === 1)
+                  .map(service => (
                     <div key={service.id} className="flex items-center space-x-2">
                       <Checkbox
                         id={`service-${service.id}`}

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import Index from "./Index";
 import NotFound from "./NotFound";
@@ -14,10 +15,10 @@ import Terms from "./Terms";
 import Return from "./Return";
 import Refund from "./Refund";
 import Shipping from "./Shipping";
-import AuthSystem from "./Authsystem";
+import AuthSystem from "./Authsystem"; // Fixed: Capital 'S'
 import ProfilePage from "./ProfilePage";
 
-const AppRoutes = () => (
+const AppRoutes: React.FC = () => (
   <Routes>
     <Route path="/" element={<Index />} />
     <Route path="/about" element={<About />} />
@@ -33,8 +34,17 @@ const AppRoutes = () => (
     <Route path="/shipping-policy" element={<Shipping />} />
     <Route path="/refund-cancellation" element={<Refund />} />
     <Route path="/return-policy" element={<Return />} />
-    <Route path="/login" element={<AuthSystem />} />
-    <Route path="/profile" element={<ProfilePage />} />
+    
+    {/* Login route - AuthSystem handles showing login or profile */}
+    <Route path="/login" element={<AuthSystem><Index /></AuthSystem>} />
+    
+    {/* Profile route - protected by AuthSystem */}
+    <Route path="/profile" element={
+      <AuthSystem>
+        <ProfilePage />
+      </AuthSystem>
+    } />
+    
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
