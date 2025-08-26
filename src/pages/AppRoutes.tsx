@@ -15,8 +15,10 @@ import Terms from "./Terms";
 import Return from "./Return";
 import Refund from "./Refund";
 import Shipping from "./Shipping";
-import AuthSystem from "./Authsystem"; // Fixed: Capital 'S'
+import AuthSystem from "./AuthSystem"; // Fixed: Capital 'S'
 import ProfilePage from "./ProfilePage";
+import MyBookings from "./MyBookings";
+import BookingSuccess from "../components/BookingSuccess";
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -34,6 +36,7 @@ const AppRoutes: React.FC = () => (
     <Route path="/shipping-policy" element={<Shipping />} />
     <Route path="/refund-cancellation" element={<Refund />} />
     <Route path="/return-policy" element={<Return />} />
+    <Route path="/booking-success" element={<BookingSuccess />} />
     
     {/* Login route - AuthSystem handles showing login or profile */}
     <Route path="/login" element={<AuthSystem><Index /></AuthSystem>} />
@@ -42,6 +45,11 @@ const AppRoutes: React.FC = () => (
     <Route path="/profile" element={
       <AuthSystem>
         <ProfilePage />
+      </AuthSystem>
+    } />
+    <Route path="/my-bookings" element={
+      <AuthSystem>
+        <MyBookings />
       </AuthSystem>
     } />
     

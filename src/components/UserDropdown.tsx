@@ -62,7 +62,7 @@ const UserDropdown: React.FC = () => {
             </Link>
             
             <Link
-              to="/profile"
+              to="/my-bookings"
               onClick={() => {
                 setIsOpen(false);
                 // You can add logic to switch to bookings tab
