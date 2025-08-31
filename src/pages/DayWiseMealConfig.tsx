@@ -168,7 +168,7 @@ const DayWiseMealConfig: React.FC<DayWiseMealConfigProps> = ({
                 packagesByCategory={packagesByCategory}
                 itemsByPackage={itemsByPackage}
                 cuisineTypes={cuisineTypes}
-                foodCategoriesForDate={foodCategoriesForDate}
+                dateRange={dateRange}
               />
             </div>
           </div>

@@ -2,7 +2,7 @@
 // import Navbar from "../components/Navbar";
 // import Footer from "../components/Footer";
 // import { format, addDays, isSameDay, isBefore, isAfter } from "date-fns";
-// import { Calendar } from "@/components/ui/calendar";
+// // import { Calendar } from "@/components/ui/calendar";
 // import { Input } from "@/components/ui/input";
 // import { CalendarIcon, InfoIcon } from "lucide-react";
 // import {
@@ -14,15 +14,16 @@
 // } from "@/components/ui/select";
 // import { Checkbox } from "@/components/ui/checkbox";
 // import { Button } from "@/components/ui/button";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
+// // import {
+// //   Popover,
+// //   PopoverContent,
+// //   PopoverTrigger,
+// // } from "@/components/ui/popover";
 // import FoodService from "./FoodService";
 // import OrderSummary from "../components/OrderSummary";
 // import { useAuth } from "./auth-context";
 // import { useNavigate } from "react-router-dom";
+// import DatePicker from '../components/DatePicker';
 
 // interface BookingPackage {
 //   id: number;
@@ -208,34 +209,6 @@
 //     loadRazorpayScript();
 //   }, []);
 
-//   // Real-time date validation (blocks today check-in after 12 PM)
-//   const isCheckInDateDisabled = (date: Date) => {
-//     const now = new Date();
-//     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-//     const selectedDate = new Date(
-//       date.getFullYear(),
-//       date.getMonth(),
-//       date.getDate()
-//     );
-
-//     // Block past dates
-//     if (selectedDate < today) return true;
-
-//     // If it's today and current time is >= 12 PM, block today
-//     if (isSameDay(selectedDate, today) && now.getHours() >= 12) {
-//       return true;
-//     }
-
-//     return false;
-//   };
-
-//   // Check-out date validation
-//   const isCheckOutDateDisabled = (date: Date) => {
-//     if (!checkIn) return true;
-//     const checkInDate = new Date(checkIn);
-//     checkInDate.setHours(0, 0, 0, 0);
-//     return isBefore(date, checkInDate) || isSameDay(date, checkInDate);
-//   };
 
 //   // Handle package selection
 //   const handlePackageChange = (packageId: string) => {
@@ -287,24 +260,6 @@
 //     }));
 //   };
 
-//   // Handle check-in date change
-//   const handleCheckInChange = (date: Date | undefined) => {
-//     setCheckIn(date);
-//     setCheckInPopoverOpen(false);
-//     if (durationType === "12_hours") {
-//       setCheckOut(undefined);
-//     } else if (checkOut && date && isAfter(date, checkOut)) {
-//       setCheckOut(undefined);
-//     }
-//   };
-
-//   // Handle check-out date change
-//   const handleCheckOutChange = (date: Date | undefined) => {
-//     if (durationType === "24_hours") {
-//       setCheckOut(date);
-//       setCheckOutPopoverOpen(false);
-//     }
-//   };
 
 //   // Get base price based on duration and package
 //   const getBasePrice = () => {
@@ -491,7 +446,7 @@
 //   // Create booking record before payment
 //   const createBookingRecord = async () => {
 //     if (!selectedPackage || !checkIn || (durationType === "24_hours" && !checkOut)) {
-//       throw new Error("Invalid booking parameters");
+//       throw new Error("Select Package or Date Correctly");
 //     }
 
 //     if (!isAuthenticated || !user) {
@@ -801,78 +756,26 @@
 //                   </div>
 //                 </div>
 
-//                 {/* Date Selection */}
-//                 <div className="space-y-4">
-//                   <div>
-//                     <label className="block text-sm font-medium mb-2">
-//                       Check-in Date
-//                     </label>
-//                     <Popover
-//                       open={checkInPopoverOpen}
-//                       onOpenChange={setCheckInPopoverOpen}
-//                     >
-//                       <PopoverTrigger asChild>
-//                         <Button
-//                           variant="outline"
-//                           className="w-full justify-start text-left font-normal"
-//                         >
-//                           <CalendarIcon className="mr-2 h-4 w-4" />
-//                           {checkIn ? (
-//                             format(checkIn, "PPP")
-//                           ) : (
-//                             <span>Pick a date</span>
-//                           )}
-//                         </Button>
-//                       </PopoverTrigger>
-//                       <PopoverContent className="w-auto p-0" align="start">
-//                         <Calendar
-//                           mode="single"
-//                           selected={checkIn}
-//                           onSelect={handleCheckInChange}
-//                           disabled={isCheckInDateDisabled}
-//                           initialFocus
-//                           className="rounded-md border"
-//                         />
-//                       </PopoverContent>
-//                     </Popover>
-//                   </div>
+//                {/* Date Selection */}
+// <div className="space-y-4">
+//   <div>
+//     <label className="block text-sm font-medium mb-2">
+//       Select Your Dates
+//     </label>
+//     <DatePicker
+//       selectedStartDate={checkIn}
+//       selectedEndDate={checkOut}
+//       onDateSelect={(start, end) => {
+//         setCheckIn(start);
+//         setCheckOut(end);
+//       }}
+//       durationType={durationType}
+//       className="w-full"
+//     />
+//   </div>
+// </div>
 
-//                   {durationType === "24_hours" && (
-//                     <div>
-//                       <label className="block text-sm font-medium mb-2">
-//                         Check-out Date
-//                       </label>
-//                       <Popover
-//                         open={checkOutPopoverOpen}
-//                         onOpenChange={setCheckOutPopoverOpen}
-//                       >
-//                         <PopoverTrigger asChild>
-//                           <Button
-//                             variant="outline"
-//                             className="w-full justify-start text-left font-normal"
-//                           >
-//                             <CalendarIcon className="mr-2 h-4 w-4" />
-//                             {checkOut ? (
-//                               format(checkOut, "PPP")
-//                             ) : (
-//                               <span>Pick a date</span>
-//                             )}
-//                           </Button>
-//                         </PopoverTrigger>
-//                         <PopoverContent className="w-auto p-0" align="start">
-//                           <Calendar
-//                             mode="single"
-//                             selected={checkOut}
-//                             onSelect={handleCheckOutChange}
-//                             disabled={isCheckOutDateDisabled}
-//                             initialFocus
-//                             className="rounded-md border"
-//                           />
-//                         </PopoverContent>
-//                       </Popover>
-//                     </div>
-//                   )}
-//                 </div>
+
 
 //                 {/* Guest Count */}
 //                 <div>
@@ -1072,7 +975,7 @@
 //       {bookingError && (
 //         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
 //           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-//             <h3 className="text-xl font-semibold text-red-600 mb-4">Booking Error</h3>
+//             <h3 className="text-xl font-semibold text-red-600 mb-4">Message</h3>
 //             <p className="mb-4">{bookingError}</p>
 //             <div className="flex justify-end space-x-3">
 //               <Button 
@@ -1101,12 +1004,10 @@
 
 
 
-
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { format, addDays, isSameDay, isBefore, isAfter } from "date-fns";
-// import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import {
@@ -1118,11 +1019,6 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
 import FoodService from "./FoodService";
 import OrderSummary from "../components/OrderSummary";
 import { useAuth } from "./auth-context";
@@ -1132,9 +1028,8 @@ import DatePicker from '../components/DatePicker';
 interface BookingPackage {
   id: number;
   name: string;
-  day: string;
-  halfday_price: number;
-  fullday_price: number;
+  weekday_price: number;
+  weekend_price: number;
   min_guests: number;
   max_guests: number;
   extra_per_guest: number;
@@ -1161,7 +1056,6 @@ const Booking = () => {
   const [selectedPackage, setSelectedPackage] = useState<BookingPackage | null>(null);
 
   // Booking state
-  const [durationType, setDurationType] = useState<"12_hours" | "24_hours">("12_hours");
   const [checkIn, setCheckIn] = useState<Date | undefined>();
   const [checkOut, setCheckOut] = useState<Date | undefined>();
   const [checkInPopoverOpen, setCheckInPopoverOpen] = useState(false);
@@ -1193,15 +1087,13 @@ const Booking = () => {
     dinner: [] as Date[],
   });
   const [dayMealConfigs, setDayMealConfigs] = useState<Record<string, Record<string, any>>>({});
-  // Add these state variables after your other state declarations
-const [foodData, setFoodData] = useState<{
-  foodCategories: any[];
-  packagesByCategory: Record<number, any[]>;
-}>({
-  foodCategories: [],
-  packagesByCategory: {}
-});
-
+  const [foodData, setFoodData] = useState<{
+    foodCategories: any[];
+    packagesByCategory: Record<number, any[]>;
+  }>({
+    foodCategories: [],
+    packagesByCategory: {}
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [bookingError, setBookingError] = useState("");
@@ -1273,9 +1165,7 @@ const [foodData, setFoodData] = useState<{
       return;
     }
 
-    if (durationType === "12_hours") {
-      setDateRange([checkIn]);
-    } else if (checkIn && checkOut) {
+    if (checkIn && checkOut) {
       const dates = [];
       let currentDate = new Date(checkIn);
       while (currentDate <= checkOut) {
@@ -1286,7 +1176,7 @@ const [foodData, setFoodData] = useState<{
     } else if (checkIn) {
       setDateRange([checkIn]);
     }
-  }, [checkIn, checkOut, durationType]);
+  }, [checkIn, checkOut]);
 
   // Guest validation
   useEffect(() => {
@@ -1313,7 +1203,6 @@ const [foodData, setFoodData] = useState<{
     loadRazorpayScript();
   }, []);
 
-
   // Handle package selection
   const handlePackageChange = (packageId: string) => {
     const pkg = packages.find((p) => p.id === parseInt(packageId));
@@ -1326,17 +1215,6 @@ const [foodData, setFoodData] = useState<{
       setCheckOut(undefined);
       setDateRange([]);
     }
-  };
-
-  // Handle duration type change
-  const handleDurationTypeChange = (duration: string) => {
-    setDurationType(duration as "12_hours" | "24_hours");
-    // Reset checkout for 12 hours
-    if (duration === "12_hours") {
-      setCheckOut(undefined);
-    }
-    // Reset date range
-    setDateRange([]);
   };
 
   // Handle guest count change with validation
@@ -1364,19 +1242,66 @@ const [foodData, setFoodData] = useState<{
     }));
   };
 
-
-  // Get base price based on duration and package
+  // Get base price based on check-in date (weekday vs weekend)
   const getBasePrice = () => {
-    if (!selectedPackage) return 0;
-    const price =
-      durationType === "12_hours"
-        ? selectedPackage.halfday_price
-        : selectedPackage.fullday_price;
-    return typeof price === "string"
-      ? parseFloat(price.replace(/,/g, ""))
-      : Number(price);
+  if (!selectedPackage || !checkIn || !checkOut) return 0;
+  
+  let totalPrice = 0;
+  let currentDate = new Date(checkIn);
+  const endDate = new Date(checkOut);
+  endDate.setDate(endDate.getDate() - 1);
+  while (currentDate <= endDate) {
+    const dayOfWeek = currentDate.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+    
+    const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
+    totalPrice += typeof dailyPrice === "string" 
+      ? parseFloat(dailyPrice.replace(/,/g, "")) 
+      : Number(dailyPrice);
+    
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return totalPrice;
+};
+// Fix the getPriceBreakdown function
+const getPriceBreakdown = () => {
+  if (!selectedPackage || !checkIn || !checkOut) return { 
+    weekdays: 0, 
+    weekends: 0, 
+    days: 0, 
+    weekdayPrice: 0, 
+    weekendPrice: 0 
   };
-
+  
+  let weekdays = 0;
+  let weekends = 0;
+  let currentDate = new Date(checkIn);
+  // Calculate only from check-in to check-out minus 1 day
+  const endDate = new Date(checkOut);
+  endDate.setDate(endDate.getDate() - 1);
+  while (currentDate <= endDate) {
+    const dayOfWeek = currentDate.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      weekends++;
+    } else {
+      weekdays++;
+    }
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return {
+    weekdays,
+    weekends,
+    days: weekdays + weekends,
+    weekdayPrice: typeof selectedPackage.weekday_price === "string" 
+      ? parseFloat(selectedPackage.weekday_price.replace(/,/g, "")) 
+      : Number(selectedPackage.weekday_price),
+    weekendPrice: typeof selectedPackage.weekend_price === "string" 
+      ? parseFloat(selectedPackage.weekend_price.replace(/,/g, "")) 
+      : Number(selectedPackage.weekend_price)
+  };
+};
   // Calculate extra guest charge
   const getExtraGuestCharge = () => {
     if (!selectedPackage || guestCount <= selectedPackage.max_guests) return 0;
@@ -1471,7 +1396,7 @@ const [foodData, setFoodData] = useState<{
 
   // Handle food service toggle
   const handleFoodServiceChange = (checked: boolean) => {
-    if (checked && (!checkIn || (durationType === "24_hours" && !checkOut))) {
+    if (checked && (!checkIn || !checkOut)) {
       alert("Please select check-in and check-out dates first");
       return;
     }
@@ -1522,34 +1447,25 @@ const [foodData, setFoodData] = useState<{
     setFoodData(foodData);
   };
 
-  // Function to get available food categories for a date based on duration and timing rules
+  // Function to get available food categories for a date based on 24-hour timing rules
   const getAvailableFoodCategoriesForDate = (date: Date) => {
-    if (!checkIn) return [];
+    if (!checkIn || !checkOut) return [];
 
-    if (durationType === "12_hours") {
-      // For 12 hours: only lunch, snacks, dinner (no breakfast)
+    if (isSameDay(date, checkIn)) {
+      // First day - exclude breakfast (check-in at 12 PM)
       return ["lunch", "snacks", "dinner"];
     }
-
-    if (durationType === "24_hours") {
-      if (isSameDay(date, checkIn)) {
-        // First day - exclude breakfast (check-in at 12 PM)
-        return ["lunch", "snacks", "dinner"];
-      }
-      if (checkOut && isSameDay(date, checkOut)) {
-        // Last day - only breakfast (check-out at 11:59 AM)
-        return ["breakfast"];
-      }
-      // Middle days - all meals available
-      return ["breakfast", "lunch", "snacks", "dinner"];
+    if (isSameDay(date, checkOut)) {
+      // Last day - only breakfast (check-out at 11:59 AM)
+      return ["breakfast"];
     }
-
-    return [];
+    // Middle days - all meals available
+    return ["breakfast", "lunch", "snacks", "dinner"];
   };
 
   // Create booking record before payment
   const createBookingRecord = async () => {
-    if (!selectedPackage || !checkIn || (durationType === "24_hours" && !checkOut)) {
+    if (!selectedPackage || !checkIn || !checkOut) {
       throw new Error("Select Package or Date Correctly");
     }
 
@@ -1593,13 +1509,12 @@ const [foodData, setFoodData] = useState<{
       customer_email: customerDetails.email,
       customer_phone: customerDetails.phone,
       package_id: selectedPackage.id,
-      duration_type: durationType,
+      duration_type: "24_hours",
       check_in_date: format(checkIn, 'yyyy-MM-dd'),
-      check_out_date: durationType === "24_hours" && checkOut 
-        ? format(checkOut, 'yyyy-MM-dd') 
-        : format(checkIn, 'yyyy-MM-dd'),
+      check_out_date: format(checkOut, 'yyyy-MM-dd'),
       guest_count: guestCount,
       base_price: getBasePrice(),
+      pricing_breakdown: getPriceBreakdown(),
       additional_services_cost: getAdditionalServicesCost(),
       food_cost: foodCost,
       total_cost: getFinalAmount(),
@@ -1654,7 +1569,7 @@ const [foodData, setFoodData] = useState<{
 
     // 🔥 Step 2: Open Razorpay checkout with real order_id
     const options = {
-      key: "rzp_test_R6qauIjIkLmjM1",
+      key: "rzp_live_R6qpNwT08jtUaq",
       amount: amount, // already in paise from backend
       currency: currency,
       name: "Vivenza Farmhouse Booking",
@@ -1738,14 +1653,13 @@ const [foodData, setFoodData] = useState<{
   }
 };
 
-
   const handlePay = async () => {
     if (!isAuthenticated) {
       setBookingError("Please login or register to book");
       return;
     }
 
-    if (!checkIn || (durationType === "24_hours" && !checkOut)) {
+    if (!checkIn || !checkOut) {
       alert("Please select check-in and check-out dates");
       return;
     }
@@ -1820,66 +1734,30 @@ const [foodData, setFoodData] = useState<{
                     <SelectContent>
                       {packages.map((pkg) => (
                         <SelectItem key={pkg.id} value={pkg.id.toString()}>
-                          {pkg.name} ({pkg.day}) - ₹
-                          {(durationType === "12_hours"
-                            ? pkg.halfday_price
-                            : pkg.fullday_price
-                          ).toLocaleString()}
+                          {pkg.name} - Weekday: ₹{pkg.weekday_price.toLocaleString()}, Weekend: ₹{pkg.weekend_price.toLocaleString()}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Duration Selection */}
-                <div className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="timeFormat"
-                        value="12_hours"
-                        checked={durationType === "12_hours"}
-                        onChange={() => handleDurationTypeChange("12_hours")}
-                        className="form-radio text-blue-600"
-                      />
-                      <span>12 Hours</span>
+                {/* Date Selection */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Select Your Dates
                     </label>
-
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="timeFormat"
-                        value="24_hours"
-                        checked={durationType === "24_hours"}
-                        onChange={() => handleDurationTypeChange("24_hours")}
-                        className="form-radio text-blue-600"
-                      />
-                      <span>24 Hours</span>
-                    </label>
+                    <DatePicker
+                      selectedStartDate={checkIn}
+                      selectedEndDate={checkOut}
+                      onDateSelect={(start, end) => {
+                        setCheckIn(start);
+                        setCheckOut(end);
+                      }}
+                      className="w-full"
+                    />
                   </div>
                 </div>
-
-               {/* Date Selection */}
-<div className="space-y-4">
-  <div>
-    <label className="block text-sm font-medium mb-2">
-      Select Your Dates
-    </label>
-    <DatePicker
-      selectedStartDate={checkIn}
-      selectedEndDate={checkOut}
-      onDateSelect={(start, end) => {
-        setCheckIn(start);
-        setCheckOut(end);
-      }}
-      durationType={durationType}
-      className="w-full"
-    />
-  </div>
-</div>
-
-
 
                 {/* Guest Count */}
                 <div>
@@ -2003,8 +1881,8 @@ const [foodData, setFoodData] = useState<{
                   guestError={guestError}
                   checkIn={checkIn}
                   checkOut={checkOut}
-                  durationType={durationType}
                   isAuthenticated={isAuthenticated}
+                   getPriceBreakdown={getPriceBreakdown}
                 />
               )}
             </div>
@@ -2019,7 +1897,7 @@ const [foodData, setFoodData] = useState<{
                   <FoodService
                     guestCount={guestCount}
                     dateRange={dateRange}
-                    foodCategoriesForDate={getAvailableFoodCategoriesForDate}
+                    // foodCategoriesForDate={getAvailableFoodCategoriesForDate}
                     onFoodCostUpdate={handleFoodCostUpdate}
                   />
                 </div>
@@ -2052,8 +1930,8 @@ const [foodData, setFoodData] = useState<{
                       guestError={guestError}
                       checkIn={checkIn}
                       checkOut={checkOut}
-                      durationType={durationType}
                       isAuthenticated={isAuthenticated}
+                      getPriceBreakdown={getPriceBreakdown}
                     />
                   </div>
                 </div>

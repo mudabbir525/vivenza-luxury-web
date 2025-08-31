@@ -48,7 +48,7 @@
 //   const currentContent = heroContent[currentImageIndex];
 
 //   return (
-//     <div className="relative h-[80vh]"> {/* Reduced height from h-screen to h-[80vh] */}
+//     <div className="relative h-[93vh]"> {/* Reduced height from h-screen to h-[80vh] */}
 //       <div className="absolute mt-10 inset-0 overflow-hidden">
 //         {/* Hero background image carousel */}
 //         {heroContent.map((content, index) => (
@@ -61,61 +61,65 @@
 //             }`}
 //           />
 //         ))}
-//         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+//         {/* Removed the overlay div completely */}
 //       </div>
       
+//       {/* Text container with background opacity */}
 //       <div className="relative flex flex-col items-center justify-center h-full text-center text-white px-4">
-//         <h1 
-//           key={`title-${currentImageIndex}`}
-//           className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight animate-fade-up"
-//         >
-//           {currentContent.title.split(' ').map((word, index) => 
-//             word === 'Vivenza' ? (
-//               <span key={index} style={{ color: 'rgb(255, 215, 0)' }}>{word}</span>
-//             ) : (
-//               <span key={index}>{word} </span>
-//             )
-//           )}
-//         </h1>
-//         <p 
-//           key={`subtitle-${currentImageIndex}`}
-//           className="mt-6 max-w-2xl text-lg md:text-xl animate-fade-up"
-//           style={{ animationDelay: '0.2s' }}
-//         >
-//           {currentContent.subtitle}
-//         </p>
-//         <div 
-//           className="mt-10 animate-fade-up"
-//           style={{ animationDelay: '0.4s' }}
-//         >
-//           <Link 
-//             to="/booking" 
-//             className="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mr-4"
-//             style={{
-//               background: 'linear-gradient(to right, rgb(255, 215, 0), rgb(255, 193, 7))',
-//               color: 'rgb(118, 37, 79)'
-//             }}
+//         <div className="bg-black bg-opacity-40 rounded-lg p-8 backdrop-blur-sm">
+//           <h1 
+//             key={`title-${currentImageIndex}`}
+//             className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight animate-fade-up"
 //           >
-//             {currentContent.primaryButton}
-//           </Link>
-//           <Link 
-//             to="/gallery" 
-//             className="px-8 py-3 rounded-full font-semibold border-2 border-white text-white hover:text-white transition-all duration-300"
-//             style={{
-//               backgroundColor: 'transparent',
-//             }}
-//             onMouseEnter={(e) => {
-//               e.currentTarget.style.backgroundColor = 'rgb(118, 37, 79)';
-//               e.currentTarget.style.borderColor = 'rgb(118, 37, 79)';
-//             }}
-//             onMouseLeave={(e) => {
-//               e.currentTarget.style.backgroundColor = 'transparent';
-//               e.currentTarget.style.borderColor = 'white';
-//             }}
+//             {currentContent.title.split(' ').map((word, index) => 
+//               word === 'Vivenza' ? (
+//                 <span key={index} style={{ color: 'rgb(255, 215, 0)' }}>{word}</span>
+//               ) : (
+//                 <span key={index}>{word} </span>
+//               )
+//             )}
+//           </h1>
+//           <p 
+//             key={`subtitle-${currentImageIndex}`}
+//             className="mt-6 max-w-2xl text-lg md:text-xl animate-fade-up"
+//             style={{ animationDelay: '0.2s' }}
 //           >
-//             {currentContent.secondaryButton}
-//           </Link>
+//             {currentContent.subtitle}
+//           </p>
+//           <div 
+//             className="mt-10 animate-fade-up"
+//             style={{ animationDelay: '0.4s' }}
+//           >
+//             <Link 
+//               to="/booking" 
+//               className="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mr-4"
+//               style={{
+//                 background: 'linear-gradient(to right, rgb(255, 215, 0), rgb(255, 193, 7))',
+//                 color: 'rgb(118, 37, 79)'
+//               }}
+//             >
+//               {currentContent.primaryButton}
+//             </Link>
+//             <Link 
+//               to="/gallery" 
+//               className="px-8 py-3 rounded-full font-semibold border-2 border-white text-white hover:text-white transition-all duration-300"
+//               style={{
+//                 backgroundColor: 'transparent',
+//               }}
+//               onMouseEnter={(e) => {
+//                 e.currentTarget.style.backgroundColor = 'rgb(118, 37, 79)';
+//                 e.currentTarget.style.borderColor = 'rgb(118, 37, 79)';
+//               }}
+//               onMouseLeave={(e) => {
+//                 e.currentTarget.style.backgroundColor = 'transparent';
+//                 e.currentTarget.style.borderColor = 'white';
+//               }}
+//             >
+//               {currentContent.secondaryButton}
+//             </Link>
+//           </div>
 //         </div>
+        
 //         <div 
 //           className="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-fade-in"
 //           style={{ animationDelay: '0.6s' }}
@@ -154,70 +158,114 @@
 // export default Hero;
 
 
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Hero: React.FC = () => {
-  const heroContent = [
-    {
-      image: "/5.jpeg",
-      title: "Welcome to Vivenza",
-      subtitle: "Experience luxury and elegance at Telangana's most premium farmhouse",
-      primaryButton: "Book Your Stay",
-      secondaryButton: "Explore Gallery"
-    },
-    {
-      image: "/1.jpeg",
-      title: "Luxury Redefined",
-      subtitle: "Immerse yourself in world-class amenities and breathtaking natural beauty",
-      primaryButton: "View Packages",
-      secondaryButton: "Virtual Tour"
-    },
-    {
-      image: "/3.jpeg",
-      title: "Perfect Getaway",
-      subtitle: "Create unforgettable memories with family and friends in our exclusive retreat",
-      primaryButton: "Plan Your Event",
-      secondaryButton: "See Amenities"
-    },
-    {
-      image: "/6.jpeg",
-      title: "Peaceful Paradise",
-      subtitle: "Escape the city chaos and reconnect with nature in our serene farmhouse",
-      primaryButton: "Book Now",
-      secondaryButton: "Contact Us"
-    }
-  ];
+interface Slide {
+  id: number;
+  image: string;
+  title: string;
+  subtitle: string;
+  primary_button: string;
+  secondary_button: string;
+  primary_button_link: string;
+  secondary_button_link: string;
+  display_order: number;
+}
 
+const Hero: React.FC = () => {
+  const [slides, setSlides] = useState<Slide[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        prevIndex === heroContent.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 5000); // Change image every 5 seconds
+    fetchSlides();
+  }, []);
 
-    return () => clearInterval(interval);
-  }, [heroContent.length]);
+  const fetchSlides = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('https://admin.webhostdevs.com/api/hero.php?action=get');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Sort slides by display_order to ensure correct order
+        const sortedSlides = data.slides.sort((a: Slide, b: Slide) => 
+          a.display_order - b.display_order
+        );
+        setSlides(sortedSlides);
+      } else {
+        throw new Error(data.message || 'Failed to fetch slides');
+      }
+    } catch (err) {
+      console.error('Error fetching hero slides:', err);
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const currentContent = heroContent[currentImageIndex];
+  useEffect(() => {
+    if (slides.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => 
+          prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000); // Change image every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [slides.length]);
+
+  if (loading && slides.length === 0) {
+    return (
+      <div className="relative h-[93vh] flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error && slides.length === 0) {
+    return (
+      <div className="relative h-[93vh] flex items-center justify-center">
+        <div className="text-white text-xl">Error: {error}</div>
+      </div>
+    );
+  }
+
+  const currentSlide = slides[currentImageIndex];
 
   return (
-    <div className="relative h-[93vh]"> {/* Reduced height from h-screen to h-[80vh] */}
+    <div className="relative h-[93vh]">
       <div className="absolute mt-10 inset-0 overflow-hidden">
         {/* Hero background image carousel */}
-        {heroContent.map((content, index) => (
+        {slides.map((slide, index) => (
           <img
-            key={index}
-            src={content.image}
-            alt="Vivenza Luxury Farmhouse"
+            key={slide.id}
+            src={slide.image}
+            alt={slide.title}
             className={`h-full w-full object-cover transition-opacity duration-1000 ${
               index === currentImageIndex ? 'opacity-100' : 'opacity-0 absolute top-0'
             }`}
           />
         ))}
-        {/* Removed the overlay div completely */}
       </div>
       
       {/* Text container with background opacity */}
@@ -227,7 +275,7 @@ const Hero: React.FC = () => {
             key={`title-${currentImageIndex}`}
             className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight animate-fade-up"
           >
-            {currentContent.title.split(' ').map((word, index) => 
+            {currentSlide.title.split(' ').map((word, index) => 
               word === 'Vivenza' ? (
                 <span key={index} style={{ color: 'rgb(255, 215, 0)' }}>{word}</span>
               ) : (
@@ -240,24 +288,24 @@ const Hero: React.FC = () => {
             className="mt-6 max-w-2xl text-lg md:text-xl animate-fade-up"
             style={{ animationDelay: '0.2s' }}
           >
-            {currentContent.subtitle}
+            {currentSlide.subtitle}
           </p>
           <div 
             className="mt-10 animate-fade-up"
             style={{ animationDelay: '0.4s' }}
           >
             <Link 
-              to="/booking" 
+              to={currentSlide.primary_button_link || "/booking"} 
               className="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mr-4"
               style={{
                 background: 'linear-gradient(to right, rgb(255, 215, 0), rgb(255, 193, 7))',
                 color: 'rgb(118, 37, 79)'
               }}
             >
-              {currentContent.primaryButton}
+              {currentSlide.primary_button}
             </Link>
             <Link 
-              to="/gallery" 
+              to={currentSlide.secondary_button_link || "/gallery"} 
               className="px-8 py-3 rounded-full font-semibold border-2 border-white text-white hover:text-white transition-all duration-300"
               style={{
                 backgroundColor: 'transparent',
@@ -271,7 +319,7 @@ const Hero: React.FC = () => {
                 e.currentTarget.style.borderColor = 'white';
               }}
             >
-              {currentContent.secondaryButton}
+              {currentSlide.secondary_button}
             </Link>
           </div>
         </div>
@@ -291,9 +339,9 @@ const Hero: React.FC = () => {
       
       {/* Carousel indicators */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {heroContent.map((_, index) => (
+        {slides.map((slide, index) => (
           <button
-            key={index}
+            key={slide.id}
             onClick={() => setCurrentImageIndex(index)}
             className={`h-2 rounded-full transition-all ${
               index === currentImageIndex 
