@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 const Privacy = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+   
       <div className="flex-grow bg-vivenza-offWhite py-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="font-display text-4xl md:text-5xl mt-24 font-medium mb-4 text-center">Privacy Policy</h1>
@@ -51,7 +51,7 @@ const Privacy = () => {
                 change / modify the terms & conditions anytime.</li>
             </ul>
             
-            <h2 className="font-display text-2xl font-medium mt-10 mb-4">Vivenza.co.in Service Use</h2>
+            <h2 className="fon   <Navbar />t-display text-2xl font-medium mt-10 mb-4">Vivenza.co.in Service Use</h2>
             <ul className="list-disc pl-6 mb-6 text-vivenza-black/80">
               <li>User is allowed to use the Vivenza.co.in application subject to
                 acceptance of the terms and conditions and the Privacy Policy on the
