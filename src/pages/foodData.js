@@ -1,5 +1,3 @@
-// Food menu data with breakfast, lunch, and dinner options
- 
 export  const foodMenuData = {
   breakfast: {
     silver: {

@@ -21,8 +21,7 @@
 //       title: "Corporate & Formal Events",
 //       description: "Professional gatherings with premium amenities",
 //       image:
-//         "https://ohmyfacts.com/wp-content/uploads/2024/10/30-facts-about-social-gatherings-1730181720.jpg",
-//       items: [
+//      
 //         "Corporate Offsites",
 //         "Team-Building Retreats",
 //         "Product Launches",
