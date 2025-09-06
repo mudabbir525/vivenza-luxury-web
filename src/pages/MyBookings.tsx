@@ -34,6 +34,8 @@ interface Booking {
   base_price: number;
   additional_services_cost: number;
   food_cost: number;
+  coupon_code: string | null;
+  coupon_discount: number;
   total_cost: number;
   payment_status: 'paid';
   payment_id: string | null;
@@ -330,19 +332,45 @@ const MyBookings = () => {
                     <span>Base Price:</span>
                     <span>₹{selectedBooking.base_price.toLocaleString()}</span>
                   </div>
+                  
                   {selectedBooking.food_cost > 0 && (
                     <div className="flex justify-between">
                       <span>Food Services:</span>
                       <span>₹{selectedBooking.food_cost.toLocaleString()}</span>
                     </div>
                   )}
+                  
                   {selectedBooking.additional_services_cost > 0 && (
                     <div className="flex justify-between">
                       <span>Additional Services:</span>
                       <span>₹{selectedBooking.additional_services_cost.toLocaleString()}</span>
                     </div>
                   )}
-                  <hr className="my-2" />
+                  
+                  {/* Calculate Subtotal */}
+                  <div className="flex justify-between border-t border-gray-200 pt-2 mt-2">
+                    <span className="font-medium">Subtotal:</span>
+                    <span className="font-medium">
+                      ₹{(
+                        selectedBooking.base_price + 
+                        selectedBooking.food_cost + 
+                        selectedBooking.additional_services_cost
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                  
+                  {/* Coupon Discount */}
+                  {selectedBooking.coupon_discount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>
+                        Coupon Discount {selectedBooking.coupon_code && `(${selectedBooking.coupon_code})`}:
+                      </span>
+                      <span className="font-medium">-₹{selectedBooking.coupon_discount.toLocaleString()}</span>
+                    </div>
+                  )}
+                  
+                  <hr className="my-2 border-gray-300" />
+                  
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total Amount:</span>
                     <span>₹{selectedBooking.total_cost.toLocaleString()}</span>

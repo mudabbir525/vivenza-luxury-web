@@ -308,13 +308,15 @@ interface DatePickerProps {
   selectedEndDate: Date | null;
   onDateSelect: (startDate: Date | null, endDate: Date | null) => void;
   className?: string;
+  isPackageSelected: boolean; // New prop to track if package is selected
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
   selectedStartDate,
   selectedEndDate,
   onDateSelect,
-  className = ""
+  className = "",
+  isPackageSelected // Receive the package selection status
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
@@ -376,19 +378,27 @@ const DatePicker: React.FC<DatePickerProps> = ({
     
     return true;
   };
+  
   // Add this function to check if any dates in range are blocked
-const isRangeBlocked = (start: Date, end: Date): boolean => {
-  let current = new Date(start);
-  while (current <= end) {
-    if (isBlocked(current)) {
-      return true;
+  const isRangeBlocked = (start: Date, end: Date): boolean => {
+    let current = new Date(start);
+    while (current <= end) {
+      if (isBlocked(current)) {
+        return true;
+      }
+      current.setDate(current.getDate() + 1);
     }
-    current.setDate(current.getDate() + 1);
-  }
-  return false;
-};
+    return false;
+  };
+  
   // Handle date click - 24 hours only (range selection)
   const handleDateClick = (date: Date) => {
+    // Check if package is selected
+    if (!isPackageSelected) {
+      toast.error('Please select a package first');
+      return;
+    }
+    
     if (!isSelectable(date)) {
       if (isBlocked(date)) {
         toast.error('This date is already booked!');
@@ -397,19 +407,21 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
       }
       return;
     }
+    
     // If clicking on already selected start date, clear selection
-  if (selectedStartDate && isSameDay(date, selectedStartDate)) {
-    onDateSelect(null, null);
-    setSelectingEndDate(false);
-    return;
-  }
+    if (selectedStartDate && isSameDay(date, selectedStartDate)) {
+      onDateSelect(null, null);
+      setSelectingEndDate(false);
+      return;
+    }
 
-  // If clicking on already selected end date, clear selection
-  if (selectedEndDate && isSameDay(date, selectedEndDate)) {
-    onDateSelect(null, null);
-    setSelectingEndDate(false);
-    return;
-  }
+    // If clicking on already selected end date, clear selection
+    if (selectedEndDate && isSameDay(date, selectedEndDate)) {
+      onDateSelect(null, null);
+      setSelectingEndDate(false);
+      return;
+    }
+    
     // For 24 hours only, range selection
     if (!selectedStartDate) {
       // First click - select start date
@@ -418,12 +430,13 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
     } else if (!selectedEndDate && selectingEndDate) {
       // Second click - select end date
       const rangeStart = isBefore(date, selectedStartDate) ? date : selectedStartDate;
-    const rangeEnd = isBefore(date, selectedStartDate) ? selectedStartDate : date;
-    
-    if (isRangeBlocked(rangeStart, rangeEnd)) {
-      toast.error('Some dates in this range are already booked!');
-      return;
-    }
+      const rangeEnd = isBefore(date, selectedStartDate) ? selectedStartDate : date;
+      
+      if (isRangeBlocked(rangeStart, rangeEnd)) {
+        toast.error('Some dates in this range are already booked!');
+        return;
+      }
+      
       if (isBefore(date, selectedStartDate)) {
         // End date before start - swap them
         onDateSelect(date, selectedStartDate);
@@ -436,8 +449,8 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
     } else {
       // Already have both dates - clicking any date starts new selection
       // Start new selection
-    onDateSelect(date, null);
-    setSelectingEndDate(true);
+      onDateSelect(date, null);
+      setSelectingEndDate(true);
     }
   };
 
@@ -466,6 +479,8 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
       if (blocked) {
         classes += "!bg-red-100 !text-red-600 ";
       }
+    } else if (!isPackageSelected) {
+      classes += "text-gray-400 bg-gray-100 cursor-not-allowed ";
     } else if (isSelected) {
       classes += "bg-amber-500 text-white font-bold ";
     } else if (inRange) {
@@ -529,9 +544,11 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
 
       {/* Info */}
       <div className="mb-3 p-2 bg-amber-50 rounded text-xs text-amber-800">
-        {selectingEndDate 
-          ? 'Now select check-out date' 
-          : 'Select check-in and check-out dates'
+        {!isPackageSelected 
+          ? 'Please select a package first' 
+          : selectingEndDate 
+            ? 'Now select check-out date' 
+            : 'Select check-in and check-out dates'
         }
       </div>
 
@@ -559,7 +576,7 @@ const isRangeBlocked = (start: Date, end: Date): boolean => {
               <div
                 className={getDateClasses(date)}
                 onClick={() => handleDateClick(date)}
-                title={isBlocked(date) ? 'Already booked' : format(date, 'MMMM d, yyyy')}
+                title={!isPackageSelected ? 'Select a package first' : isBlocked(date) ? 'Already booked' : format(date, 'MMMM d, yyyy')}
               >
                 {format(date, 'd')}
               </div>

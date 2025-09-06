@@ -425,85 +425,93 @@ const QuickInfo = () => {
   return (
     <>
       {/* Pricing Section */}
-<section className="py-16 bg-white">
-  <div className="luxury-container">
-    <div className="text-center mb-12">
-      <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
-        Booking & Pricing
-      </h2>
-      <div className="gold-divider mx-auto"></div>
-      <p className="max-w-3xl mx-auto text-vivenza-black/80">
-        Transparent pricing for your perfect farmhouse experience
-      </p>
-      
-      {/* Timings information */}
-      <div className="mt-6 bg-vivenza-offWhite p-4 rounded-lg inline-block">
-        <p className="text-vivenza-black font-medium">
-          Check-in time: 12:00 PM on arrival day | Check-out time: 11:00 AM on departure day
-        </p>
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {pricingCategories.map((category) => (
-        <div key={category.id} className="flex h-full">
-          <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
-            <div>
-              <h3 className="font-display text-2xl font-semibold mb-6">
-                {category.package_title}
-              </h3>
-              
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg">24 Hrs:</span>
-                  <span className="text-2xl font-bold text-yellow-300">
-                    ₹{category.fullday_price.toLocaleString('en-IN')}
-                  </span>
-                </div>
-              </div>
-              <div className="text-sm space-y-1 opacity-90">
-                <p>Minimum - {category.min_guests} members and Maximum - {category.max_guests} members</p>
-                {category.extra_per_guest && (
-                  <p>Extra per guest - ₹{category.extra_per_guest.toLocaleString('en-IN')}</p>
-                )}
-              </div>
-            </div>
+      <section className="py-16 bg-white">
+        <div className="luxury-container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-medium text-vivenza-black">
+              Booking & Pricing
+            </h2>
+            <div className="gold-divider mx-auto"></div>
+            <p className="max-w-3xl mx-auto text-vivenza-black/80">
+              Transparent pricing for your perfect farmhouse experience
+            </p>
             
-            {/* Requirements section with improved design */}
-            {category.requirements && (
-              <div className="mb-4 mt-4">
-                <div className="flex items-center mb-3">
-                  <div className="h-px bg-yellow-300 flex-grow mr-3"></div>
-                  <h4 className="text-yellow-300 font-semibold text-lg whitespace-nowrap">
-                    Package Inclusions
-                  </h4>
-                  <div className="h-px bg-yellow-300 flex-grow ml-3"></div>
-                </div>
-                
-                <div className="bg-black/20 p-4 rounded-lg border border-yellow-300/30">
-                  <ul className="text-white text-sm space-y-2">
-                    <p className="text-white text-base leading-relaxed">
-        {category.requirements}
-      </p>
-                  </ul>
-                </div>
-              </div>
-            )}
-            
-            <div className="text-center pt-4">
-              <Link
-                to="/booking"
-                className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
-              >
-                Book Your Stay
-              </Link>
+            {/* Timings information */}
+            <div className="mt-6 bg-vivenza-offWhite p-4 rounded-lg inline-block">
+              <p className="text-vivenza-black font-medium">
+                Check-in time: 12:00 PM on arrival day | Check-out time: 11:00 AM on departure day
+              </p>
             </div>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {pricingCategories.map((category) => (
+              <div key={category.id} className="flex h-full">
+                <div className="bg-[linear-gradient(to_right,_rgb(118,37,79),_rgb(118,37,79))] rounded-xl p-8 text-white w-full flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold mb-6">
+                      {category.package_title}
+                    </h3>
+                    
+                    <div className="space-y-4 mb-6">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg">24 Hrs:</span>
+                        <span className="text-2xl font-bold text-yellow-300">
+                          ₹{category.fullday_price.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="text-sm space-y-2 opacity-90">
+                      <p>Minimum - {category.min_guests} members and Maximum - {category.max_guests} members</p>
+                      {category.extra_per_guest && (
+                        <p>Extra per guest - ₹{category.extra_per_guest.toLocaleString('en-IN')}</p>
+                      )}
+                      
+                      {/* Check-in and Check-out times */}
+                      <div className="bg-black/20 p-3 rounded-lg border border-yellow-300/30 mt-3">
+                        <p className="text-yellow-300 font-medium mb-1">Timing Details:</p>
+                        <p>Check-in: 12:00 PM on arrival day</p>
+                        <p>Check-out: 11:00 AM on departure day</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Requirements section with improved design */}
+                  {category.requirements && (
+                    <div className="mb-4 mt-4">
+                      <div className="flex items-center mb-3">
+                        <div className="h-px bg-yellow-300 flex-grow mr-3"></div>
+                        <h4 className="text-yellow-300 font-semibold text-lg whitespace-nowrap">
+                          Package Inclusions
+                        </h4>
+                        <div className="h-px bg-yellow-300 flex-grow ml-3"></div>
+                      </div>
+                      
+                      <div className="bg-black/20 p-4 rounded-lg border border-yellow-300/30">
+                        <ul className="text-white text-sm space-y-2">
+                          <p className="text-white text-base leading-relaxed">
+                            {category.requirements}
+                          </p>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="text-center pt-4">
+                    <Link
+                      to="/booking"
+                      className="inline-block px-8 py-3 bg-vivenza-gold text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+                    >
+                      Book Your Stay
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Events Section */}
       <section className="py-16 bg-gradient-to-b from-vivenza-offWhite to-white">

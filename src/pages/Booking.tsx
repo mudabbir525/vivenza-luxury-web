@@ -1055,13 +1055,17 @@ const Booking = () => {
   const [additionalServicesData, setAdditionalServicesData] = useState<AdditionalService[]>([]);
   const [selectedPackage, setSelectedPackage] = useState<BookingPackage | null>(null);
 
+  // NEW: Modal state for package info
+  const [showPackageModal, setShowPackageModal] = useState(false);
+  const [tempSelectedPackage, setTempSelectedPackage] = useState<BookingPackage | null>(null);
+
   // Booking state
   const [checkIn, setCheckIn] = useState<Date | undefined>();
   const [checkOut, setCheckOut] = useState<Date | undefined>();
   const [checkInPopoverOpen, setCheckInPopoverOpen] = useState(false);
   const [checkOutPopoverOpen, setCheckOutPopoverOpen] = useState(false);
   const [dateRange, setDateRange] = useState<Date[]>([]);
-  const [guestCount, setGuestCount] = useState<number>(15);
+  const [guestCount, setGuestCount] = useState<number>(0);
   const [guestError, setGuestError] = useState<string>("");
   const [additionalServices, setAdditionalServices] = useState<Record<number, boolean>>({});
 
@@ -1203,18 +1207,34 @@ const Booking = () => {
     loadRazorpayScript();
   }, []);
 
-  // Handle package selection
+  // MODIFIED: Handle package selection with modal
   const handlePackageChange = (packageId: string) => {
     const pkg = packages.find((p) => p.id === parseInt(packageId));
     if (pkg) {
-      setSelectedPackage(pkg);
-      setGuestCount(pkg.min_guests);
+      setTempSelectedPackage(pkg);
+      setShowPackageModal(true);
+    }
+  };
+
+  // NEW: Handle package confirmation from modal
+  const handlePackageConfirm = () => {
+    if (tempSelectedPackage) {
+      setSelectedPackage(tempSelectedPackage);
+      setGuestCount(tempSelectedPackage.min_guests);
       setGuestError("");
       // Reset dates when package changes
       setCheckIn(undefined);
       setCheckOut(undefined);
       setDateRange([]);
     }
+    setShowPackageModal(false);
+    setTempSelectedPackage(null);
+  };
+
+  // NEW: Handle package modal cancel
+  const handlePackageCancel = () => {
+    setShowPackageModal(false);
+    setTempSelectedPackage(null);
   };
 
   // Handle guest count change with validation
@@ -1244,64 +1264,66 @@ const Booking = () => {
 
   // Get base price based on check-in date (weekday vs weekend)
   const getBasePrice = () => {
-  if (!selectedPackage || !checkIn || !checkOut) return 0;
-  
-  let totalPrice = 0;
-  let currentDate = new Date(checkIn);
-  const endDate = new Date(checkOut);
-  endDate.setDate(endDate.getDate() - 1);
-  while (currentDate <= endDate) {
-    const dayOfWeek = currentDate.getDay();
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+    if (!selectedPackage || !checkIn || !checkOut) return 0;
     
-    const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
-    totalPrice += typeof dailyPrice === "string" 
-      ? parseFloat(dailyPrice.replace(/,/g, "")) 
-      : Number(dailyPrice);
-    
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-  
-  return totalPrice;
-};
-// Fix the getPriceBreakdown function
-const getPriceBreakdown = () => {
-  if (!selectedPackage || !checkIn || !checkOut) return { 
-    weekdays: 0, 
-    weekends: 0, 
-    days: 0, 
-    weekdayPrice: 0, 
-    weekendPrice: 0 
-  };
-  
-  let weekdays = 0;
-  let weekends = 0;
-  let currentDate = new Date(checkIn);
-  // Calculate only from check-in to check-out minus 1 day
-  const endDate = new Date(checkOut);
-  endDate.setDate(endDate.getDate() - 1);
-  while (currentDate <= endDate) {
-    const dayOfWeek = currentDate.getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      weekends++;
-    } else {
-      weekdays++;
+    let totalPrice = 0;
+    let currentDate = new Date(checkIn);
+    const endDate = new Date(checkOut);
+    endDate.setDate(endDate.getDate() - 1);
+    while (currentDate <= endDate) {
+      const dayOfWeek = currentDate.getDay();
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+      
+      const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
+      totalPrice += typeof dailyPrice === "string" 
+        ? parseFloat(dailyPrice.replace(/,/g, "")) 
+        : Number(dailyPrice);
+      
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-  
-  return {
-    weekdays,
-    weekends,
-    days: weekdays + weekends,
-    weekdayPrice: typeof selectedPackage.weekday_price === "string" 
-      ? parseFloat(selectedPackage.weekday_price.replace(/,/g, "")) 
-      : Number(selectedPackage.weekday_price),
-    weekendPrice: typeof selectedPackage.weekend_price === "string" 
-      ? parseFloat(selectedPackage.weekend_price.replace(/,/g, "")) 
-      : Number(selectedPackage.weekend_price)
+    
+    return totalPrice;
   };
-};
+
+  // Fix the getPriceBreakdown function
+  const getPriceBreakdown = () => {
+    if (!selectedPackage || !checkIn || !checkOut) return { 
+      weekdays: 0, 
+      weekends: 0, 
+      days: 0, 
+      weekdayPrice: 0, 
+      weekendPrice: 0 
+    };
+    
+    let weekdays = 0;
+    let weekends = 0;
+    let currentDate = new Date(checkIn);
+    // Calculate only from check-in to check-out minus 1 day
+    const endDate = new Date(checkOut);
+    endDate.setDate(endDate.getDate() - 1);
+    while (currentDate <= endDate) {
+      const dayOfWeek = currentDate.getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        weekends++;
+      } else {
+        weekdays++;
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    return {
+      weekdays,
+      weekends,
+      days: weekdays + weekends,
+      weekdayPrice: typeof selectedPackage.weekday_price === "string" 
+        ? parseFloat(selectedPackage.weekday_price.replace(/,/g, "")) 
+        : Number(selectedPackage.weekday_price),
+      weekendPrice: typeof selectedPackage.weekend_price === "string" 
+        ? parseFloat(selectedPackage.weekend_price.replace(/,/g, "")) 
+        : Number(selectedPackage.weekend_price)
+    };
+  };
+
   // Calculate extra guest charge
   const getExtraGuestCharge = () => {
     if (!selectedPackage || guestCount <= selectedPackage.max_guests) return 0;
@@ -1436,9 +1458,9 @@ const getPriceBreakdown = () => {
     },
     dayMealConfigs: Record<string, Record<string, any>>,
     foodData: {
-    foodCategories: any[];
-    packagesByCategory: Record<number, any[]>;
-  }
+      foodCategories: any[];
+      packagesByCategory: Record<number, any[]>;
+    }
   ) => {
     setFoodCost(totalFoodCost);
     setMealCosts(mealCostsObj);
@@ -1481,10 +1503,10 @@ const getPriceBreakdown = () => {
             const dayConfig = dayMealConfigs[dateKey];
             const mealConfig = dayConfig?.[mealKey];
             // Use the passed data
-          const category = foodData.foodCategories.find(cat => cat.key_name === mealKey);
-          const packages = category ? foodData.packagesByCategory[category.id] || [] : [];
-          const selectedPackage = packages.find(pkg => pkg.id === mealConfig?.package_id);
-          const pricePerPerson = selectedPackage?.price || 0;
+            const category = foodData.foodCategories.find(cat => cat.key_name === mealKey);
+            const packages = category ? foodData.packagesByCategory[category.id] || [] : [];
+            const selectedPackage = packages.find(pkg => pkg.id === mealConfig?.package_id);
+            const pricePerPerson = selectedPackage?.price || 0;
             return {
               meal_type: mealKey,
               date: format(date, 'yyyy-MM-dd'),
@@ -1517,6 +1539,8 @@ const getPriceBreakdown = () => {
       pricing_breakdown: getPriceBreakdown(),
       additional_services_cost: getAdditionalServicesCost(),
       food_cost: foodCost,
+      coupon_code: appliedCoupon?.code || null, // Add coupon code
+    coupon_discount: couponDiscount, // Add coupon discount
       total_cost: getFinalAmount(),
       food_services: foodServicesData,
       additional_services: selectedAdditionalServices
@@ -1535,7 +1559,7 @@ const getPriceBreakdown = () => {
 
       const data = await response.json();
       
-      if (!response.ok || data.status !=="success") {
+      if (!response.ok || data.status !== "success") {
         throw new Error(data.message || "Failed to create booking");
       }
 
@@ -1548,110 +1572,110 @@ const getPriceBreakdown = () => {
 
   // Razorpay payment handler
   const handleRazorpayPayment = async (bookingId: string) => {
-  try {
-    // 🔥 Step 1: Ask backend to create an order
-    const orderResponse = await fetch(
-      "https://admin.webhostdevs.com/api/bookings/create-order.php",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: getFinalAmount() }), // send amount in rupees
-      }
-    );
-
-    const orderData = await orderResponse.json();
-    console.log("Order creation response:", orderData);
-    if (orderData.status !== "success") {
-      throw new Error(orderData.message || "Failed to create Razorpay order");
-    }
-
-    const { id: razorpayOrderId, amount, currency } = orderData.order;
-
-    // 🔥 Step 2: Open Razorpay checkout with real order_id
-    const options = {
-      key: "rzp_live_R6qpNwT08jtUaq",
-      amount: amount, // already in paise from backend
-      currency: currency,
-      name: "Vivenza Farmhouse Booking",
-      description: `Booking ${bookingId} from ${
-        checkIn ? format(checkIn, "MMM d, yyyy") : ""
-      } to ${checkOut ? format(checkOut, "MMM d, yyyy") : ""}`,
-      image: "/logo.png",
-      order_id: razorpayOrderId, // ✅ now real order id
-      handler: async function (response: any) {
-        console.log("Payment Response:", response);
-        try {
-          // 🔥 Step 3: Verify payment with backend
-          const verifyResponse = await fetch(
-            "https://admin.webhostdevs.com/api/bookings/verify-payment.php",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                booking_id: bookingId,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_signature: response.razorpay_signature,
-              }),
-            }
-          );
-          console.log(response);
-
-          const verifyData = await verifyResponse.json();
-
-          if (!verifyResponse.ok || verifyData.status !== "success") {
-            throw new Error(
-              verifyData.message || "Payment verification failed"
-            );
-          }
-
-          // ✅ Redirect to success page with booking data
-          navigate("/booking-success", {
-            state: {
-              bookingData: verifyData.data,
-              paymentId: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-            },
-          });
-        } catch (error) {
-          console.error("Payment verification error:", error);
-          setBookingError("Payment verification failed. Please contact support.");
-          setIsLoading(false);
+    try {
+      // 🔥 Step 1: Ask backend to create an order
+      const orderResponse = await fetch(
+        "https://admin.webhostdevs.com/api/bookings/create-order.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: getFinalAmount() }), // send amount in rupees
         }
-      },
-      prefill: {
-        name: customerDetails.name,
-        email: customerDetails.email,
-        contact: customerDetails.phone,
-      },
-      notes: {
-        booking_id: bookingId,
-        checkIn: checkIn ? format(checkIn, "yyyy-MM-dd") : "",
-        checkOut: checkOut ? format(checkOut, "yyyy-MM-dd") : "",
-        guests: guestCount.toString(),
-      },
-      theme: { color: "#F59E0B" },
-      modal: {
-        ondismiss: function () {
-          setIsLoading(false);
-          console.log("Payment cancelled");
-        },
-      },
-    };
+      );
 
-    if (window.Razorpay) {
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } else {
-      alert("Razorpay SDK not loaded. Please try again.");
+      const orderData = await orderResponse.json();
+      console.log("Order creation response:", orderData);
+      if (orderData.status !== "success") {
+        throw new Error(orderData.message || "Failed to create Razorpay order");
+      }
+
+      const { id: razorpayOrderId, amount, currency } = orderData.order;
+
+      // 🔥 Step 2: Open Razorpay checkout with real order_id
+      const options = {
+        key: "rzp_live_R6qpNwT08jtUaq",
+        amount: amount, // already in paise from backend
+        currency: currency,
+        name: "Vivenza Farmhouse Booking",
+        description: `Booking ${bookingId} from ${
+          checkIn ? format(checkIn, "MMM d, yyyy") : ""
+        } to ${checkOut ? format(checkOut, "MMM d, yyyy") : ""}`,
+        image: "/logo.png",
+        order_id: razorpayOrderId, // ✅ now real order id
+        handler: async function (response: any) {
+          console.log("Payment Response:", response);
+          try {
+            // 🔥 Step 3: Verify payment with backend
+            const verifyResponse = await fetch(
+              "https://admin.webhostdevs.com/api/bookings/verify-payment.php",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  booking_id: bookingId,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
+              }
+            );
+            console.log(response);
+
+            const verifyData = await verifyResponse.json();
+
+            if (!verifyResponse.ok || verifyData.status !== "success") {
+              throw new Error(
+                verifyData.message || "Payment verification failed"
+              );
+            }
+
+            // ✅ Redirect to success page with booking data
+            navigate("/booking-success", {
+              state: {
+                bookingData: verifyData.data,
+                paymentId: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+              },
+            });
+          } catch (error) {
+            console.error("Payment verification error:", error);
+            setBookingError("Payment verification failed. Please contact support.");
+            setIsLoading(false);
+          }
+        },
+        prefill: {
+          name: customerDetails.name,
+          email: customerDetails.email,
+          contact: customerDetails.phone,
+        },
+        notes: {
+          booking_id: bookingId,
+          checkIn: checkIn ? format(checkIn, "yyyy-MM-dd") : "",
+          checkOut: checkOut ? format(checkOut, "yyyy-MM-dd") : "",
+          guests: guestCount.toString(),
+        },
+        theme: { color: "#F59E0B" },
+        modal: {
+          ondismiss: function () {
+            setIsLoading(false);
+            console.log("Payment cancelled");
+          },
+        },
+      };
+
+      if (window.Razorpay) {
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } else {
+        alert("Razorpay SDK not loaded. Please try again.");
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.error("Error starting payment:", err);
+      setBookingError("Unable to start payment. Please try again.");
       setIsLoading(false);
     }
-  } catch (err) {
-    console.error("Error starting payment:", err);
-    setBookingError("Unable to start payment. Please try again.");
-    setIsLoading(false);
-  }
-};
+  };
 
   const handlePay = async () => {
     if (!isAuthenticated) {
@@ -1690,6 +1714,158 @@ const getPriceBreakdown = () => {
     if (dates.length === 0) return "Not selected";
     return dates.map((date) => format(date, "MMM d")).join(", ");
   };
+
+  // **NEW: Login Prompt Component**
+  const LoginPrompt = () => (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <div className="flex-grow bg-stone-50 pt-24">
+        <div className="container mx-auto py-16 px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            {/* Header */}
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium mb-6">
+              Book Your Stay
+            </h1>
+            <div className="h-1 w-24 bg-amber-500 mx-auto mb-12"></div>
+
+            {/* Login Required Card */}
+            <div className="bg-white p-12 rounded-lg shadow-lg border border-amber-100">
+              <div className="text-6xl mb-6">🔐</div>
+              
+              <h2 className="font-serif text-3xl font-medium mb-4 text-gray-800">
+                Login Required
+              </h2>
+              
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                To make a booking at Vivenza Farmhouse, please login to your account or create a new one. 
+                This ensures we can securely process your booking and keep you updated.
+              </p>
+
+              <div className="space-y-4">
+                <Button
+                  onClick={() => navigate('/login')}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 text-lg font-medium rounded-lg transition-colors"
+                >
+                  Login to Your Account
+                </Button>
+                
+                <Button
+                  onClick={() => navigate('/login')}
+                  variant="outline"
+                  className="w-full border-amber-500 text-amber-600 hover:bg-amber-50 py-3 text-lg font-medium rounded-lg transition-colors"
+                >
+                  Create New Account
+                </Button>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-3">Why do I need to login?</h3>
+                <ul className="text-sm text-gray-600 space-y-2 text-left max-w-md mx-auto">
+                  <li className="flex items-start">
+                    <span className="text-amber-500 mr-2">•</span>
+                    Secure booking process and payment protection
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-500 mr-2">•</span>
+                    Easy access to your booking history and details
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-500 mr-2">•</span>
+                    Receive booking confirmations and updates
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-500 mr-2">•</span>
+                    Manage and modify your reservations
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+
+  // **NEW: Package Info Modal Component**
+  const PackageInfoModal = () => {
+    if (!showPackageModal || !tempSelectedPackage) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+        <div className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+          {/* Modal Header */}
+          <div className="p-6 border-b border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+              Package Selected
+            </h3>
+            <h4 className="text-xl font-semibold text-amber-600">
+              {tempSelectedPackage.name}
+            </h4>
+          </div>
+
+          {/* Modal Content */}
+          <div className="p-6 space-y-6">
+  
+
+            {/* Guest Information */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+              <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
+                <span className="text-blue-500 mr-2">👥</span>
+                Guest Capacity
+              </h5>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Minimum Guests:</span>
+                  <span className="font-medium text-blue-600">{tempSelectedPackage.min_guests} guests</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Maximum Guests:</span>
+                  <span className="font-medium text-blue-600">{tempSelectedPackage.max_guests} guests</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Extra per Guest(More than {tempSelectedPackage.max_guests}):</span>
+                  <span className="font-medium text-red-600">₹{tempSelectedPackage.extra_per_guest.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Summary Box */}
+            {/* <div className="bg-amber-500 text-white p-4 rounded-lg">
+              <p className="text-center font-medium">
+                You can accommodate {tempSelectedPackage.min_guests}-{tempSelectedPackage.max_guests} guests
+              </p>
+              <p className="text-center text-sm mt-1 opacity-90">
+                Perfect for your group size!
+              </p>
+            </div> */}
+          </div>
+
+          {/* Modal Footer */}
+          <div className="p-6 border-t border-gray-200 flex space-x-3">
+            <Button
+              onClick={handlePackageCancel}
+              variant="outline"
+              className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handlePackageConfirm}
+              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white"
+            >
+              Continue with this Package
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // **MAIN RETURN: Show LoginPrompt if not authenticated**
+  if (!isAuthenticated) {
+    return <LoginPrompt />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -1755,6 +1931,7 @@ const getPriceBreakdown = () => {
                         setCheckOut(end);
                       }}
                       className="w-full"
+                      isPackageSelected={!!selectedPackage}
                     />
                   </div>
                 </div>
@@ -1882,7 +2059,7 @@ const getPriceBreakdown = () => {
                   checkIn={checkIn}
                   checkOut={checkOut}
                   isAuthenticated={isAuthenticated}
-                   getPriceBreakdown={getPriceBreakdown}
+                  getPriceBreakdown={getPriceBreakdown}
                 />
               )}
             </div>
@@ -1897,7 +2074,6 @@ const getPriceBreakdown = () => {
                   <FoodService
                     guestCount={guestCount}
                     dateRange={dateRange}
-                    // foodCategoriesForDate={getAvailableFoodCategoriesForDate}
                     onFoodCostUpdate={handleFoodCostUpdate}
                   />
                 </div>
@@ -1941,6 +2117,9 @@ const getPriceBreakdown = () => {
         </div>
       </div>
       <Footer />
+
+      {/* NEW: Package Info Modal */}
+      <PackageInfoModal />
 
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">

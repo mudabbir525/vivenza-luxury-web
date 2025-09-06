@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 import { Calendar, Users, DollarSign, CheckCircle, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -24,16 +24,36 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
   foodCategories,
   packagesByCategory
 }) => {
-  // Calculate configuration completeness
+  
+  // NEW: Function to get available meals for a specific date
+  const getAvailableMealsForDate = (date: Date): string[] => {
+    if (!dateRange || dateRange.length === 0) return [];
+    
+    const checkIn = dateRange[0];
+    const checkOut = dateRange[dateRange.length - 1];
+    
+    if (isSameDay(date, checkIn)) {
+      // First day - exclude breakfast (check-in at 12 PM)
+      return ["lunch", "snacks", "dinner"];
+    }
+    if (isSameDay(date, checkOut)) {
+      // Last day - only breakfast (check-out at 11 AM)
+      return ["breakfast"];
+    }
+    // Middle days - all meals available
+    return ["breakfast", "lunch", "snacks", "dinner"];
+  };
+
+  // UPDATED: Calculate configuration completeness with date restrictions
   const getConfigurationStatus = () => {
     const selectedMealKeys = Object.entries(selectedMeals)
       .filter(([_, selected]) => selected)
       .map(([mealKey]) => mealKey)
       .sort((a, b) => {
-    const aCat = foodCategories.find(cat => cat.key_name === a);
-    const bCat = foodCategories.find(cat => cat.key_name === b);
-    return (aCat?.sort_order || 0) - (bCat?.sort_order || 0);
-  });
+        const aCat = foodCategories.find(cat => cat.key_name === a);
+        const bCat = foodCategories.find(cat => cat.key_name === b);
+        return (aCat?.sort_order || 0) - (bCat?.sort_order || 0);
+      });
 
     let totalConfigured = 0;
     let totalRequired = 0;
@@ -41,11 +61,15 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
     dateRange.forEach(date => {
       const dateKey = format(date, 'yyyy-MM-dd');
       const dayConfig = dayMealConfigs[dateKey];
+      const availableMeals = getAvailableMealsForDate(date); // NEW: Get available meals for this date
 
       selectedMealKeys.forEach(mealKey => {
-        totalRequired++;
-        if (dayConfig?.[mealKey]?.package_id) {
-          totalConfigured++;
+        // NEW: Only count meals that are available for this date
+        if (availableMeals.includes(mealKey)) {
+          totalRequired++;
+          if (dayConfig?.[mealKey]?.package_id) {
+            totalConfigured++;
+          }
         }
       });
     });
@@ -66,28 +90,43 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
     return foodCategories.find(cat => cat.id === categoryId);
   };
 
+  // UPDATED: Render day-wise breakdown with availability restrictions
   const renderDayWiseBreakdown = () => {
     return dateRange.map(date => {
       const dateKey = format(date, 'yyyy-MM-dd');
       const dayConfig = dayMealConfigs[dateKey];
+      const availableMeals = getAvailableMealsForDate(date); // NEW: Get available meals for this date
       
       const selectedMealKeys = Object.entries(selectedMeals)
-        .filter(([_, selected]) => selected)
+        .filter(([mealKey, selected]) => selected && availableMeals.includes(mealKey)) // NEW: Filter by availability
         .map(([mealKey]) => mealKey)
         .sort((a, b) => {
-    const aCat = foodCategories.find(cat => cat.key_name === a);
-    const bCat = foodCategories.find(cat => cat.key_name === b);
-    return (aCat?.sort_order || 0) - (bCat?.sort_order || 0);
-  });
+          const aCat = foodCategories.find(cat => cat.key_name === a);
+          const bCat = foodCategories.find(cat => cat.key_name === b);
+          return (aCat?.sort_order || 0) - (bCat?.sort_order || 0);
+        });
+
+      // NEW: Show unavailable meals with different styling
+      const unavailableMeals = Object.entries(selectedMeals)
+        .filter(([mealKey, selected]) => selected && !availableMeals.includes(mealKey))
+        .map(([mealKey]) => mealKey);
 
       return (
         <div key={dateKey} className="border rounded-lg p-4 mb-4">
           <div className="flex items-center space-x-2 mb-3">
             <Calendar className="w-4 h-4 text-gray-600" />
             <h6 className="font-semibold">{format(date, 'EEEE, MMMM d, yyyy')}</h6>
+            {/* NEW: Show day type indicator */}
+            {isSameDay(date, dateRange[0]) && (
+              <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">Check-in</span>
+            )}
+            {isSameDay(date, dateRange[dateRange.length - 1]) && (
+              <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">Check-out</span>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Available meals */}
             {selectedMealKeys.map(mealKey => {
               const mealConfig = dayConfig?.[mealKey];
               const category = foodCategories.find(cat => cat.key_name === mealKey);
@@ -105,7 +144,7 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
                     <div className="text-sm text-gray-600">
                       {packageDetails 
                         ? `${packageDetails.name} - ₹${packageDetails.price.toLocaleString()}/person`
-                        : 'Not configured'
+                        : 'Food Package Not Selected'
                       }
                     </div>
                   </div>
@@ -115,7 +154,38 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
                 </div>
               );
             })}
+
+            {/* NEW: Show unavailable meals with different styling */}
+            {unavailableMeals.map(mealKey => (
+              <div key={`unavailable-${mealKey}`} className="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg opacity-60">
+                <div className="w-3 h-3 rounded-full bg-gray-400" />
+                <div className="flex-1">
+                  <div className="font-medium capitalize text-gray-500">{mealKey}</div>
+                  <div className="text-sm text-gray-400">
+                    {isSameDay(date, dateRange[0]) && mealKey === 'breakfast' 
+                      ? 'Not available (Check-in at 12 PM)'
+                      : isSameDay(date, dateRange[dateRange.length - 1]) && mealKey !== 'breakfast'
+                      ? 'Not available (Check-out at 11 AM)'
+                      : 'Not available'
+                    }
+                  </div>
+                </div>
+                <AlertCircle className="w-4 h-4 text-gray-400" />
+              </div>
+            ))}
           </div>
+
+          {/* NEW: Show timing info for special days */}
+          {(isSameDay(date, dateRange[0]) || isSameDay(date, dateRange[dateRange.length - 1])) && (
+            <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded text-xs text-amber-800">
+              {isSameDay(date, dateRange[0]) && (
+                <>📍 Check-in day: No breakfast available (Check-in at 12:00 PM)</>
+              )}
+              {isSameDay(date, dateRange[dateRange.length - 1]) && (
+                <>📍 Check-out day: Only breakfast available (Check-out at 11:00 AM)</>
+              )}
+            </div>
+          )}
         </div>
       );
     });
@@ -131,14 +201,14 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
           <Alert className="border-green-200 bg-green-50">
             <CheckCircle className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-green-800">
-              All meals are configured! Review your selections below.
+              Select available meals to configure! Review your selections.
             </AlertDescription>
           </Alert>
         ) : (
           <Alert className="border-amber-200 bg-amber-50">
             <AlertCircle className="h-4 w-4 text-amber-600" />
             <AlertDescription className="text-amber-800">
-              {totalConfigured} of {totalRequired} meals configured. 
+              {totalConfigured} of {totalRequired} available meals configured. 
               Please complete the remaining configurations.
             </AlertDescription>
           </Alert>
@@ -192,7 +262,7 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
           </div>
         </div>
         <div className="text-sm text-gray-600 mt-1">
-          Based on {guestCount} guests for {dateRange.length} day{dateRange.length > 1 ? 's' : ''}
+          Based on {guestCount} guests for {dateRange.length} day{dateRange.length > 1 ? 's' : ''} (excluding unavailable meals)
         </div>
       </div>
     </div>
@@ -200,3 +270,4 @@ const FoodSummary: React.FC<FoodSummaryProps> = ({
 };
 
 export default FoodSummary;
+

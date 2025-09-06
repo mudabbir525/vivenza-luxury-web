@@ -498,7 +498,7 @@
 
 
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -570,15 +570,56 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 }) => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [showCouponSuccess, setShowCouponSuccess] = useState(false);
+  const [prevAppliedCoupon, setPrevAppliedCoupon] = useState<any>(null);
+
+  // Show congratulations modal when coupon is applied
+  useEffect(() => {
+    if (appliedCoupon && !prevAppliedCoupon) {
+      setShowCouponSuccess(true);
+    }
+    setPrevAppliedCoupon(appliedCoupon);
+  }, [appliedCoupon, prevAppliedCoupon]);
 
   const handleAuthRedirect = () => {
     navigate('/login', { state: { from: '/booking' } });
+  };
+
+  const handleContinue = () => {
+    setShowCouponSuccess(false);
   };
 
   const priceBreakdown = getPriceBreakdown();
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
+      {/* Coupon Success Modal */}
+      {showCouponSuccess && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mt-4">Congratulations!</h3>
+              <p className="text-sm text-gray-500 mt-2">
+                You've successfully applied coupon code <span className="font-bold text-green-600">{appliedCoupon?.code}</span> and saved ₹{couponDiscount.toLocaleString()}.
+              </p>
+              <div className="mt-6">
+                <Button
+                  onClick={handleContinue}
+                  className="bg-green-600 hover:bg-green-700 px-6"
+                >
+                  Continue
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 
       {/* Coupon Section */}
@@ -618,6 +659,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                 <span className="text-xs bg-green-200 text-green-800 px-2 py-1 rounded">Applied</span>
               </div>
               <p className="text-sm text-green-700 mt-1">{appliedCoupon.description}</p>
+              <p className="text-sm text-green-800 font-medium mt-1">
+                You saved ₹{couponDiscount.toLocaleString()}!
+              </p>
             </div>
             <button
               onClick={removeCoupon}
