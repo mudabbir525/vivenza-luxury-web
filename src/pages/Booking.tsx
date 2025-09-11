@@ -713,7 +713,7 @@ const Booking = () => {
   const LoginPrompt = () => (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow bg-stone-50 pt-24">
+      <div className="flex-grow bg-stone-50 pt-32">
         <div className="container mx-auto py-16 px-4">
           <div className="max-w-2xl mx-auto text-center">
             {/* Header */}
@@ -864,7 +864,7 @@ const Booking = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow bg-stone-50 pt-24">
+      <div className="flex-grow bg-stone-50 pt-32">
         <div className="container mt-4 mx-auto py-16 px-4">
           {/* Header with title and timing info */}
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-center mb-6">

@@ -324,7 +324,7 @@ const Hero: React.FC = () => {
           </div>
         </div>
         
-        <div 
+        {/* <div 
           className="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-fade-in"
           style={{ animationDelay: '0.6s' }}
         >
@@ -334,7 +334,7 @@ const Hero: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
       
       {/* Carousel indicators */}
