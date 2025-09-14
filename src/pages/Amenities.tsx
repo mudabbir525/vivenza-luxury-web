@@ -71,7 +71,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import ScrollToTopButton from '../components/ScrollToTopButton';
 interface AmenityCategory {
   id: number;
   name: string;
@@ -215,6 +215,7 @@ const Amenities = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

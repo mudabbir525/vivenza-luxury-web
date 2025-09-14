@@ -102,7 +102,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import ScrollToTopButton from '../components/ScrollToTopButton';
 interface Event {
   id: number;
   title: string;
@@ -298,6 +298,7 @@ const Events = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

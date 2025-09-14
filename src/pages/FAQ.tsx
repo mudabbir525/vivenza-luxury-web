@@ -2,6 +2,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 import {
   Accordion,
   AccordionContent,
@@ -64,6 +65,7 @@ const FAQ = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

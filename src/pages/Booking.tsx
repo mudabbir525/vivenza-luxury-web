@@ -18,7 +18,7 @@ import OrderSummary from "../components/OrderSummary";
 import { useAuth } from "./auth-context";
 import { useNavigate } from "react-router-dom";
 import DatePicker from '../components/DatePicker';
-
+import ScrollToTopButton from '../components/ScrollToTopButton';
 interface BookingPackage {
   id: number;
   name: string;
@@ -1111,6 +1111,7 @@ const Booking = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTopButton />
 
       {/* NEW: Package Info Modal */}
       <PackageInfoModal />

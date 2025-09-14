@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import ScrollToTopButton from '../components/ScrollToTopButton';
 const Gallery = () => {
   const [galleryData, setGalleryData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -169,6 +169,7 @@ const Gallery = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

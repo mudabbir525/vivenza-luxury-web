@@ -4,15 +4,75 @@ import { Menu, X, MapPin, Phone, Facebook, Twitter, Instagram, User, UserPlus, L
 // import { useAuth } from '@/pages/Authsystem';
 import { useAuth } from '@/pages/auth-context';
 import UserDropdown from '../components/UserDropdown';
+
+// TypeScript interface for business details
+interface BusinessDetails {
+  id: number;
+  mobile_number: string;
+  whatsapp_number: string;
+  email: string;
+  address_long: string;
+  address_short: string;
+  facebook_link: string | null;
+  instagram_link: string | null;
+  twitter_link: string | null;
+  google_map_link: string | null;
+  business_hours: string;
+  updated_at: string;
+}
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, logout } = useAuth();
 
+  // Business details state
+  const [businessDetails, setBusinessDetails] = useState<BusinessDetails | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Fetch business details from API
+  useEffect(() => {
+    const fetchBusinessDetails = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('https://admin.webhostdevs.com/api/business_details.php', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        // Handle different response structures
+        if (result.success && result.data) {
+          setBusinessDetails(result.data);
+        } else if (result.id) {
+          // Direct data without wrapper
+          setBusinessDetails(result);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (err) {
+        console.error('Error fetching business details:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch business details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBusinessDetails();
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -33,15 +93,36 @@ const Navbar: React.FC = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
+  // Dynamic social links from API with fallbacks
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { 
+      icon: Facebook, 
+      href: businessDetails?.facebook_link || '#', 
+      label: 'Facebook',
+      isActive: !!businessDetails?.facebook_link 
+    },
+    { 
+      icon: Twitter, 
+      href: businessDetails?.twitter_link || '#', 
+      label: 'Twitter',
+      isActive: !!businessDetails?.twitter_link 
+    },
+    { 
+      icon: Instagram, 
+      href: businessDetails?.instagram_link || '#', 
+      label: 'Instagram',
+      isActive: !!businessDetails?.instagram_link 
+    },
   ];
 
   const handleLogout = () => {
     logout();
     setIsMenuOpen(false);
+  };
+  // Format phone number for display
+  const formatPhoneNumber = (number: string | undefined) => {
+    if (!number) return 'Loading...';
+    return number.startsWith('+91') ? number : `+91 ${number}`;
   };
 
   return (
@@ -66,20 +147,28 @@ const Navbar: React.FC = () => {
           : 'linear-gradient(to right, rgba(118, 37, 79), rgba(118, 37, 79))'
       }}>
       {/* Top Bar */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-3">
-            {/* Left Side - Location & Phone */}
-            <div className="hidden md:flex items-center space-x-6 text-white text-sm">
-              <div className="flex items-center space-x-2 text-xs">
-                <MapPin className="h-4 w-4" />
-                <span>108, Murthuzaguda,Moinabad</span>
+        <div className="border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-3">
+              {/* Left Side - Location & Phone - Dynamic */}
+              <div className="hidden md:flex items-center space-x-6 text-white text-sm">
+                <div className="flex items-center space-x-2 text-xs">
+                  <MapPin className="h-4 w-4" />
+                  <span>
+                    {loading ? 'Loading...' : 
+                     error ? 'Address unavailable' : 
+                     businessDetails?.address_short || 'Address unavailable'}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2 text-xs">
+                  <Phone className="h-4 w-4" />
+                  <span>
+                    {loading ? 'Loading...' : 
+                     error ? 'Phone unavailable' : 
+                     formatPhoneNumber(businessDetails?.mobile_number)}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2 text-xs">
-                <Phone className="h-4 w-4" />
-                <span>+91 96977 98888</span>
-              </div>
-            </div>
 
             {/* Center - Logo */}
             <Link to="/" className="flex items-center">
@@ -90,21 +179,35 @@ const Navbar: React.FC = () => {
               />
             </Link>
 
-            {/* Right Side - Social Icons & Auth */}
-            <div className="hidden md:flex items-center space-x-4">
-              {/* Social Icons */}
-              <div className="flex items-center space-x-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className="text-white hover:text-yellow-400 transition-colors duration-300"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
+{/* Right Side - Social Icons & Auth - Dynamic */}
+              <div className="hidden md:flex items-center space-x-4">
+                {/* Dynamic Social Icons */}
+                <div className="flex items-center space-x-3">
+                  {!loading && !error && socialLinks.map((social, index) => (
+                    social.isActive ? (
+                      <a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white hover:text-yellow-400 transition-colors duration-300"
+                        aria-label={social.label}
+                      >
+                        <social.icon className="h-4 w-4" />
+                      </a>
+                    ) : null
+                  ))}
+                  
+                  {/* Show loading state for social icons */}
+                  {loading && (
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 bg-white/30 animate-pulse rounded"></div>
+                      <div className="w-4 h-4 bg-white/30 animate-pulse rounded"></div>
+                      <div className="w-4 h-4 bg-white/30 animate-pulse rounded"></div>
+                    </div>
+                  )}
+                </div>
+
 
               {/* Divider */}
               <div className="h-4 w-px bg-white/30"></div>
@@ -197,36 +300,45 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="lg:hidden shadow-xl animate-fade-in" style={{
-          background: 'linear-gradient(to bottom, rgb(118, 37, 79), rgb(118, 37, 79))'
-        }}>
-          <div className="flex flex-col py-6 space-y-3 px-6">
-            {/* Mobile Contact Info */}
-            <div className="border-b border-white/10 pb-4 mb-4">
-              <div className="flex flex-col space-y-2 text-white text-sm">
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>225 Beach Street, Australian</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="h-4 w-4" />
-                  <span>1-548-854-8898</span>
+        {isMenuOpen && (
+          <div className="lg:hidden shadow-xl animate-fade-in" style={{
+            background: 'linear-gradient(to bottom, rgb(118, 37, 79), rgb(118, 37, 79))'
+          }}>
+            <div className="flex flex-col py-6 space-y-3 px-6">
+              {/* Mobile Contact Info - Dynamic */}
+              <div className="border-b border-white/10 pb-4 mb-4">
+                <div className="flex flex-col space-y-2 text-white text-sm">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>
+                      {loading ? 'Loading address...' : 
+                       error ? 'Address unavailable' : 
+                       businessDetails?.address_short || 'Address unavailable'}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Phone className="h-4 w-4" />
+                    <span>
+                      {loading ? 'Loading phone...' : 
+                       error ? 'Phone unavailable' : 
+                       formatPhoneNumber(businessDetails?.mobile_number)}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Mobile Navigation Links */}
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="py-2 px-4 text-white font-medium transition-colors rounded-lg hover:bg-white/10"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
+              {/* Mobile Navigation Links */}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="py-2 px-4 text-white font-medium transition-colors rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+
 
             {/* Mobile Auth Links */}
             <div className="border-t border-white/10 pt-4 mt-4">
@@ -269,19 +381,31 @@ const Navbar: React.FC = () => {
                 </div>
               )}
 
-              {/* Mobile Social Icons */}
-              <div className="flex items-center space-x-4 mb-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className="text-white hover:text-yellow-400 transition-colors duration-300"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </div>
+{/* Mobile Dynamic Social Icons */}
+                <div className="flex items-center space-x-4 mb-4">
+                  {!loading && !error && socialLinks.map((social, index) => (
+                    social.isActive ? (
+                      <a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white hover:text-yellow-400 transition-colors duration-300"
+                        aria-label={social.label}
+                      >
+                        <social.icon className="h-5 w-5" />
+                      </a>
+                    ) : null
+                  ))}
+                  {/* Loading state for mobile social icons */}
+                  {loading && (
+                    <div className="flex items-center space-x-4">
+                      <div className="w-5 h-5 bg-white/30 animate-pulse rounded"></div>
+                      <div className="w-5 h-5 bg-white/30 animate-pulse rounded"></div>
+                      <div className="w-5 h-5 bg-white/30 animate-pulse rounded"></div>
+                    </div>
+                  )}
+                </div>
 
               {/* Mobile Book Now Button */}
               <Link

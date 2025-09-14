@@ -9,6 +9,7 @@ import GalleryPreview from '../components/GalleryPreview';
 import Testimonials from '../components/Testimonials';
 import ContactPreview from '../components/ContactPreview';
 import Footer from '../components/Footer';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const Index: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const Index: React.FC = () => {
       <Testimonials />
       <ContactPreview />
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

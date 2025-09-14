@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./pages/auth-context";
 import AppRoutes from "./pages/AppRoutes"; // We'll create this next
 import Navbar from "./components/Navbar";
-
+import ScrollToTop from "./components/ScrollToTop"; 
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -17,6 +17,7 @@ const App = () => (
       <Sonner />
       <HotToaster position="top-right" />
       <BrowserRouter>
+      <ScrollToTop />
         <AuthProvider>
           <Navbar />
           <AppRoutes />
