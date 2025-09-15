@@ -1462,7 +1462,7 @@ useEffect(() => {
     endDate.setDate(endDate.getDate() - 1);
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
-      const isWeekend = dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6; // Sunday = 0, Friday = 5, Saturday = 6
       
       const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
       totalPrice += typeof dailyPrice === "string" 
@@ -1493,7 +1493,7 @@ useEffect(() => {
     endDate.setDate(endDate.getDate() - 1);
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
-      if (dayOfWeek === 0 || dayOfWeek === 6) {
+      if (dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6) {
         weekends++;
       } else {
         weekdays++;
