@@ -127,8 +127,18 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-    
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
+    {/* Maintenance Banner - Add this at the very top */}
+      <div className="fixed top-0 left-0 right-0 z-[9999] bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white shadow-lg">
+        <div className="overflow-hidden whitespace-nowrap">
+          <div className="animate-marquee inline-block py-3 px-4">
+            <span className="text-sm md:text-base font-semibold">
+              🚧 Website Under Maintenance - We're working hard to bring you an amazing experience! 
+              Site will be live in a few days. Thank you for your patience! 🚧
+            </span>
+          </div>
+        </div>
+      </div>
+    <nav className={`pt-10 fixed w-full z-50 transition-all duration-300 ${isScrolled
         ? 'shadow-lg'
         : 'backdrop-blur-sm'
       }`} style={{

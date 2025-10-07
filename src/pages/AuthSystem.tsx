@@ -212,7 +212,7 @@ const VivenzaAuth = () => {
   const currentStepIndex = stepConfig.findIndex(s => s.key === step);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-vivenza-offWhite flex items-center justify-center p-4">
       {/* Modal Backdrop */}
       <div className="fixed inset-0 bg-white/20 backdrop-blur-sm"></div>
       
