@@ -72,7 +72,7 @@ const Gallery = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex-grow mt-12 bg-vivenza-offWhite pt-8">
+        <div className="flex-grow mt-12 bg-vivenza-offWhite">
           <div className="luxury-container mt-4 py-20">
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
@@ -120,7 +120,7 @@ const Gallery = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow mt-12 bg-vivenza-offWhite pt-8">
+      <div className="flex-grow mt-12 bg-vivenza-offWhite">
         <div className="luxury-container mt-4 py-20">
           <h1 className="font-display mt-4 text-4xl md:text-5xl lg:text-6xl font-medium text-center mb-6">
             Gallery
