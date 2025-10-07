@@ -613,7 +613,7 @@ useEffect(() => {
 
       // 🔥 Step 2: Open Razorpay checkout with real order_id
       const options = {
-        key: "rzp_test_R6qauIjIkLmjM1",
+        key: "rzp_live_R6qpNwT08jtUaq",
         amount: amount, // already in paise from backend
         currency: currency,
         name: "Vivenza Farmhouse Booking",
