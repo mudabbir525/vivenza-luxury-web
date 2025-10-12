@@ -418,6 +418,486 @@
 
 
 
+// import React, { useState, useEffect } from "react";
+// import { User, Phone, Home, Calendar, Edit, Save, X, Construction, Mail, FileText, Upload, Check } from "lucide-react";
+// import { useAuth } from "./auth-context";
+
+// const ProfilePage = () => {
+//   const { user, updateUser, logout } = useAuth();
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [activeTab, setActiveTab] = useState("profile");
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [editedProfile, setEditedProfile] = useState({
+//     name: "",
+//     address: "",
+//     phone: "",
+//     email: "",
+//     identity_type: "",
+//     identity_document: null
+//   });
+
+//   useEffect(() => {
+//     if (user) {
+//       setEditedProfile({
+//         name: user.name || "",
+//         address: user.address || "",
+//         phone: user.phone || "",
+//         email: user.email || "",
+//         identity_type: user.identity_type || "",
+//         identity_document: null
+//       });
+//       setLoading(false);
+//     }
+//   }, [user]);
+
+//   const handleInputChange = (field, value) => {
+//     setEditedProfile((prev) => ({
+//       ...prev,
+//       [field]: value,
+//     }));
+//   };
+
+//   const handleFileChange = (e) => {
+//     const file = e.target.files?.[0];
+//     if (file) {
+//       if (file.size > 5 * 1024 * 1024) {
+//         setError('File size should be less than 5MB');
+//         return;
+//       }
+      
+//       const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+//       if (!allowedTypes.includes(file.type)) {
+//         setError('Please upload JPEG, PNG, or PDF files only');
+//         return;
+//       }
+      
+//       setEditedProfile(prev => ({ ...prev, identity_document: file }));
+//     }
+//   };
+
+//   const handleEditSubmit = async (e) => {
+//     e.preventDefault();
+//     setError(null);
+//     setLoading(true);
+
+//     try {
+//       const formData = new FormData();
+//       formData.append('name', editedProfile.name.trim());
+//       formData.append('address', editedProfile.address.trim());
+//       formData.append('phone', editedProfile.phone);
+//       formData.append('email', editedProfile.email.trim());
+      
+//       if (editedProfile.identity_type) {
+//         formData.append('identity_type', editedProfile.identity_type);
+//       }
+      
+//       if (editedProfile.identity_document) {
+//         formData.append('identity_document', editedProfile.identity_document);
+//       }
+
+//       const response = await fetch(
+//         "https://admin.webhostdevs.com/api/login/update_profile.php",
+//         {
+//           method: "POST",
+//           body: formData,
+//         }
+//       );
+
+//       const data = await response.json();
+
+//       if (data.success) {
+//         const updatedUser = {
+//           ...user,
+//           name: editedProfile.name.trim(),
+//           address: editedProfile.address.trim(),
+//           email: editedProfile.email.trim(),
+//           identity_type: editedProfile.identity_type || user.identity_type
+//         };
+//         updateUser(updatedUser);
+//         setIsEditing(false);
+//         setError(null);
+//       } else {
+//         throw new Error(data.error || data.message || "Failed to update profile");
+//       }
+//     } catch (err) {
+//       console.error('Profile update error:', err);
+//       setError(err.message || 'Failed to update profile. Please try again.');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleCancel = () => {
+//     setIsEditing(false);
+//     setEditedProfile({
+//       name: user?.name || "",
+//       address: user?.address || "",
+//       phone: user?.phone || "",
+//       email: user?.email || "",
+//       identity_type: user?.identity_type || "",
+//       identity_document: null
+//     });
+//     setError(null);
+//   };
+
+//   const getIdentityTypeName = (type) => {
+//     const types = {
+//       'aadhaar': 'Aadhaar Card',
+//       'pan': 'PAN Card',
+//       'passport': 'Passport',
+//       'driving': 'Driving License'
+//     };
+//     return types[type] || type;
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-gray-50">
+//         <div className="text-center">
+//           <div className="animate-spin rounded-full h-16 w-16 border-4 border-amber-200 border-t-amber-600 mx-auto"></div>
+//           <p className="mt-4 text-gray-600 font-medium">Loading profile...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="min-h-screen bg-gray-50">
+//       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+//         <div className="bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden mt-40">
+//           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+//           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+          
+//           <div className="relative flex flex-col md:flex-row items-center gap-6">
+//             <div className="relative">
+//               <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+//                 <User className="w-12 h-12 text-amber-600" />
+//               </div>
+//               <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-amber-600 flex items-center justify-center">
+//                 <Check className="w-4 h-4 text-white" />
+//               </div>
+//             </div>
+//             <div className="text-center md:text-left flex-1">
+//               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+//                 {user?.name || 'User'}
+//               </h1>
+//               <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-amber-50">
+//                 <div className="flex items-center gap-2">
+//                   <Phone className="w-4 h-4" />
+//                   <span className="font-medium">{user?.phone || 'Not provided'}</span>
+//                 </div>
+//                 {user?.email && (
+//                   <>
+//                     <span className="hidden md:inline">•</span>
+//                     <div className="flex items-center gap-2">
+//                       <Mail className="w-4 h-4" />
+//                       <span className="font-medium">{user.email}</span>
+//                     </div>
+//                   </>
+//                 )}
+//               </div>
+//             </div>
+//             {!isEditing && (
+//               <button
+//                 onClick={() => setIsEditing(true)}
+//                 className="bg-white text-amber-600 px-6 py-3 rounded-xl font-semibold hover:bg-amber-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
+//               >
+//                 <Edit className="w-5 h-5" />
+//                 Edit Profile
+//               </button>
+//             )}
+//           </div>
+//         </div>
+
+//         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+//           <div className="border-b border-gray-200 bg-gray-50">
+//             <nav className="flex space-x-8 px-6 md:px-8">
+//               <button
+//                 onClick={() => setActiveTab("profile")}
+//                 className={`py-5 px-1 border-b-3 font-semibold text-sm transition-all duration-200 ${
+//                   activeTab === "profile"
+//                     ? "border-amber-500 text-amber-600"
+//                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+//                 }`}
+//               >
+//                 <User className="w-4 h-4 inline mr-2" />
+//                 My Profile
+//               </button>
+//             </nav>
+//           </div>
+
+//           <div className="p-6 md:p-8">
+//             {activeTab === "profile" && (
+//               <div>
+//                 {!isEditing && (
+//                   <div className="mb-8">
+//                     <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Information</h2>
+//                     <p className="text-gray-500">Manage your personal information and identity documents</p>
+//                   </div>
+//                 )}
+
+//                 {error && (
+//                   <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-4 mb-6 flex items-start gap-3">
+//                     <div className="flex-shrink-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+//                       <X className="w-4 h-4 text-white" />
+//                     </div>
+//                     <p className="text-red-700 font-medium">{error}</p>
+//                   </div>
+//                 )}
+
+//                 {isEditing ? (
+//                   <div className="space-y-6">
+//                     <div className="mb-6">
+//                       <h2 className="text-2xl font-bold text-gray-900 mb-2">Edit Profile</h2>
+//                       <p className="text-gray-500">Update your personal information below</p>
+//                     </div>
+
+//                     <div className="grid md:grid-cols-2 gap-6">
+//                       <div className="space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <User className="w-4 h-4 mr-2 text-amber-600" />
+//                           Full Name
+//                         </label>
+//                         <input
+//                           type="text"
+//                           value={editedProfile.name}
+//                           onChange={(e) => handleInputChange("name", e.target.value)}
+//                           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+//                           placeholder="Enter your full name"
+//                           required
+//                         />
+//                       </div>
+
+//                       <div className="space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <Mail className="w-4 h-4 mr-2 text-amber-600" />
+//                           Email Address
+//                         </label>
+//                         <input
+//                           type="email"
+//                           value={editedProfile.email}
+//                           onChange={(e) => handleInputChange("email", e.target.value)}
+//                           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+//                           placeholder="your.email@example.com"
+//                           required
+//                         />
+//                       </div>
+
+//                       <div className="space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <Phone className="w-4 h-4 mr-2 text-amber-600" />
+//                           Phone Number
+//                         </label>
+//                         <input
+//                           type="tel"
+//                           value={editedProfile.phone}
+//                           className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed"
+//                           disabled
+//                         />
+//                         <p className="text-xs text-gray-500 flex items-center gap-1">
+//                           <span className="inline-block w-1 h-1 bg-gray-400 rounded-full"></span>
+//                           Phone number cannot be changed
+//                         </p>
+//                       </div>
+
+//                       <div className="space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <FileText className="w-4 h-4 mr-2 text-amber-600" />
+//                           Identity Type
+//                         </label>
+//                         <select
+//                           value={editedProfile.identity_type}
+//                           onChange={(e) => handleInputChange("identity_type", e.target.value)}
+//                           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white"
+//                         >
+//                           <option value="">Select Identity Type</option>
+//                           <option value="aadhaar">Aadhaar Card</option>
+//                           <option value="pan">PAN Card</option>
+//                           <option value="passport">Passport</option>
+//                           <option value="driving">Driving License</option>
+//                         </select>
+//                       </div>
+
+//                       <div className="md:col-span-2 space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <Home className="w-4 h-4 mr-2 text-amber-600" />
+//                           Address
+//                         </label>
+//                         <textarea
+//                           value={editedProfile.address}
+//                           onChange={(e) => handleInputChange("address", e.target.value)}
+//                           rows={3}
+//                           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 resize-none"
+//                           placeholder="Enter your complete address"
+//                           required
+//                         />
+//                       </div>
+
+//                       <div className="md:col-span-2 space-y-2">
+//                         <label className="flex items-center text-sm font-semibold text-gray-700">
+//                           <Upload className="w-4 h-4 mr-2 text-amber-600" />
+//                           Update Identity Document (Optional)
+//                         </label>
+//                         <div className="relative">
+//                           <input
+//                             type="file"
+//                             onChange={handleFileChange}
+//                             accept=".jpg,.jpeg,.png,.pdf"
+//                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+//                           />
+//                         </div>
+//                         <p className="text-xs text-gray-500 flex items-center gap-1">
+//                           <span className="inline-block w-1 h-1 bg-gray-400 rounded-full"></span>
+//                           Upload JPEG, PNG, or PDF files (Max 5MB)
+//                         </p>
+//                         {editedProfile.identity_document && (
+//                           <div className="mt-3 flex items-center gap-3 bg-gradient-to-r from-amber-50 to-amber-100 p-4 rounded-xl border border-amber-200">
+//                             <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
+//                               <FileText className="w-5 h-5 text-white" />
+//                             </div>
+//                             <span className="text-sm font-medium text-amber-900 flex-1 truncate">
+//                               {editedProfile.identity_document.name}
+//                             </span>
+//                             <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
+//                           </div>
+//                         )}
+//                       </div>
+//                     </div>
+
+//                     <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
+//                       <button
+//                         onClick={handleEditSubmit}
+//                         disabled={loading}
+//                         className="flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+//                       >
+//                         <Save className="w-5 h-5" />
+//                         {loading ? "Saving..." : "Save Changes"}
+//                       </button>
+//                       <button
+//                         onClick={handleCancel}
+//                         className="flex items-center justify-center gap-2 bg-gray-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+//                       >
+//                         <X className="w-5 h-5" />
+//                         Cancel
+//                       </button>
+//                     </div>
+//                   </div>
+//                 ) : (
+//                   <div className="grid md:grid-cols-2 gap-8">
+//                     <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+//                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+//                         <User className="w-4 h-4 mr-2 text-amber-600" />
+//                         Full Name
+//                       </label>
+//                       <p className="text-lg font-semibold text-gray-900">{user?.name || 'Not provided'}</p>
+//                     </div>
+
+//                     <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+//                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+//                         <Phone className="w-4 h-4 mr-2 text-amber-600" />
+//                         Phone Number
+//                       </label>
+//                       <p className="text-lg font-semibold text-gray-900">{user?.phone || 'Not provided'}</p>
+//                     </div>
+
+//                     <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+//                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+//                         <Mail className="w-4 h-4 mr-2 text-amber-600" />
+//                         Email Address
+//                       </label>
+//                       <p className="text-lg font-semibold text-gray-900">{user?.email || 'Not provided'}</p>
+//                     </div>
+
+//                     <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+//                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+//                         <FileText className="w-4 h-4 mr-2 text-amber-600" />
+//                         Identity Type
+//                       </label>
+//                       <p className="text-lg font-semibold text-gray-900">
+//                         {user?.identity_type ? getIdentityTypeName(user.identity_type) : 'Not provided'}
+//                       </p>
+//                     </div>
+
+//                     <div className="md:col-span-2 space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+//                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+//                         <Home className="w-4 h-4 mr-2 text-amber-600" />
+//                         Address
+//                       </label>
+//                       <p className="text-lg font-semibold text-gray-900">{user?.address || 'Not provided'}</p>
+//                     </div>
+
+//                     {user?.identity_document && (
+//                       <div className="md:col-span-2 space-y-3 p-5 bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200">
+//                         <label className="flex items-center text-xs font-semibold text-amber-800 uppercase tracking-wide">
+//                           <FileText className="w-4 h-4 mr-2" />
+//                           Identity Document
+//                         </label>
+//                         <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
+//                           <div className="flex items-center gap-3">
+//                             <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
+//                               <FileText className="w-5 h-5 text-white" />
+//                             </div>
+//                             <div>
+//                               <span className="font-semibold text-gray-900 block">Document uploaded</span>
+//                               <span className="text-xs text-gray-500">Verified identity document</span>
+//                             </div>
+//                           </div>
+//                           {user.identity_document && (
+//                             <a
+//                               href={`https://admin.webhostdevs.com/api/login/${user.identity_document}`}
+//                               target="_blank"
+//                               rel="noopener noreferrer"
+//                               className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors duration-200 text-sm font-semibold shadow-md hover:shadow-lg"
+//                             >
+//                               View Document
+//                             </a>
+//                           )}
+//                         </div>
+//                       </div>
+//                     )}
+//                   </div>
+//                 )}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProfilePage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import { User, Phone, Home, Calendar, Edit, Save, X, Construction, Mail, FileText, Upload, Check } from "lucide-react";
 import { useAuth } from "./auth-context";
@@ -553,10 +1033,10 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-amber-200 border-t-amber-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 font-medium">Loading profile...</p>
+          <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-4 border-amber-200 border-t-amber-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 font-medium text-sm sm:text-base">Loading profile...</p>
         </div>
       </div>
     );
@@ -564,35 +1044,35 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden mt-40">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+      <div className="max-w-6xl mx-auto p-3 sm:p-4 md:p-6 lg:p-8">
+        <div className="bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 relative overflow-hidden mt-20 md:mt-20 sm:mt-20 lg:mt-40">
+          <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-white opacity-5 rounded-full -mr-16 sm:-mr-24 lg:-mr-32 -mt-16 sm:-mt-24 lg:-mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-white opacity-5 rounded-full -ml-12 sm:-ml-18 lg:-ml-24 -mb-12 sm:-mb-18 lg:-mb-24"></div>
           
-          <div className="relative flex flex-col md:flex-row items-center gap-6">
+          <div className="relative flex flex-col items-center gap-4 sm:gap-6 text-center sm:text-left sm:flex-row">
             <div className="relative">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <User className="w-12 h-12 text-amber-600" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <User className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-amber-600" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-amber-600 flex items-center justify-center">
-                <Check className="w-4 h-4 text-white" />
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full border-2 sm:border-4 border-amber-600 flex items-center justify-center">
+                <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
             </div>
-            <div className="text-center md:text-left flex-1">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <div className="flex-1 w-full sm:w-auto">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 break-words">
                 {user?.name || 'User'}
               </h1>
-              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-amber-50">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-amber-50 text-sm sm:text-base">
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
                   <span className="font-medium">{user?.phone || 'Not provided'}</span>
                 </div>
                 {user?.email && (
                   <>
-                    <span className="hidden md:inline">•</span>
+                    <span className="hidden sm:inline">•</span>
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4" />
-                      <span className="font-medium">{user.email}</span>
+                      <span className="font-medium break-all">{user.email}</span>
                     </div>
                   </>
                 )}
@@ -601,98 +1081,98 @@ const ProfilePage = () => {
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-white text-amber-600 px-6 py-3 rounded-xl font-semibold hover:bg-amber-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
+                className="bg-white text-amber-600 px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-amber-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 text-sm sm:text-base"
               >
-                <Edit className="w-5 h-5" />
+                <Edit className="w-4 h-4 sm:w-5 sm:h-5" />
                 Edit Profile
               </button>
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg overflow-hidden">
           <div className="border-b border-gray-200 bg-gray-50">
-            <nav className="flex space-x-8 px-6 md:px-8">
+            <nav className="flex space-x-4 sm:space-x-8 px-4 sm:px-6 lg:px-8">
               <button
                 onClick={() => setActiveTab("profile")}
-                className={`py-5 px-1 border-b-3 font-semibold text-sm transition-all duration-200 ${
+                className={`py-4 sm:py-5 px-1 border-b-2 sm:border-b-3 font-semibold text-xs sm:text-sm transition-all duration-200 ${
                   activeTab === "profile"
                     ? "border-amber-500 text-amber-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
               >
-                <User className="w-4 h-4 inline mr-2" />
+                <User className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" />
                 My Profile
               </button>
             </nav>
           </div>
 
-          <div className="p-6 md:p-8">
+          <div className="p-4 sm:p-6 lg:p-8">
             {activeTab === "profile" && (
               <div>
                 {!isEditing && (
-                  <div className="mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Information</h2>
-                    <p className="text-gray-500">Manage your personal information and identity documents</p>
+                  <div className="mb-6 sm:mb-8">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Profile Information</h2>
+                    <p className="text-gray-500 text-sm sm:text-base">Manage your personal information and identity documents</p>
                   </div>
                 )}
 
                 {error && (
-                  <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-4 mb-6 flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                      <X className="w-4 h-4 text-white" />
+                  <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 flex items-start gap-2 sm:gap-3">
+                    <div className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded-full flex items-center justify-center">
+                      <X className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                     </div>
-                    <p className="text-red-700 font-medium">{error}</p>
+                    <p className="text-red-700 font-medium text-sm sm:text-base">{error}</p>
                   </div>
                 )}
 
                 {isEditing ? (
-                  <div className="space-y-6">
-                    <div className="mb-6">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Edit Profile</h2>
-                      <p className="text-gray-500">Update your personal information below</p>
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="mb-4 sm:mb-6">
+                      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Edit Profile</h2>
+                      <p className="text-gray-500 text-sm sm:text-base">Update your personal information below</p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       <div className="space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <User className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <User className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Full Name
                         </label>
                         <input
                           type="text"
                           value={editedProfile.name}
                           onChange={(e) => handleInputChange("name", e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 text-sm sm:text-base"
                           placeholder="Enter your full name"
                           required
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <Mail className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <Mail className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Email Address
                         </label>
                         <input
                           type="email"
                           value={editedProfile.email}
                           onChange={(e) => handleInputChange("email", e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 text-sm sm:text-base"
                           placeholder="your.email@example.com"
                           required
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <Phone className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <Phone className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Phone Number
                         </label>
                         <input
                           type="tel"
                           value={editedProfile.phone}
-                          className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed"
+                          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed text-sm sm:text-base"
                           disabled
                         />
                         <p className="text-xs text-gray-500 flex items-center gap-1">
@@ -702,14 +1182,14 @@ const ProfilePage = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <FileText className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Identity Type
                         </label>
                         <select
                           value={editedProfile.identity_type}
                           onChange={(e) => handleInputChange("identity_type", e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white"
+                          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white text-sm sm:text-base"
                         >
                           <option value="">Select Identity Type</option>
                           <option value="aadhaar">Aadhaar Card</option>
@@ -720,23 +1200,23 @@ const ProfilePage = () => {
                       </div>
 
                       <div className="md:col-span-2 space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <Home className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <Home className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Address
                         </label>
                         <textarea
                           value={editedProfile.address}
                           onChange={(e) => handleInputChange("address", e.target.value)}
                           rows={3}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 resize-none"
+                          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 resize-none text-sm sm:text-base"
                           placeholder="Enter your complete address"
                           required
                         />
                       </div>
 
                       <div className="md:col-span-2 space-y-2">
-                        <label className="flex items-center text-sm font-semibold text-gray-700">
-                          <Upload className="w-4 h-4 mr-2 text-amber-600" />
+                        <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700">
+                          <Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                           Update Identity Document (Optional)
                         </label>
                         <div className="relative">
@@ -744,7 +1224,7 @@ const ProfilePage = () => {
                             type="file"
                             onChange={handleFileChange}
                             accept=".jpg,.jpeg,.png,.pdf"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                            className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 text-xs sm:text-sm"
                           />
                         </div>
                         <p className="text-xs text-gray-500 flex items-center gap-1">
@@ -752,94 +1232,94 @@ const ProfilePage = () => {
                           Upload JPEG, PNG, or PDF files (Max 5MB)
                         </p>
                         {editedProfile.identity_document && (
-                          <div className="mt-3 flex items-center gap-3 bg-gradient-to-r from-amber-50 to-amber-100 p-4 rounded-xl border border-amber-200">
-                            <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <FileText className="w-5 h-5 text-white" />
+                          <div className="mt-3 flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-50 to-amber-100 p-3 sm:p-4 rounded-lg sm:rounded-xl border border-amber-200">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
-                            <span className="text-sm font-medium text-amber-900 flex-1 truncate">
+                            <span className="text-xs sm:text-sm font-medium text-amber-900 flex-1 truncate">
                               {editedProfile.identity_document.name}
                             </span>
-                            <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
+                            <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-6 border-t">
                       <button
                         onClick={handleEditSubmit}
                         disabled={loading}
-                        className="flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+                        className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-green-700 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 text-sm sm:text-base"
                       >
-                        <Save className="w-5 h-5" />
+                        <Save className="w-4 h-4 sm:w-5 sm:h-5" />
                         {loading ? "Saving..." : "Save Changes"}
                       </button>
                       <button
                         onClick={handleCancel}
-                        className="flex items-center justify-center gap-2 bg-gray-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                        className="flex items-center justify-center gap-2 bg-gray-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-gray-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-sm sm:text-base"
                       >
-                        <X className="w-5 h-5" />
+                        <X className="w-4 h-4 sm:w-5 sm:h-5" />
                         Cancel
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="space-y-3 p-4 sm:p-5 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        <User className="w-4 h-4 mr-2 text-amber-600" />
+                        <User className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                         Full Name
                       </label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.name || 'Not provided'}</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900 break-words">{user?.name || 'Not provided'}</p>
                     </div>
 
-                    <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+                    <div className="space-y-3 p-4 sm:p-5 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        <Phone className="w-4 h-4 mr-2 text-amber-600" />
+                        <Phone className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                         Phone Number
                       </label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.phone || 'Not provided'}</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900">{user?.phone || 'Not provided'}</p>
                     </div>
 
-                    <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+                    <div className="space-y-3 p-4 sm:p-5 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        <Mail className="w-4 h-4 mr-2 text-amber-600" />
+                        <Mail className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                         Email Address
                       </label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.email || 'Not provided'}</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900 break-all">{user?.email || 'Not provided'}</p>
                     </div>
 
-                    <div className="space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+                    <div className="space-y-3 p-4 sm:p-5 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        <FileText className="w-4 h-4 mr-2 text-amber-600" />
+                        <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                         Identity Type
                       </label>
-                      <p className="text-lg font-semibold text-gray-900">
+                      <p className="text-base sm:text-lg font-semibold text-gray-900">
                         {user?.identity_type ? getIdentityTypeName(user.identity_type) : 'Not provided'}
                       </p>
                     </div>
 
-                    <div className="md:col-span-2 space-y-3 p-5 bg-gray-50 rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
+                    <div className="md:col-span-2 space-y-3 p-4 sm:p-5 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200 hover:border-amber-300 transition-colors duration-200">
                       <label className="flex items-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        <Home className="w-4 h-4 mr-2 text-amber-600" />
+                        <Home className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-amber-600" />
                         Address
                       </label>
-                      <p className="text-lg font-semibold text-gray-900">{user?.address || 'Not provided'}</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900 break-words">{user?.address || 'Not provided'}</p>
                     </div>
 
                     {user?.identity_document && (
-                      <div className="md:col-span-2 space-y-3 p-5 bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200">
+                      <div className="md:col-span-2 space-y-3 p-4 sm:p-5 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg sm:rounded-xl border-2 border-amber-200">
                         <label className="flex items-center text-xs font-semibold text-amber-800 uppercase tracking-wide">
-                          <FileText className="w-4 h-4 mr-2" />
+                          <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                           Identity Document
                         </label>
-                        <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
-                              <FileText className="w-5 h-5 text-white" />
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 bg-white rounded-lg shadow-sm gap-3">
+                          <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-amber-600 rounded-lg flex items-center justify-center">
+                              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
                             <div>
-                              <span className="font-semibold text-gray-900 block">Document uploaded</span>
+                              <span className="font-semibold text-gray-900 block text-sm sm:text-base">Document uploaded</span>
                               <span className="text-xs text-gray-500">Verified identity document</span>
                             </div>
                           </div>
@@ -848,7 +1328,7 @@ const ProfilePage = () => {
                               href={`https://admin.webhostdevs.com/api/login/${user.identity_document}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors duration-200 text-sm font-semibold shadow-md hover:shadow-lg"
+                              className="px-3 py-2 sm:px-4 sm:py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors duration-200 text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg w-full sm:w-auto text-center"
                             >
                               View Document
                             </a>

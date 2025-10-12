@@ -41,9 +41,9 @@ const FAQ = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow mt-12 bg-vivenza-offWhite pt-10">
-        <div className="luxury-container mt-4 py-20">
-          <h1 className="font-display mt-5 text-4xl md:text-5xl lg:text-6xl font-medium text-center mb-6">
+      <div className="flex-grow bg-vivenza-offWhite">
+        <div className="luxury-container py-20">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-center mb-6 mt-8 sm:mt-12 lg:mt-24">
             Frequently Asked Questions
           </h1>
           <div className="gold-divider mx-auto mb-12"></div>
@@ -52,7 +52,7 @@ const FAQ = () => {
             <Accordion type="single" collapsible className="w-full space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg">
-                  <AccordionTrigger className="px-6 py-4 text-left font-display">
+                  <AccordionTrigger className="px-6 py-4 text-left font-display hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="px-6 pb-4 text-vivenza-black/80">

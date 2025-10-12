@@ -178,6 +178,346 @@
 
 
 
+// import React, { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+
+// // TypeScript interface for business details
+// interface BusinessDetails {
+//   id: number;
+//   mobile_number: string;
+//   whatsapp_number: string;
+//   email: string;
+//   address_long: string;
+//   address_short: string;
+//   facebook_link: string | null;
+//   instagram_link: string | null;
+//   twitter_link: string | null;
+//   google_map_link: string | null;
+//   business_hours: string;
+//   updated_at: string;
+// }
+
+// const Footer: React.FC = () => {
+//   const currentYear = new Date().getFullYear();
+  
+//   // Business details state
+//   const [businessDetails, setBusinessDetails] = useState<BusinessDetails | null>(null);
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   // Fetch business details from API
+//   useEffect(() => {
+//     const fetchBusinessDetails = async () => {
+//       try {
+//         setLoading(true);
+//         setError(null);
+        
+//         const response = await fetch('https://admin.webhostdevs.com/api/business_details.php', {
+//           method: 'GET',
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//           },
+//         });
+
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const result = await response.json();
+        
+//         // Handle different response structures
+//         if (result.success && result.data) {
+//           setBusinessDetails(result.data);
+//         } else if (result.id) {
+//           // Direct data without wrapper
+//           setBusinessDetails(result);
+//         } else {
+//           throw new Error('Invalid response format');
+//         }
+//       } catch (err) {
+//         console.error('Error fetching business details:', err);
+//         setError(err instanceof Error ? err.message : 'Failed to fetch business details');
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchBusinessDetails();
+//   }, []);
+
+//   // Format phone number for display
+//   const formatPhoneNumber = (number: string | undefined) => {
+//     if (!number) return '+91 XXXXXXXXXX';
+//     return number.startsWith('+91') ? number : `+91 ${number}`;
+//   };
+
+//   return (
+//     <>
+//       {/* Dynamic Google Maps Section */}
+//       <div className="w-full h-[300px] overflow-hidden">
+//         <iframe 
+//           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.560849572976!2d78.2893251!3d17.3172401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbc1b4d898a27f%3A0xd1be5c6813a879ce!2sVivenza%20farm-Best%20farmhouse%20in%20Hyderabad!5e1!3m2!1sen!2sin!4v1750970748661!5m2!1sen!2sin" 
+//           width="100%" 
+//           height="300" 
+//           style={{ border: 0 }} 
+//           allowFullScreen={true} 
+//           loading="lazy" 
+//           referrerPolicy="no-referrer-when-downgrade"
+//           title="Vivenza Farm Location"
+//         />
+//       </div>
+
+//       <footer className="bg-vivenza-black text-white">
+//         <div className="luxury-container py-12">
+//           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+//             {/* Company Section */}
+//             <div className="md:col-span-1">
+//               <h3 className="text-2xl font-display font-medium text-white mb-4">Vivenza</h3>
+//               <p className="text-white/70 mb-6">
+//                 Experience luxury and elegance at Vivenza, the most premium farmhouse in Moinabad, Telangana.
+//               </p>
+              
+//               {/* Dynamic Social Icons */}
+//               <div className="flex space-x-4">
+//                 {loading ? (
+//                   // Loading state for social icons
+//                   <div className="flex space-x-4">
+//                     <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
+//                     <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
+//                     <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
+//                   </div>
+//                 ) : error ? (
+//                   // Error state - show static links
+//                   <>
+//                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
+//                       <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                         <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+//                       </svg>
+//                     </a>
+//                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
+//                       <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+//                       </svg>
+//                     </a>
+//                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
+//                       <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                         <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+//                       </svg>
+//                     </a>
+//                   </>
+//                 ) : (
+//                   // Dynamic social icons from API
+//                   <>
+//                     {businessDetails?.facebook_link && (
+//                       <a 
+//                         href={businessDetails.facebook_link} 
+//                         target="_blank" 
+//                         rel="noopener noreferrer" 
+//                         className="text-white hover:text-vivenza-gold transition-colors"
+//                       >
+//                         <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                           <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+//                         </svg>
+//                       </a>
+//                     )}
+//                     {businessDetails?.instagram_link && (
+//                       <a 
+//                         href={businessDetails.instagram_link} 
+//                         target="_blank" 
+//                         rel="noopener noreferrer" 
+//                         className="text-white hover:text-vivenza-gold transition-colors"
+//                       >
+//                         <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+//                         </svg>
+//                       </a>
+//                     )}
+//                     {businessDetails?.twitter_link && (
+//                       <a 
+//                         href={businessDetails.twitter_link} 
+//                         target="_blank" 
+//                         rel="noopener noreferrer" 
+//                         className="text-white hover:text-vivenza-gold transition-colors"
+//                       >
+//                         <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+//                           <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+//                         </svg>
+//                       </a>
+//                     )}
+//                   </>
+//                 )}
+//               </div>
+//             </div>
+            
+//             {/* Quick Links */}
+//             <div>
+//               <h4 className="text-lg font-medium mb-4">Quick Links</h4>
+//               <ul className="space-y-2">
+//                 <li>
+//                   <Link to="/" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Home
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/about" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     About Us
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/gallery" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Gallery
+//                   </Link>
+//                 </li>
+//                 {/* <li>
+//                    <Link to="/packages" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                      Packages
+//                    </Link>
+//                 </li> */}
+//                 <li>
+//                   <Link to="/contact" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Contact
+//                   </Link>
+//                 </li>
+//               </ul>
+//             </div>
+            
+//             {/* Services */}
+//             <div>
+//               <h4 className="text-lg font-medium mb-4">Services</h4>
+//               <ul className="space-y-2">
+//                 <li>
+//                   <Link to="/amenities" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Amenities
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/events" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Events
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/faq" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     FAQ
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/booking" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Book Now
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/return-policy" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Return Policy
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/refund-cancellation" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Refund & Cancellation
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link to="/shipping-policy" className="text-white/70 hover:text-vivenza-gold transition-colors">
+//                     Shipping Policy
+//                   </Link>
+//                 </li>
+//               </ul>
+//             </div>
+            
+//             {/* Dynamic Contact Section */}
+//             <div>
+//               <h4 className="text-lg font-medium mb-4">Contact</h4>
+//               {loading ? (
+//                 <div className="space-y-2">
+//                   <div className="h-4 bg-white/20 rounded animate-pulse"></div>
+//                   <div className="h-4 bg-white/20 rounded animate-pulse w-3/4"></div>
+//                   <div className="h-4 bg-white/20 rounded animate-pulse w-1/2"></div>
+//                   <div className="h-4 bg-white/20 rounded animate-pulse w-2/3"></div>
+//                 </div>
+//               ) : error ? (
+//                 <address className="not-italic text-white/70">
+//                   <p className="mb-2 text-white/60">Contact info currently unavailable</p>
+//                   <p className="text-white/60">Please try again later</p>
+//                 </address>
+//               ) : (
+//                 <address className="not-italic text-white/70">
+//                   {businessDetails?.address_long ? (
+//                     <div className="mb-4 whitespace-pre-line">
+//                       {businessDetails.address_long}
+//                     </div>
+//                   ) : (
+//                     <div className="mb-4">
+//                       <p className="mb-2">SY NUMBER: 108, near Mirja Farms</p>
+//                       <p className="mb-2">Murthuzaguda, Moinabad</p>
+//                       <p className="mb-4">Telangana – 501504</p>
+//                     </div>
+//                   )}
+//                   <p className="mb-2">
+//                     <a 
+//                       href={`tel:${businessDetails?.mobile_number || '9697798888'}`} 
+//                       className="hover:text-vivenza-gold transition-colors"
+//                     >
+//                       {formatPhoneNumber(businessDetails?.mobile_number)}
+//                     </a>
+//                   </p>
+//                   <p>
+//                     <a 
+//                       href={`mailto:${businessDetails?.email || 'info@vivenza.in'}`} 
+//                       className="hover:text-vivenza-gold transition-colors"
+//                     >
+//                       {businessDetails?.email || 'info@vivenza.in'}
+//                     </a>
+//                   </p>
+//                 </address>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+        
+//         {/* Footer Bottom */}
+//         <div className="border-t border-white/10">
+//           <div className="luxury-container py-6">
+//             <div className="flex flex-col md:flex-row justify-between items-center">
+//               <div className="text-white/60 text-sm mb-4 md:mb-0">
+//                 &copy; {currentYear} Vivenza Luxury Farmhouse. All rights reserved.
+//               </div>
+//               <div className="flex flex-wrap gap-4 md:space-x-6">
+//                 <Link to="/privacy" className="text-white/60 text-sm hover:text-white transition-colors">
+//                   Privacy Policy
+//                 </Link>
+//                 <Link to="/terms" className="text-white/60 text-sm hover:text-white transition-colors">
+//                   Terms of Service
+//                 </Link>
+//                 <Link to="/return-policy" className="text-white/60 text-sm hover:text-white transition-colors">
+//                   Return Policy
+//                 </Link>
+//                 <Link to="/refund-cancellation" className="text-white/60 text-sm hover:text-white transition-colors">
+//                   Refund & Cancellation
+//                 </Link>
+//                 <Link to="/shipping-policy" className="text-white/60 text-sm hover:text-white transition-colors">
+//                   Shipping Policy
+//                 </Link>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </footer>
+//     </>
+//   );
+// };
+
+// export default Footer;
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -255,11 +595,11 @@ const Footer: React.FC = () => {
   return (
     <>
       {/* Dynamic Google Maps Section */}
-      <div className="w-full h-[300px] overflow-hidden">
+      <div className="w-full h-[200px] sm:h-[250px] lg:h-[300px] overflow-hidden">
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.560849572976!2d78.2893251!3d17.3172401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbc1b4d898a27f%3A0xd1be5c6813a879ce!2sVivenza%20farm-Best%20farmhouse%20in%20Hyderabad!5e1!3m2!1sen!2sin!4v1750970748661!5m2!1sen!2sin" 
           width="100%" 
-          height="300" 
+          height="100%" 
           style={{ border: 0 }} 
           allowFullScreen={true} 
           loading="lazy" 
@@ -269,39 +609,39 @@ const Footer: React.FC = () => {
       </div>
 
       <footer className="bg-vivenza-black text-white">
-        <div className="luxury-container py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="luxury-container px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Company Section */}
-            <div className="md:col-span-1">
-              <h3 className="text-2xl font-display font-medium text-white mb-4">Vivenza</h3>
-              <p className="text-white/70 mb-6">
+            <div className="sm:col-span-2 lg:col-span-1">
+              <h3 className="text-xl sm:text-2xl font-display font-medium text-white mb-3 sm:mb-4">Vivenza</h3>
+              <p className="text-white/70 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
                 Experience luxury and elegance at Vivenza, the most premium farmhouse in Moinabad, Telangana.
               </p>
               
               {/* Dynamic Social Icons */}
-              <div className="flex space-x-4">
+              <div className="flex space-x-3 sm:space-x-4">
                 {loading ? (
                   // Loading state for social icons
-                  <div className="flex space-x-4">
-                    <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
-                    <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
-                    <div className="w-6 h-6 bg-white/30 animate-pulse rounded"></div>
+                  <div className="flex space-x-3 sm:space-x-4">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white/30 animate-pulse rounded"></div>
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white/30 animate-pulse rounded"></div>
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white/30 animate-pulse rounded"></div>
                   </div>
                 ) : error ? (
                   // Error state - show static links
                   <>
                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                       </svg>
                     </a>
                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                       </svg>
                     </a>
                     <a href="#" className="text-white hover:text-vivenza-gold transition-colors">
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                       </svg>
                     </a>
@@ -316,7 +656,7 @@ const Footer: React.FC = () => {
                         rel="noopener noreferrer" 
                         className="text-white hover:text-vivenza-gold transition-colors"
                       >
-                        <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                         </svg>
                       </a>
@@ -328,7 +668,7 @@ const Footer: React.FC = () => {
                         rel="noopener noreferrer" 
                         className="text-white hover:text-vivenza-gold transition-colors"
                       >
-                        <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                       </a>
@@ -340,7 +680,7 @@ const Footer: React.FC = () => {
                         rel="noopener noreferrer" 
                         className="text-white hover:text-vivenza-gold transition-colors"
                       >
-                        <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                         </svg>
                       </a>
@@ -352,30 +692,25 @@ const Footer: React.FC = () => {
             
             {/* Quick Links */}
             <div>
-              <h4 className="text-lg font-medium mb-4">Quick Links</h4>
-              <ul className="space-y-2">
+              <h4 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">Quick Links</h4>
+              <ul className="space-y-1.5 sm:space-y-2">
                 <li>
-                  <Link to="/" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/about" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link to="/gallery" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/gallery" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Gallery
                   </Link>
                 </li>
-                {/* <li>
-                   <Link to="/packages" className="text-white/70 hover:text-vivenza-gold transition-colors">
-                     Packages
-                   </Link>
-                </li> */}
                 <li>
-                  <Link to="/contact" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/contact" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Contact
                   </Link>
                 </li>
@@ -384,40 +719,40 @@ const Footer: React.FC = () => {
             
             {/* Services */}
             <div>
-              <h4 className="text-lg font-medium mb-4">Services</h4>
-              <ul className="space-y-2">
+              <h4 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">Services</h4>
+              <ul className="space-y-1.5 sm:space-y-2">
                 <li>
-                  <Link to="/amenities" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/amenities" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Amenities
                   </Link>
                 </li>
                 <li>
-                  <Link to="/events" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/events" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Events
                   </Link>
                 </li>
                 <li>
-                  <Link to="/faq" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/faq" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link to="/booking" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/booking" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Book Now
                   </Link>
                 </li>
                 <li>
-                  <Link to="/return-policy" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/return-policy" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Return Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/refund-cancellation" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/refund-cancellation" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Refund & Cancellation
                   </Link>
                 </li>
                 <li>
-                  <Link to="/shipping-policy" className="text-white/70 hover:text-vivenza-gold transition-colors">
+                  <Link to="/shipping-policy" className="text-white/70 hover:text-vivenza-gold transition-colors text-sm sm:text-base">
                     Shipping Policy
                   </Link>
                 </li>
@@ -426,36 +761,36 @@ const Footer: React.FC = () => {
             
             {/* Dynamic Contact Section */}
             <div>
-              <h4 className="text-lg font-medium mb-4">Contact</h4>
+              <h4 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">Contact</h4>
               {loading ? (
                 <div className="space-y-2">
-                  <div className="h-4 bg-white/20 rounded animate-pulse"></div>
-                  <div className="h-4 bg-white/20 rounded animate-pulse w-3/4"></div>
-                  <div className="h-4 bg-white/20 rounded animate-pulse w-1/2"></div>
-                  <div className="h-4 bg-white/20 rounded animate-pulse w-2/3"></div>
+                  <div className="h-3 sm:h-4 bg-white/20 rounded animate-pulse"></div>
+                  <div className="h-3 sm:h-4 bg-white/20 rounded animate-pulse w-3/4"></div>
+                  <div className="h-3 sm:h-4 bg-white/20 rounded animate-pulse w-1/2"></div>
+                  <div className="h-3 sm:h-4 bg-white/20 rounded animate-pulse w-2/3"></div>
                 </div>
               ) : error ? (
                 <address className="not-italic text-white/70">
-                  <p className="mb-2 text-white/60">Contact info currently unavailable</p>
-                  <p className="text-white/60">Please try again later</p>
+                  <p className="mb-2 text-white/60 text-xs sm:text-sm">Contact info currently unavailable</p>
+                  <p className="text-white/60 text-xs sm:text-sm">Please try again later</p>
                 </address>
               ) : (
-                <address className="not-italic text-white/70">
+                <address className="not-italic text-white/70 text-sm sm:text-base">
                   {businessDetails?.address_long ? (
-                    <div className="mb-4 whitespace-pre-line">
+                    <div className="mb-3 sm:mb-4 whitespace-pre-line leading-relaxed">
                       {businessDetails.address_long}
                     </div>
                   ) : (
-                    <div className="mb-4">
-                      <p className="mb-2">SY NUMBER: 108, near Mirja Farms</p>
-                      <p className="mb-2">Murthuzaguda, Moinabad</p>
-                      <p className="mb-4">Telangana – 501504</p>
+                    <div className="mb-3 sm:mb-4 leading-relaxed">
+                      <p className="mb-1 sm:mb-2">SY NUMBER: 108, near Mirja Farms</p>
+                      <p className="mb-1 sm:mb-2">Murthuzaguda, Moinabad</p>
+                      <p className="mb-2 sm:mb-4">Telangana – 501504</p>
                     </div>
                   )}
                   <p className="mb-2">
                     <a 
                       href={`tel:${businessDetails?.mobile_number || '9697798888'}`} 
-                      className="hover:text-vivenza-gold transition-colors"
+                      className="hover:text-vivenza-gold transition-colors break-all"
                     >
                       {formatPhoneNumber(businessDetails?.mobile_number)}
                     </a>
@@ -463,7 +798,7 @@ const Footer: React.FC = () => {
                   <p>
                     <a 
                       href={`mailto:${businessDetails?.email || 'info@vivenza.in'}`} 
-                      className="hover:text-vivenza-gold transition-colors"
+                      className="hover:text-vivenza-gold transition-colors break-all"
                     >
                       {businessDetails?.email || 'info@vivenza.in'}
                     </a>
@@ -476,25 +811,25 @@ const Footer: React.FC = () => {
         
         {/* Footer Bottom */}
         <div className="border-t border-white/10">
-          <div className="luxury-container py-6">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="text-white/60 text-sm mb-4 md:mb-0">
+          <div className="luxury-container px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+              <div className="text-white/60 text-xs sm:text-sm text-center lg:text-left">
                 &copy; {currentYear} Vivenza Luxury Farmhouse. All rights reserved.
               </div>
-              <div className="flex flex-wrap gap-4 md:space-x-6">
-                <Link to="/privacy" className="text-white/60 text-sm hover:text-white transition-colors">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-end gap-2 sm:gap-4 lg:gap-6">
+                <Link to="/privacy" className="text-white/60 text-xs sm:text-sm hover:text-white transition-colors text-center">
                   Privacy Policy
                 </Link>
-                <Link to="/terms" className="text-white/60 text-sm hover:text-white transition-colors">
+                <Link to="/terms" className="text-white/60 text-xs sm:text-sm hover:text-white transition-colors text-center">
                   Terms of Service
                 </Link>
-                <Link to="/return-policy" className="text-white/60 text-sm hover:text-white transition-colors">
+                <Link to="/return-policy" className="text-white/60 text-xs sm:text-sm hover:text-white transition-colors text-center">
                   Return Policy
                 </Link>
-                <Link to="/refund-cancellation" className="text-white/60 text-sm hover:text-white transition-colors">
+                <Link to="/refund-cancellation" className="text-white/60 text-xs sm:text-sm hover:text-white transition-colors text-center">
                   Refund & Cancellation
                 </Link>
-                <Link to="/shipping-policy" className="text-white/60 text-sm hover:text-white transition-colors">
+                <Link to="/shipping-policy" className="text-white/60 text-xs sm:text-sm hover:text-white transition-colors text-center">
                   Shipping Policy
                 </Link>
               </div>
