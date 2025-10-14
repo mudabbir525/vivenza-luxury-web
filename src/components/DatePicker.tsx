@@ -33,7 +33,7 @@
 //       const endDate = endOfMonth(month);
       
 //       const response = await fetch(
-//         `https://admin.webhostdevs.com/api/date-blocks/get-availability.php?start_date=${format(startDate, 'yyyy-MM-dd')}&end_date=${format(endDate, 'yyyy-MM-dd')}`
+//         `https://vivenza.adminmahaspice.in/api/date-blocks/get-availability.php?start_date=${format(startDate, 'yyyy-MM-dd')}&end_date=${format(endDate, 'yyyy-MM-dd')}`
 //       );
       
 //       const data = await response.json();
@@ -503,7 +503,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       const endDate = endOfMonth(month);
       
       const response = await fetch(
-        `https://admin.webhostdevs.com/api/date-blocks/get-availability.php?start_date=${format(startDate, 'yyyy-MM-dd')}&end_date=${format(endDate, 'yyyy-MM-dd')}`
+        `https://vivenza.adminmahaspice.in/api/date-blocks/get-availability.php?start_date=${format(startDate, 'yyyy-MM-dd')}&end_date=${format(endDate, 'yyyy-MM-dd')}`
       );
       
       const data = await response.json();

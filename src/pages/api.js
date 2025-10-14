@@ -1,5 +1,5 @@
 // api.ts
-const API_BASE_URL = 'https://admin.webhostdevs.com/api';
+const API_BASE_URL = 'https://vivenza.adminmahaspice.in/api';
 
 export const fetchBookingPackages = async () => {
   const response = await fetch(`${API_BASE_URL}/booking-packages/index.php`);

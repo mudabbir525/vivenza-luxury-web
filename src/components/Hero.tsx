@@ -26,7 +26,7 @@
 //   const fetchSlides = async () => {
 //     try {
 //       setLoading(true);
-//       const response = await fetch('https://admin.webhostdevs.com/api/hero.php?action=get');
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/hero.php?action=get');
       
 //       if (!response.ok) {
 //         throw new Error(`HTTP error! status: ${response.status}`);
@@ -226,7 +226,7 @@
 //   const fetchSlides = async () => {
 //     try {
 //       setLoading(true);
-//       const response = await fetch('https://admin.webhostdevs.com/api/hero.php?action=get');
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/hero.php?action=get');
       
 //       if (!response.ok) {
 //         throw new Error(`HTTP error! status: ${response.status}`);
@@ -416,7 +416,7 @@ const Hero: React.FC = () => {
   const fetchSlides = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://admin.webhostdevs.com/api/hero.php?action=get');
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/hero.php?action=get');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

@@ -41,7 +41,7 @@
 
 //       const userData = JSON.parse(storedUser);
 //       const response = await fetch(
-//         "https://admin.webhostdevs.com/api/login/get-user-details.php",
+//         "https://vivenza.adminmahaspice.in/api/login/get-user-details.php",
 //         {
 //           method: "POST",
 //           headers: {

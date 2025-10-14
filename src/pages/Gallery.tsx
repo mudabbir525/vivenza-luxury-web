@@ -7,7 +7,7 @@
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 
-//   const BASE_URL = "https://admin.webhostdevs.com/api";
+//   const BASE_URL = "https://vivenza.adminmahaspice.in/api";
 
 //   useEffect(() => {
 //     fetchGalleryData();
@@ -47,7 +47,7 @@
 //               path: item.path,
 //               altText: item.alt_text || item.title,
 //               // Construct full image URL
-//               imageUrl: `https://admin.webhostdevs.com/${item.path}`
+//               imageUrl: `https://vivenza.adminmahaspice.in/${item.path}`
 //             }));
 
 //           return {
@@ -198,7 +198,7 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const BASE_URL = "https://admin.webhostdevs.com/api";
+  const BASE_URL = "https://vivenza.adminmahaspice.in/api";
 
   useEffect(() => {
     fetchGalleryData();
@@ -238,7 +238,7 @@ const Gallery = () => {
               path: item.path,
               altText: item.alt_text || item.title,
               // Construct full image URL
-              imageUrl: `https://admin.webhostdevs.com/${item.path}`
+              imageUrl: `https://vivenza.adminmahaspice.in/${item.path}`
             }));
 
           return {

@@ -103,7 +103,7 @@ const Accommodations: React.FC = () => {
     const fetchAccommodations = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://admin.webhostdevs.com/api/accommodations.php');
+        const response = await fetch('https://vivenza.adminmahaspice.in/api/accommodations.php');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

@@ -491,7 +491,7 @@ const Packages = () => {
 
   const fetchPackages = async () => {
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/packages.php');
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/packages.php');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -516,7 +516,7 @@ const Packages = () => {
 
   const fetchAdditionalServices = async () => {
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/additional-services/index.php');
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/additional-services/index.php');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

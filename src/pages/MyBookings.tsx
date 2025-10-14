@@ -68,7 +68,7 @@
 //     setError(null);
 
 //     try {
-//       const response = await fetch('https://admin.webhostdevs.com/api/bookings/get-user-bookings.php', {
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/bookings/get-user-bookings.php', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -509,7 +509,7 @@ const MyBookings = () => {
     setError(null);
 
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/bookings/get-user-bookings.php', {
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/bookings/get-user-bookings.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

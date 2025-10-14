@@ -111,7 +111,7 @@
 //         setLoading(true);
 //         setError(null);
         
-//         const response = await fetch('https://admin.webhostdevs.com/api/business_details.php', {
+//         const response = await fetch('https://vivenza.adminmahaspice.in/api/business_details.php', {
 //           method: 'GET',
 //           headers: {
 //             'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ const ContactPreview: React.FC = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('https://admin.webhostdevs.com/api/business_details.php', {
+        const response = await fetch('https://vivenza.adminmahaspice.in/api/business_details.php', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

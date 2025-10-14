@@ -371,14 +371,14 @@ const QuickInfo = () => {
     try {
       setLoading(true);
       // Fetch pricing categories
-      const pricingResponse = await fetch("https://admin.webhostdevs.com/api/pricing_info_package.php");
+      const pricingResponse = await fetch("https://vivenza.adminmahaspice.in/api/pricing_info_package.php");
       if (!pricingResponse.ok) {
         throw new Error("Failed to fetch pricing data");
       }
       const pricingData = await pricingResponse.json();
       
       // Fetch event categories
-      const eventResponse = await fetch("https://admin.webhostdevs.com/api/eventsection.php");
+      const eventResponse = await fetch("https://vivenza.adminmahaspice.in/api/eventsection.php");
       if (!eventResponse.ok) {
         throw new Error("Failed to fetch event data");
       }

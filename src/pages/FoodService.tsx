@@ -16,7 +16,7 @@
 //   useEffect(() => {
 //     const fetchFoodCategories = async () => {
 //       setLoading(true);
-//       const res = await fetch('https://admin.webhostdevs.com/api/food-categories/index.php');
+//       const res = await fetch('https://vivenza.adminmahaspice.in/api/food-categories/index.php');
 //       const data = await res.json();
 //       if (data.status === 'success') {
 //         setFoodCategories(data.data.filter((cat: any) => cat.is_active === 1));
@@ -28,7 +28,7 @@
 
 //   useEffect(() => {
 //     const fetchCuisineTypes = async () => {
-//       const res = await fetch('https://admin.webhostdevs.com/api/food-cuisine-types/index.php');
+//       const res = await fetch('https://vivenza.adminmahaspice.in/api/food-cuisine-types/index.php');
 //       const data = await res.json();
 //       if (data.status === 'success') {
 //         setCuisineTypes(data.data.filter((c: any) => c.is_active === 1));
@@ -39,7 +39,7 @@
 
 //   const fetchPackagesForCategory = async (categoryId: number) => {
 //     if (packagesByCategory[categoryId]) return;
-//     const res = await fetch(`https://admin.webhostdevs.com/api/food-packages/index.php?category_id=${categoryId}`);
+//     const res = await fetch(`https://vivenza.adminmahaspice.in/api/food-packages/index.php?category_id=${categoryId}`);
 //     const data = await res.json();
 //     if (data.status === 'success') {
 //       setPackagesByCategory(prev => ({ ...prev, [categoryId]: data.data }));
@@ -48,7 +48,7 @@
 
 //   const fetchItemsForPackage = async (packageId: number) => {
 //     if (itemsByPackage[packageId]) return;
-//     const res = await fetch(`https://admin.webhostdevs.com/api/food-items/index.php?package_id=${packageId}`);
+//     const res = await fetch(`https://vivenza.adminmahaspice.in/api/food-items/index.php?package_id=${packageId}`);
 //     const data = await res.json();
 //     if (data.status === 'success') {
 //       setItemsByPackage(prev => ({ ...prev, [packageId]: data.data }));
@@ -216,7 +216,7 @@ const FoodService = ({ guestCount, dateRange, onFoodCostUpdate }) => {
   useEffect(() => {
     const fetchFoodCategories = async () => {
       setLoading(true);
-      const res = await fetch('https://admin.webhostdevs.com/api/food-categories/index.php');
+      const res = await fetch('https://vivenza.adminmahaspice.in/api/food-categories/index.php');
       const data = await res.json();
       if (data.status === 'success') {
         setFoodCategories(data.data.filter((cat: any) => cat.is_active === 1));
@@ -228,7 +228,7 @@ const FoodService = ({ guestCount, dateRange, onFoodCostUpdate }) => {
 
   useEffect(() => {
     const fetchCuisineTypes = async () => {
-      const res = await fetch('https://admin.webhostdevs.com/api/food-cuisine-types/index.php');
+      const res = await fetch('https://vivenza.adminmahaspice.in/api/food-cuisine-types/index.php');
       const data = await res.json();
       if (data.status === 'success') {
         setCuisineTypes(data.data.filter((c: any) => c.is_active === 1));
@@ -239,7 +239,7 @@ const FoodService = ({ guestCount, dateRange, onFoodCostUpdate }) => {
 
   const fetchPackagesForCategory = async (categoryId: number) => {
     if (packagesByCategory[categoryId]) return;
-    const res = await fetch(`https://admin.webhostdevs.com/api/food-packages/index.php?category_id=${categoryId}`);
+    const res = await fetch(`https://vivenza.adminmahaspice.in/api/food-packages/index.php?category_id=${categoryId}`);
     const data = await res.json();
     if (data.status === 'success') {
       setPackagesByCategory(prev => ({ ...prev, [categoryId]: data.data }));
@@ -248,7 +248,7 @@ const FoodService = ({ guestCount, dateRange, onFoodCostUpdate }) => {
 
   const fetchItemsForPackage = async (packageId: number) => {
     if (itemsByPackage[packageId]) return;
-    const res = await fetch(`https://admin.webhostdevs.com/api/food-items/index.php?package_id=${packageId}`);
+    const res = await fetch(`https://vivenza.adminmahaspice.in/api/food-items/index.php?package_id=${packageId}`);
     const data = await res.json();
     if (data.status === 'success') {
       setItemsByPackage(prev => ({ ...prev, [packageId]: data.data }));

@@ -137,7 +137,7 @@ const ShippingPolicy = () => {
         setError(null);
 
         const response = await fetch(
-          "https://admin.webhostdevs.com/api/business_details.php",
+          "https://vivenza.adminmahaspice.in/api/business_details.php",
           {
             method: "GET",
             headers: {

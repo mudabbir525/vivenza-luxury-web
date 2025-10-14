@@ -77,7 +77,7 @@
 //       }
 
 //       const response = await fetch(
-//         "https://admin.webhostdevs.com/api/login/update_profile.php",
+//         "https://vivenza.adminmahaspice.in/api/login/update_profile.php",
 //         {
 //           method: "POST",
 //           body: formData,
@@ -373,7 +373,7 @@
 //                           <span className="text-gray-700">Document uploaded</span>
 //                           {user.identity_document && (
 //                             <a
-//                               href={`https://admin.webhostdevs.com/api/login/${user.identity_document}`}
+//                               href={`https://vivenza.adminmahaspice.in/api/login/${user.identity_document}`}
 //                               target="_blank"
 //                               rel="noopener noreferrer"
 //                               className="ml-auto text-amber-600 hover:text-amber-700 text-sm"
@@ -497,7 +497,7 @@
 //       }
 
 //       const response = await fetch(
-//         "https://admin.webhostdevs.com/api/login/update_profile.php",
+//         "https://vivenza.adminmahaspice.in/api/login/update_profile.php",
 //         {
 //           method: "POST",
 //           body: formData,
@@ -845,7 +845,7 @@
 //                           </div>
 //                           {user.identity_document && (
 //                             <a
-//                               href={`https://admin.webhostdevs.com/api/login/${user.identity_document}`}
+//                               href={`https://vivenza.adminmahaspice.in/api/login/${user.identity_document}`}
 //                               target="_blank"
 //                               rel="noopener noreferrer"
 //                               className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors duration-200 text-sm font-semibold shadow-md hover:shadow-lg"
@@ -977,7 +977,7 @@ const ProfilePage = () => {
       }
 
       const response = await fetch(
-        "https://admin.webhostdevs.com/api/login/update_profile.php",
+        "https://vivenza.adminmahaspice.in/api/login/update_profile.php",
         {
           method: "POST",
           body: formData,
@@ -1325,7 +1325,7 @@ const ProfilePage = () => {
                           </div>
                           {user.identity_document && (
                             <a
-                              href={`https://admin.webhostdevs.com/api/login/${user.identity_document}`}
+                              href={`https://vivenza.adminmahaspice.in/api/login/${user.identity_document}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="px-3 py-2 sm:px-4 sm:py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors duration-200 text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg w-full sm:w-auto text-center"

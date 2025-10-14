@@ -209,7 +209,7 @@
 //     const fetchPackages = async () => {
 //       try {
 //         const response = await fetch(
-//           "https://admin.webhostdevs.com/api/booking-packages/index.php"
+//           "https://vivenza.adminmahaspice.in/api/booking-packages/index.php"
 //         );
 //         const data = await response.json();
 //         if (data.status === "success" && data.data?.length) {
@@ -228,7 +228,7 @@
 //     const fetchAdditionalServices = async () => {
 //       try {
 //         const response = await fetch(
-//           "https://admin.webhostdevs.com/api/additional-services/index.php"
+//           "https://vivenza.adminmahaspice.in/api/additional-services/index.php"
 //         );
 //         const data = await response.json();
 //         if (data.status === "success" && data.data) {
@@ -354,7 +354,7 @@
 //   const checkFoodServiceAvailability = async () => {
 //     try {
 //       const response = await fetch(
-//         "https://admin.webhostdevs.com/api/food-categories/index.php"
+//         "https://vivenza.adminmahaspice.in/api/food-categories/index.php"
 //       );
 //       const data = await response.json();
       
@@ -492,7 +492,7 @@
 //     try {
 //       const orderValue = calculateTotalPrice();
 //       const response = await fetch(
-//         `https://admin.webhostdevs.com/api/coupons/coupons.php?validate=1&code=${couponCode}&order_value=${orderValue}`
+//         `https://vivenza.adminmahaspice.in/api/coupons/coupons.php?validate=1&code=${couponCode}&order_value=${orderValue}`
 //       );
 //       const data = await response.json();
 
@@ -644,7 +644,7 @@
 //     console.log("Booking payload:", bookingPayload);
 
 //     try {
-//       const response = await fetch('https://admin.webhostdevs.com/api/bookings/create.php', {
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/bookings/create.php', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -669,7 +669,7 @@
 //   const handleRazorpayPayment = async (bookingId: string) => {
 //     try {
 //       const orderResponse = await fetch(
-//         "https://admin.webhostdevs.com/api/bookings/create-order.php",
+//         "https://vivenza.adminmahaspice.in/api/bookings/create-order.php",
 //         {
 //           method: "POST",
 //           headers: { "Content-Type": "application/json" },
@@ -699,7 +699,7 @@
 //           console.log("Payment Response:", response);
 //           try {
 //             const verifyResponse = await fetch(
-//               "https://admin.webhostdevs.com/api/bookings/verify-payment.php",
+//               "https://vivenza.adminmahaspice.in/api/bookings/verify-payment.php",
 //               {
 //                 method: "POST",
 //                 headers: { "Content-Type": "application/json" },
@@ -1409,7 +1409,7 @@ const Booking = () => {
     const fetchPackages = async () => {
       try {
         const response = await fetch(
-          "https://admin.webhostdevs.com/api/booking-packages/index.php"
+          "https://vivenza.adminmahaspice.in/api/booking-packages/index.php"
         );
         const data = await response.json();
         if (data.status === "success" && data.data?.length) {
@@ -1428,7 +1428,7 @@ const Booking = () => {
     const fetchAdditionalServices = async () => {
       try {
         const response = await fetch(
-          "https://admin.webhostdevs.com/api/additional-services/index.php"
+          "https://vivenza.adminmahaspice.in/api/additional-services/index.php"
         );
         const data = await response.json();
         if (data.status === "success" && data.data) {
@@ -1554,7 +1554,7 @@ const Booking = () => {
   const checkFoodServiceAvailability = async () => {
     try {
       const response = await fetch(
-        "https://admin.webhostdevs.com/api/food-categories/index.php"
+        "https://vivenza.adminmahaspice.in/api/food-categories/index.php"
       );
       const data = await response.json();
       
@@ -1692,7 +1692,7 @@ const Booking = () => {
     try {
       const orderValue = calculateTotalPrice();
       const response = await fetch(
-        `https://admin.webhostdevs.com/api/coupons/coupons.php?validate=1&code=${couponCode}&order_value=${orderValue}`
+        `https://vivenza.adminmahaspice.in/api/coupons/coupons.php?validate=1&code=${couponCode}&order_value=${orderValue}`
       );
       const data = await response.json();
 
@@ -1844,7 +1844,7 @@ const Booking = () => {
     console.log("Booking payload:", bookingPayload);
 
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/bookings/create.php', {
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/bookings/create.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1869,7 +1869,7 @@ const Booking = () => {
   const handleRazorpayPayment = async (bookingId: string) => {
     try {
       const orderResponse = await fetch(
-        "https://admin.webhostdevs.com/api/bookings/create-order.php",
+        "https://vivenza.adminmahaspice.in/api/bookings/create-order.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1899,7 +1899,7 @@ const Booking = () => {
           console.log("Payment Response:", response);
           try {
             const verifyResponse = await fetch(
-              "https://admin.webhostdevs.com/api/bookings/verify-payment.php",
+              "https://vivenza.adminmahaspice.in/api/bookings/verify-payment.php",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

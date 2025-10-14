@@ -99,7 +99,7 @@ const Amenities = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch('https://admin.webhostdevs.com/api/amenities.php');
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/amenities.php');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

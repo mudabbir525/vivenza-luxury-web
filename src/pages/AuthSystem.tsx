@@ -34,7 +34,7 @@
 //     setError('');
 
 //     try {
-//       const response = await fetch('https://admin.webhostdevs.com/api/login/send-otp.php', {
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/login/send-otp.php', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,7 +66,7 @@
 //     setError('');
 
 //     try {
-//       const response = await fetch('https://admin.webhostdevs.com/api/login/verify-otp.php', {
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/login/verify-otp.php', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/x-www-form-urlencoded',
@@ -78,7 +78,7 @@
 
 //       if (data.success) {
 //         if (data.userExists && authMode === 'login') {
-//           const userResponse = await fetch('https://admin.webhostdevs.com/api/login/get-user-details.php', {
+//           const userResponse = await fetch('https://vivenza.adminmahaspice.in/api/login/get-user-details.php', {
 //             method: 'POST',
 //             headers: {
 //               'Content-Type': 'application/json',
@@ -137,7 +137,7 @@
 //       formData.append('identity_type', identityData.identity_type);
 //       formData.append('identity_document', identityData.identity_document);
 
-//       const response = await fetch('https://admin.webhostdevs.com/api/login/signup.php', {
+//       const response = await fetch('https://vivenza.adminmahaspice.in/api/login/signup.php', {
 //         method: 'POST',
 //         body: formData
 //       });
@@ -692,7 +692,7 @@ const VivenzaAuth = () => {
     setError('');
 
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/login/send-otp.php', {
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/login/send-otp.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -724,7 +724,7 @@ const VivenzaAuth = () => {
     setError('');
 
     try {
-      const response = await fetch('https://admin.webhostdevs.com/api/login/verify-otp.php', {
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/login/verify-otp.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -736,7 +736,7 @@ const VivenzaAuth = () => {
 
       if (data.success) {
         if (data.userExists && authMode === 'login') {
-          const userResponse = await fetch('https://admin.webhostdevs.com/api/login/get-user-details.php', {
+          const userResponse = await fetch('https://vivenza.adminmahaspice.in/api/login/get-user-details.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -795,7 +795,7 @@ const VivenzaAuth = () => {
       formData.append('identity_type', identityData.identity_type);
       formData.append('identity_document', identityData.identity_document);
 
-      const response = await fetch('https://admin.webhostdevs.com/api/login/signup.php', {
+      const response = await fetch('https://vivenza.adminmahaspice.in/api/login/signup.php', {
         method: 'POST',
         body: formData
       });
