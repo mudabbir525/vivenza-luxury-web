@@ -44,7 +44,7 @@
 // const Booking = () => {
 //   const { user, isAuthenticated } = useAuth();
 //   const navigate = useNavigate();
-  
+
 //   // Backend data state
 //   const [packages, setPackages] = useState<BookingPackage[]>([]);
 //   const [additionalServicesData, setAdditionalServicesData] = useState<AdditionalService[]>([]);
@@ -139,7 +139,7 @@
 //         const bookingData = JSON.parse(savedData);
 //         // Check if data is recent (within 1 hour)
 //         const isRecent = Date.now() - bookingData.timestamp < 3600000;
-        
+
 //         if (isRecent) {
 //           setSelectedPackage(bookingData.selectedPackage);
 //           setCheckIn(bookingData.checkIn ? new Date(bookingData.checkIn) : undefined);
@@ -149,7 +149,7 @@
 //           setIncludeFoodService(bookingData.includeFoodService || false);
 //           setFoodCost(bookingData.foodCost || 0);
 //           setMealCosts(bookingData.mealCosts || { breakfast: 0, lunch: 0, snacks: 0, dinner: 0 });
-          
+
 //           if (bookingData.mealDates) {
 //             setMealDates({
 //               breakfast: bookingData.mealDates.breakfast?.map((d: string) => new Date(d)) || [],
@@ -158,7 +158,7 @@
 //               dinner: bookingData.mealDates.dinner?.map((d: string) => new Date(d)) || [],
 //             });
 //           }
-          
+
 //           setDayMealConfigs(bookingData.dayMealConfigs || {});
 //           setFoodData(bookingData.foodData || { foodCategories: [], packagesByCategory: {} });
 //           setCouponCode(bookingData.couponCode || "");
@@ -357,7 +357,7 @@
 //         "https://vivenza.adminmahaspice.in/api/food-categories/index.php"
 //       );
 //       const data = await response.json();
-      
+
 //       if (data.status === "success" && data.data) {
 //         const hasActiveServices = data.data.some((category: any) => category.is_active === 1);
 //         setFoodServicesAvailable(hasActiveServices);
@@ -378,7 +378,7 @@
 //   // Get base price based on check-in date (weekday vs weekend)
 //   const getBasePrice = () => {
 //     if (!selectedPackage || !checkIn || !checkOut) return 0;
-    
+
 //     let totalPrice = 0;
 //     let currentDate = new Date(checkIn);
 //     const endDate = new Date(checkOut);
@@ -386,28 +386,28 @@
 //     while (currentDate <= endDate) {
 //       const dayOfWeek = currentDate.getDay();
 //       const isWeekend = dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6;
-      
+
 //       const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
-//       totalPrice += typeof dailyPrice === "string" 
-//         ? parseFloat(dailyPrice.replace(/,/g, "")) 
+//       totalPrice += typeof dailyPrice === "string"
+//         ? parseFloat(dailyPrice.replace(/,/g, ""))
 //         : Number(dailyPrice);
-      
+
 //       currentDate.setDate(currentDate.getDate() + 1);
 //     }
-    
+
 //     return totalPrice;
 //   };
 
 //   // Get price breakdown
 //   const getPriceBreakdown = () => {
-//     if (!selectedPackage || !checkIn || !checkOut) return { 
-//       weekdays: 0, 
-//       weekends: 0, 
-//       days: 0, 
-//       weekdayPrice: 0, 
-//       weekendPrice: 0 
+//     if (!selectedPackage || !checkIn || !checkOut) return {
+//       weekdays: 0,
+//       weekends: 0,
+//       days: 0,
+//       weekdayPrice: 0,
+//       weekendPrice: 0
 //     };
-    
+
 //     let weekdays = 0;
 //     let weekends = 0;
 //     let currentDate = new Date(checkIn);
@@ -422,16 +422,16 @@
 //       }
 //       currentDate.setDate(currentDate.getDate() + 1);
 //     }
-    
+
 //     return {
 //       weekdays,
 //       weekends,
 //       days: weekdays + weekends,
-//       weekdayPrice: typeof selectedPackage.weekday_price === "string" 
-//         ? parseFloat(selectedPackage.weekday_price.replace(/,/g, "")) 
+//       weekdayPrice: typeof selectedPackage.weekday_price === "string"
+//         ? parseFloat(selectedPackage.weekday_price.replace(/,/g, ""))
 //         : Number(selectedPackage.weekday_price),
-//       weekendPrice: typeof selectedPackage.weekend_price === "string" 
-//         ? parseFloat(selectedPackage.weekend_price.replace(/,/g, "")) 
+//       weekendPrice: typeof selectedPackage.weekend_price === "string"
+//         ? parseFloat(selectedPackage.weekend_price.replace(/,/g, ""))
 //         : Number(selectedPackage.weekend_price)
 //     };
 //   };
@@ -577,7 +577,7 @@
 //     setFoodCost(totalFoodCost);
 //     setMealCosts(mealCostsObj);
 //     setMealDates(selectedDates);
-//     setDayMealConfigs(dayMealConfigs); 
+//     setDayMealConfigs(dayMealConfigs);
 //     setFoodData(foodData);
 //   };
 
@@ -653,7 +653,7 @@
 //       });
 
 //       const data = await response.json();
-      
+
 //       if (!response.ok || data.status !== "success") {
 //         throw new Error(data.message || "Failed to create booking");
 //       }
@@ -1157,14 +1157,14 @@
 //             <h3 className="text-xl font-semibold text-red-600 mb-4">Message</h3>
 //             <p className="mb-4">{bookingError}</p>
 //             <div className="flex justify-end space-x-3">
-//               <Button 
+//               <Button
 //                 onClick={() => setBookingError("")}
 //                 className="bg-amber-500 hover:bg-amber-600"
 //               >
 //                 OK
 //               </Button>
 //               {!isAuthenticated && (
-//                 <Button 
+//                 <Button
 //                   onClick={handleLoginRedirect}
 //                   className="bg-blue-500 hover:bg-blue-600"
 //                 >
@@ -1180,23 +1180,6 @@
 // };
 
 // export default Booking;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
@@ -1217,8 +1200,8 @@ import FoodService from "./FoodService";
 import OrderSummary from "../components/OrderSummary";
 import { useAuth } from "./auth-context";
 import { useNavigate } from "react-router-dom";
-import DatePicker from '../components/DatePicker';
-import ScrollToTopButton from '../components/ScrollToTopButton';
+import DatePicker from "../components/DatePicker";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 
 interface BookingPackage {
   id: number;
@@ -1244,15 +1227,20 @@ interface AdditionalService {
 const Booking = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  
+
   // Backend data state
   const [packages, setPackages] = useState<BookingPackage[]>([]);
-  const [additionalServicesData, setAdditionalServicesData] = useState<AdditionalService[]>([]);
-  const [selectedPackage, setSelectedPackage] = useState<BookingPackage | null>(null);
+  const [additionalServicesData, setAdditionalServicesData] = useState<
+    AdditionalService[]
+  >([]);
+  const [selectedPackage, setSelectedPackage] = useState<BookingPackage | null>(
+    null
+  );
 
   // Modal state for package info
   const [showPackageModal, setShowPackageModal] = useState(false);
-  const [tempSelectedPackage, setTempSelectedPackage] = useState<BookingPackage | null>(null);
+  const [tempSelectedPackage, setTempSelectedPackage] =
+    useState<BookingPackage | null>(null);
 
   // Booking state
   const [checkIn, setCheckIn] = useState<Date | undefined>();
@@ -1262,7 +1250,9 @@ const Booking = () => {
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [guestCount, setGuestCount] = useState<number>(0);
   const [guestError, setGuestError] = useState<string>("");
-  const [additionalServices, setAdditionalServices] = useState<Record<number, boolean>>({});
+  const [additionalServices, setAdditionalServices] = useState<
+    Record<number, boolean>
+  >({});
 
   const [couponCode, setCouponCode] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
@@ -1272,7 +1262,8 @@ const Booking = () => {
 
   // Food related state
   const [includeFoodService, setIncludeFoodService] = useState(false);
-  const [foodServicesAvailable, setFoodServicesAvailable] = useState<boolean>(true);
+  const [foodServicesAvailable, setFoodServicesAvailable] =
+    useState<boolean>(true);
   const [foodCost, setFoodCost] = useState(0);
   const [mealCosts, setMealCosts] = useState({
     breakfast: 0,
@@ -1286,13 +1277,15 @@ const Booking = () => {
     snacks: [] as Date[],
     dinner: [] as Date[],
   });
-  const [dayMealConfigs, setDayMealConfigs] = useState<Record<string, Record<string, any>>>({});
+  const [dayMealConfigs, setDayMealConfigs] = useState<
+    Record<string, Record<string, any>>
+  >({});
   const [foodData, setFoodData] = useState<{
     foodCategories: any[];
     packagesByCategory: Record<number, any[]>;
   }>({
     foodCategories: [],
-    packagesByCategory: {}
+    packagesByCategory: {},
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -1316,64 +1309,89 @@ const Booking = () => {
       foodCost,
       mealCosts,
       mealDates: {
-        breakfast: mealDates.breakfast.map(d => d.toISOString()),
-        lunch: mealDates.lunch.map(d => d.toISOString()),
-        snacks: mealDates.snacks.map(d => d.toISOString()),
-        dinner: mealDates.dinner.map(d => d.toISOString()),
+        breakfast: mealDates.breakfast.map((d) => d.toISOString()),
+        lunch: mealDates.lunch.map((d) => d.toISOString()),
+        snacks: mealDates.snacks.map((d) => d.toISOString()),
+        dinner: mealDates.dinner.map((d) => d.toISOString()),
       },
       dayMealConfigs,
       foodData,
       couponCode,
       appliedCoupon,
       couponDiscount,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    sessionStorage.setItem('vivenza_booking_data', JSON.stringify(bookingData));
+    sessionStorage.setItem("vivenza_booking_data", JSON.stringify(bookingData));
   };
 
   // NEW: Load booking data from sessionStorage
   const loadBookingDataFromSession = () => {
-    const savedData = sessionStorage.getItem('vivenza_booking_data');
+    const savedData = sessionStorage.getItem("vivenza_booking_data");
     if (savedData) {
       try {
         const bookingData = JSON.parse(savedData);
         // Check if data is recent (within 1 hour)
         const isRecent = Date.now() - bookingData.timestamp < 3600000;
-        
+
         if (isRecent) {
           setSelectedPackage(bookingData.selectedPackage);
-          setCheckIn(bookingData.checkIn ? new Date(bookingData.checkIn) : undefined);
-          setCheckOut(bookingData.checkOut ? new Date(bookingData.checkOut) : undefined);
+          setCheckIn(
+            bookingData.checkIn ? new Date(bookingData.checkIn) : undefined
+          );
+          setCheckOut(
+            bookingData.checkOut ? new Date(bookingData.checkOut) : undefined
+          );
           setGuestCount(bookingData.guestCount || 0);
           setAdditionalServices(bookingData.additionalServices || {});
           setIncludeFoodService(bookingData.includeFoodService || false);
           setFoodCost(bookingData.foodCost || 0);
-          setMealCosts(bookingData.mealCosts || { breakfast: 0, lunch: 0, snacks: 0, dinner: 0 });
-          
+          setMealCosts(
+            bookingData.mealCosts || {
+              breakfast: 0,
+              lunch: 0,
+              snacks: 0,
+              dinner: 0,
+            }
+          );
+
           if (bookingData.mealDates) {
             setMealDates({
-              breakfast: bookingData.mealDates.breakfast?.map((d: string) => new Date(d)) || [],
-              lunch: bookingData.mealDates.lunch?.map((d: string) => new Date(d)) || [],
-              snacks: bookingData.mealDates.snacks?.map((d: string) => new Date(d)) || [],
-              dinner: bookingData.mealDates.dinner?.map((d: string) => new Date(d)) || [],
+              breakfast:
+                bookingData.mealDates.breakfast?.map(
+                  (d: string) => new Date(d)
+                ) || [],
+              lunch:
+                bookingData.mealDates.lunch?.map((d: string) => new Date(d)) ||
+                [],
+              snacks:
+                bookingData.mealDates.snacks?.map((d: string) => new Date(d)) ||
+                [],
+              dinner:
+                bookingData.mealDates.dinner?.map((d: string) => new Date(d)) ||
+                [],
             });
           }
-          
+
           setDayMealConfigs(bookingData.dayMealConfigs || {});
-          setFoodData(bookingData.foodData || { foodCategories: [], packagesByCategory: {} });
+          setFoodData(
+            bookingData.foodData || {
+              foodCategories: [],
+              packagesByCategory: {},
+            }
+          );
           setCouponCode(bookingData.couponCode || "");
           setAppliedCoupon(bookingData.appliedCoupon || null);
           setCouponDiscount(bookingData.couponDiscount || 0);
         }
       } catch (error) {
-        console.error('Error loading booking data from session:', error);
+        console.error("Error loading booking data from session:", error);
       }
     }
   };
 
   // NEW: Clear booking data from sessionStorage
   const clearBookingDataFromSession = () => {
-    sessionStorage.removeItem('vivenza_booking_data');
+    sessionStorage.removeItem("vivenza_booking_data");
   };
 
   // Load booking data from session when component mounts
@@ -1387,7 +1405,7 @@ const Booking = () => {
     return () => {
       // Only clear if navigating to non-auth pages
       const currentPath = window.location.pathname;
-      if (currentPath !== '/login' && currentPath !== '/booking') {
+      if (currentPath !== "/login" && currentPath !== "/booking") {
         clearBookingDataFromSession();
       }
     };
@@ -1437,9 +1455,9 @@ const Booking = () => {
           data.data.forEach((service: AdditionalService) => {
             servicesState[service.id] = false;
           });
-          setAdditionalServices(prevServices => ({
+          setAdditionalServices((prevServices) => ({
             ...servicesState,
-            ...prevServices // Keep existing selections from session
+            ...prevServices, // Keep existing selections from session
           }));
         }
       } catch (error) {
@@ -1543,7 +1561,10 @@ const Booking = () => {
   };
 
   // Handle additional services changes
-  const handleAdditionalServiceChange = (serviceId: number, checked: boolean) => {
+  const handleAdditionalServiceChange = (
+    serviceId: number,
+    checked: boolean
+  ) => {
     setAdditionalServices((prev) => ({
       ...prev,
       [serviceId]: checked,
@@ -1557,9 +1578,11 @@ const Booking = () => {
         "https://vivenza.adminmahaspice.in/api/food-categories/index.php"
       );
       const data = await response.json();
-      
+
       if (data.status === "success" && data.data) {
-        const hasActiveServices = data.data.some((category: any) => category.is_active === 1);
+        const hasActiveServices = data.data.some(
+          (category: any) => category.is_active === 1
+        );
         setFoodServicesAvailable(hasActiveServices);
       } else {
         setFoodServicesAvailable(false);
@@ -1578,7 +1601,7 @@ const Booking = () => {
   // Get base price based on check-in date (weekday vs weekend)
   const getBasePrice = () => {
     if (!selectedPackage || !checkIn || !checkOut) return 0;
-    
+
     let totalPrice = 0;
     let currentDate = new Date(checkIn);
     const endDate = new Date(checkOut);
@@ -1586,28 +1609,32 @@ const Booking = () => {
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
       const isWeekend = dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6;
-      
-      const dailyPrice = isWeekend ? selectedPackage.weekend_price : selectedPackage.weekday_price;
-      totalPrice += typeof dailyPrice === "string" 
-        ? parseFloat(dailyPrice.replace(/,/g, "")) 
-        : Number(dailyPrice);
-      
+
+      const dailyPrice = isWeekend
+        ? selectedPackage.weekend_price
+        : selectedPackage.weekday_price;
+      totalPrice +=
+        typeof dailyPrice === "string"
+          ? parseFloat(dailyPrice.replace(/,/g, ""))
+          : Number(dailyPrice);
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    
+
     return totalPrice;
   };
 
   // Get price breakdown
   const getPriceBreakdown = () => {
-    if (!selectedPackage || !checkIn || !checkOut) return { 
-      weekdays: 0, 
-      weekends: 0, 
-      days: 0, 
-      weekdayPrice: 0, 
-      weekendPrice: 0 
-    };
-    
+    if (!selectedPackage || !checkIn || !checkOut)
+      return {
+        weekdays: 0,
+        weekends: 0,
+        days: 0,
+        weekdayPrice: 0,
+        weekendPrice: 0,
+      };
+
     let weekdays = 0;
     let weekends = 0;
     let currentDate = new Date(checkIn);
@@ -1622,17 +1649,19 @@ const Booking = () => {
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    
+
     return {
       weekdays,
       weekends,
       days: weekdays + weekends,
-      weekdayPrice: typeof selectedPackage.weekday_price === "string" 
-        ? parseFloat(selectedPackage.weekday_price.replace(/,/g, "")) 
-        : Number(selectedPackage.weekday_price),
-      weekendPrice: typeof selectedPackage.weekend_price === "string" 
-        ? parseFloat(selectedPackage.weekend_price.replace(/,/g, "")) 
-        : Number(selectedPackage.weekend_price)
+      weekdayPrice:
+        typeof selectedPackage.weekday_price === "string"
+          ? parseFloat(selectedPackage.weekday_price.replace(/,/g, ""))
+          : Number(selectedPackage.weekday_price),
+      weekendPrice:
+        typeof selectedPackage.weekend_price === "string"
+          ? parseFloat(selectedPackage.weekend_price.replace(/,/g, ""))
+          : Number(selectedPackage.weekend_price),
     };
   };
 
@@ -1777,7 +1806,7 @@ const Booking = () => {
     setFoodCost(totalFoodCost);
     setMealCosts(mealCostsObj);
     setMealDates(selectedDates);
-    setDayMealConfigs(dayMealConfigs); 
+    setDayMealConfigs(dayMealConfigs);
     setFoodData(foodData);
   };
 
@@ -1794,22 +1823,28 @@ const Booking = () => {
     // Prepare food services data if included
     const foodServicesData = includeFoodService
       ? Object.entries(mealDates).flatMap(([mealKey, dates]) => {
-          return dates.map(date => {
-            const dateKey = format(date, 'yyyy-MM-dd');
+          return dates.map((date) => {
+            const dateKey = format(date, "yyyy-MM-dd");
             const dayConfig = dayMealConfigs[dateKey];
             const mealConfig = dayConfig?.[mealKey];
-            const category = foodData.foodCategories.find(cat => cat.key_name === mealKey);
-            const packages = category ? foodData.packagesByCategory[category.id] || [] : [];
-            const selectedPackage = packages.find(pkg => pkg.id === mealConfig?.package_id);
+            const category = foodData.foodCategories.find(
+              (cat) => cat.key_name === mealKey
+            );
+            const packages = category
+              ? foodData.packagesByCategory[category.id] || []
+              : [];
+            const selectedPackage = packages.find(
+              (pkg) => pkg.id === mealConfig?.package_id
+            );
             const pricePerPerson = selectedPackage?.price || 0;
             return {
               meal_type: mealKey,
-              date: format(date, 'yyyy-MM-dd'),
+              date: format(date, "yyyy-MM-dd"),
               package_id: mealConfig?.package_id || null,
               cuisine_type_id: mealConfig?.cuisine_type_id || null,
               price_per_person: pricePerPerson,
               total_price: pricePerPerson * guestCount,
-              selected_items: mealConfig?.selected_items || {}
+              selected_items: mealConfig?.selected_items || {},
             };
           });
         })
@@ -1817,8 +1852,8 @@ const Booking = () => {
 
     // Prepare additional services data
     const selectedAdditionalServices = additionalServicesData
-      .filter(service => additionalServices[service.id])
-      .map(service => service.id);
+      .filter((service) => additionalServices[service.id])
+      .map((service) => service.id);
 
     // Prepare booking payload
     const bookingPayload = {
@@ -1827,8 +1862,8 @@ const Booking = () => {
       customer_phone: customerDetails.phone,
       package_id: selectedPackage.id,
       duration_type: "24_hours",
-      check_in_date: format(checkIn, 'yyyy-MM-dd'),
-      check_out_date: format(checkOut, 'yyyy-MM-dd'),
+      check_in_date: format(checkIn, "yyyy-MM-dd"),
+      check_out_date: format(checkOut, "yyyy-MM-dd"),
       guest_count: guestCount,
       base_price: getBasePrice(),
       pricing_breakdown: getPriceBreakdown(),
@@ -1838,22 +1873,25 @@ const Booking = () => {
       coupon_discount: couponDiscount,
       total_cost: getFinalAmount(),
       food_services: foodServicesData,
-      additional_services: selectedAdditionalServices
+      additional_services: selectedAdditionalServices,
     };
 
     console.log("Booking payload:", bookingPayload);
 
     try {
-      const response = await fetch('https://vivenza.adminmahaspice.in/api/bookings/create.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingPayload)
-      });
+      const response = await fetch(
+        "https://vivenza.adminmahaspice.in/api/bookings/create.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingPayload),
+        }
+      );
 
       const data = await response.json();
-      
+
       if (!response.ok || data.status !== "success") {
         throw new Error(data.message || "Failed to create booking");
       }
@@ -1933,7 +1971,9 @@ const Booking = () => {
             });
           } catch (error) {
             console.error("Payment verification error:", error);
-            setBookingError("Payment verification failed. Please contact support.");
+            setBookingError(
+              "Payment verification failed. Please contact support."
+            );
             setIsLoading(false);
           }
         },
@@ -1976,8 +2016,8 @@ const Booking = () => {
     // Save current booking data before redirecting
     saveBookingDataToSession();
     // Set flag to indicate coming from booking page
-    sessionStorage.setItem('vivenza_redirect_to_booking', 'true');
-    navigate('/login');
+    sessionStorage.setItem("vivenza_redirect_to_booking", "true");
+    navigate("/login");
   };
 
   const handlePay = async () => {
@@ -2004,7 +2044,11 @@ const Booking = () => {
       await handleRazorpayPayment(bookingResult.booking_id);
     } catch (error) {
       console.error("Booking error:", error);
-      setBookingError(error instanceof Error ? error.message : "Booking failed. Please try again.");
+      setBookingError(
+        error instanceof Error
+          ? error.message
+          : "Booking failed. Please try again."
+      );
       setIsLoading(false);
     }
   };
@@ -2034,15 +2078,23 @@ const Booking = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Minimum Guests:</span>
-                  <span className="font-medium text-blue-600">{tempSelectedPackage.min_guests} guests</span>
+                  <span className="font-medium text-blue-600">
+                    {tempSelectedPackage.min_guests} guests
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Maximum Guests:</span>
-                  <span className="font-medium text-blue-600">{tempSelectedPackage.max_guests} guests</span>
+                  <span className="font-medium text-blue-600">
+                    {tempSelectedPackage.max_guests} guests
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Extra per Guest(More than {tempSelectedPackage.max_guests}):</span>
-                  <span className="font-medium text-red-600">₹{tempSelectedPackage.extra_per_guest.toLocaleString()}</span>
+                  <span className="text-gray-600">
+                    Extra per Guest(More than {tempSelectedPackage.max_guests}):
+                  </span>
+                  <span className="font-medium text-red-600">
+                    ₹{tempSelectedPackage.extra_per_guest.toLocaleString()}
+                  </span>
                 </div>
               </div>
             </div>
@@ -2074,11 +2126,15 @@ const Booking = () => {
       <div className="flex-grow bg-stone-50 pt-20 sm:pt-24 md:pt-32">
         <div className="container mx-auto py-8 sm:py-12 md:py-16 px-4">
           {/* Header with title and timing info */}
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-center mb-4 sm:mb-6">
-            Book Your Stay
-          </h1>
-          <div className="h-1 w-16 sm:w-20 md:w-24 bg-amber-500 mx-auto mb-8 sm:mb-10 md:mb-12"></div>
-
+          <div className="text-center">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium">
+              Ready to Celebrate?
+            </h1>
+            <h2 className="font-serif text-xl pt-3 sm:text-2xl md:text-3xl lg:text-4xl font-light italic text-gray-700">
+              Book Your Venue & Event Today!
+            </h2>
+            <div className="h-1 w-16 sm:w-20 md:w-24 bg-amber-500 mx-auto mt-6 mb-8 sm:mb-10 md:mb-12"></div>
+          </div>
           <div className="bg-amber-50 p-3 sm:p-4 rounded-lg mb-6 sm:mb-8 text-center">
             <p className="text-xs sm:text-sm md:text-base">
               <strong>Check-in time:</strong> 12:00 PM on arrival day
@@ -2115,7 +2171,8 @@ const Booking = () => {
                           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                             <span className="font-medium">{pkg.name}</span>
                             <span className="text-xs sm:text-sm text-gray-600">
-                              Weekday: ₹{pkg.weekday_price.toLocaleString()}, Weekend: ₹{pkg.weekend_price.toLocaleString()}
+                              Weekday: ₹{pkg.weekday_price.toLocaleString()},
+                              Weekend: ₹{pkg.weekend_price.toLocaleString()}
                             </span>
                           </div>
                         </SelectItem>
@@ -2160,16 +2217,22 @@ const Booking = () => {
                   />
                   {selectedPackage && (
                     <p className="text-gray-600 text-xs sm:text-sm mt-1">
-                      Min: {selectedPackage.min_guests}, Max: {selectedPackage.max_guests} | ₹{selectedPackage.extra_per_guest} per extra guest
+                      Min: {selectedPackage.min_guests}, Max:{" "}
+                      {selectedPackage.max_guests} | ₹
+                      {selectedPackage.extra_per_guest} per extra guest
                     </p>
                   )}
                   {guestError && (
-                    <p className="text-red-500 text-xs sm:text-sm mt-1">{guestError}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">
+                      {guestError}
+                    </p>
                   )}
                   {selectedPackage &&
                     guestCount > selectedPackage.max_guests && (
                       <p className="text-amber-600 text-xs sm:text-sm mt-1">
-                        Extra guest charge: ₹{selectedPackage.extra_per_guest} per guest × {guestCount - selectedPackage.max_guests} guests = ₹{getExtraGuestCharge().toLocaleString()}
+                        Extra guest charge: ₹{selectedPackage.extra_per_guest}{" "}
+                        per guest × {guestCount - selectedPackage.max_guests}{" "}
+                        guests = ₹{getExtraGuestCharge().toLocaleString()}
                       </p>
                     )}
                 </div>
@@ -2205,7 +2268,8 @@ const Booking = () => {
                           htmlFor={`service-${service.id}`}
                           className="text-xs sm:text-sm font-medium leading-relaxed cursor-pointer flex-1"
                         >
-                          {service.name} (+₹{Number(service.price).toLocaleString()})
+                          {service.name} (+₹
+                          {Number(service.price).toLocaleString()})
                         </label>
                       </div>
                     ))}
@@ -2239,7 +2303,9 @@ const Booking = () => {
                               Food Services Currently Unavailable
                             </h4>
                             <p className="text-xs sm:text-sm text-amber-700 leading-relaxed">
-                              At this moment we are not including food services. Please contact the Vivenza Team for more information about meal arrangements.
+                              At this moment we are not including food services.
+                              Please contact the Vivenza Team for more
+                              information about meal arrangements.
                             </p>
                           </div>
                         </div>
@@ -2357,17 +2423,19 @@ const Booking = () => {
       {bookingError && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
           <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h3 className="text-lg sm:text-xl font-semibold text-red-600 mb-4">Message</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-red-600 mb-4">
+              Message
+            </h3>
             <p className="mb-4 text-sm sm:text-base">{bookingError}</p>
             <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
-              <Button 
+              <Button
                 onClick={() => setBookingError("")}
                 className="bg-amber-500 hover:bg-amber-600 w-full sm:w-auto"
               >
                 OK
               </Button>
               {!isAuthenticated && (
-                <Button 
+                <Button
                   onClick={handleLoginRedirect}
                   className="bg-blue-500 hover:bg-blue-600 w-full sm:w-auto"
                 >
