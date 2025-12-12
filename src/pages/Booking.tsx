@@ -1924,7 +1924,7 @@ const Booking = () => {
       const { id: razorpayOrderId, amount, currency } = orderData.order;
 
       const options = {
-        key: "rzp_live_R6qpNwT08jtUaq",
+        key: "rzp_live_RqfIII8Vscmhhe",
         amount: amount,
         currency: currency,
         name: "Vivenza Farmhouse Booking",
